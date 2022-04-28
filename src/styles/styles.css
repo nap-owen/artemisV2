@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'AirbnbCereal';
+    src: url('./styles/fonts/AirbnbCereal_W_Lt.otf');
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'AirbnbCereal';
+    src: url('./styles/fonts/AirbnbCereal_W_Md.otf');
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'AirbnbCereal';
+    src: url('./styles/fonts/AirbnbCereal_W_Bk.otf');
+}
+@font-face {
+    font-family: 'AirbnbCereal';
+    src: url('./styles/fonts/AirbnbCereal_W_Bd.otf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'AirbnbCereal';
+    src: url('./styles/fonts/AirbnbCereal_W_XBd.otf');
+    font-weight: 800;
+}
+@font-face {
+    font-family: 'AirbnbCereal';
+    src: url('./styles/fonts/AirbnbCereal_W_Blk.otf');
+    font-weight: 900;
+}
+
+/* root styles */
+
+:root {
+    --ff-primary: 'AirbnbCereal';
+    --f-clr-dark: #383A3D;
+}
+
+/* general styles */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'AirbnbCereal';
+    background: linear-gradient(1deg, #ADBBD8 0%, #FFFFFF 100%) no-repeat;
+    height: 100vh;
+}
+
+/* index vue */
+#index-body {
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+    #index-body {
+        gap: 50px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #index-body {
+        display: block;
+        position: relative;
+        margin: auto;
+    }
+}

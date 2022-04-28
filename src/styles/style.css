@@ -1,0 +1,316 @@
+@font-face {
+  font-family: 'artemis-icons';
+  src:  url('fonts/artemis-icons.eot?9a6fx2');
+  src:  url('fonts/artemis-icons.eot?9a6fx2#iefix') format('embedded-opentype'),
+    url('fonts/artemis-icons.ttf?9a6fx2') format('truetype'),
+    url('fonts/artemis-icons.woff?9a6fx2') format('woff'),
+    url('fonts/artemis-icons.svg?9a6fx2#artemis-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="r-"], [class*=" r-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'artemis-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.r-product-evidence .path1:before {
+  content: "\e900";
+  color: rgb(223, 227, 238);
+}
+.r-product-evidence .path2:before {
+  content: "\e901";
+  margin-left: -0.9375em;
+  color: rgb(223, 28, 28);
+}
+.r-product-evidence .path3:before {
+  content: "\e902";
+  margin-left: -0.9375em;
+  color: rgb(223, 28, 28);
+}
+.r-product-evidence .path4:before {
+  content: "\e903";
+  margin-left: -0.9375em;
+  color: rgb(223, 28, 28);
+}
+.r-product-evidence-black .path1:before {
+  content: "\e904";
+  color: rgb(227, 227, 227);
+}
+.r-product-evidence-black .path2:before {
+  content: "\e905";
+  margin-left: -0.9375em;
+  color: rgb(87, 87, 87);
+}
+.r-product-evidence-black .path3:before {
+  content: "\e906";
+  margin-left: -0.9375em;
+  color: rgb(87, 87, 87);
+}
+.r-product-evidence-black .path4:before {
+  content: "\e907";
+  margin-left: -0.9375em;
+  color: rgb(87, 87, 87);
+}
+.r-upload-file:before {
+  content: "\e908";
+}
+.r-actionbar-breakdown:before {
+  content: "\e909";
+}
+.r-actionbar-case-statuses:before {
+  content: "\e90a";
+}
+.r-actionbar-filters:before {
+  content: "\e90b";
+}
+.r-actionbar-layout:before {
+  content: "\e90c";
+}
+.r-actionbar-platform:before {
+  content: "\e90d";
+}
+.r-actionbar-selection:before {
+  content: "\e90e";
+}
+.r-appbar-counterfeitchecker:before {
+  content: "\e90f";
+}
+.r-appbar-notification:before {
+  content: "\e910";
+}
+.r-appbar-profilemenu:before {
+  content: "\e911";
+}
+.r-appbar-reportbug:before {
+  content: "\e912";
+}
+.r-appbar-search:before {
+  content: "\e913";
+}
+.r-appbar-spg:before {
+  content: "\e914";
+}
+.r-case-date-filed:before {
+  content: "\e915";
+  color: #fff;
+}
+.r-case-defendant:before {
+  content: "\e916";
+  color: #fff;
+}
+.r-case-expected-agreed:before {
+  content: "\e917";
+}
+.r-case-frozen-amount:before {
+  content: "\e918";
+}
+.r-case-judge:before {
+  content: "\e919";
+  color: #fff;
+}
+.r-case-lawfirm:before {
+  content: "\e91a";
+  color: #fff;
+}
+.r-case-predicted:before {
+  content: "\e91b";
+}
+.r-case-received:before {
+  content: "\e91c";
+}
+.r-case-remove:before {
+  content: "\e91d";
+}
+.r-export-excel:before {
+  content: "\e91e";
+}
+.r-export-vendor-data:before {
+  content: "\e91f";
+}
+.r-export-word:before {
+  content: "\e920";
+}
+.r-login-password:before {
+  content: "\e921";
+}
+.r-login-user:before {
+  content: "\e922";
+}
+.r-logo-white:before {
+  content: "\e923";
+  color: #fff;
+}
+.r-pagination-back:before {
+  content: "\e924";
+}
+.r-pagination-forward:before {
+  content: "\e925";
+}
+.r-product-address:before {
+  content: "\e926";
+  color: #595959;
+}
+.r-product-brand-name:before {
+  content: "\e927";
+  color: #595959;
+}
+.r-product-claimtype:before {
+  content: "\e928";
+  color: #595959;
+}
+.r-product-close:before {
+  content: "\e929";
+}
+.r-product-conversation:before {
+  content: "\e92a";
+  color: #595959;
+}
+.r-product-country:before {
+  content: "\e92b";
+  color: #595959;
+}
+.r-product-date:before {
+  content: "\e92c";
+  color: #595959;
+}
+.r-product-dummy:before {
+  content: "\e92d";
+  color: #595959;
+}
+.r-product-email:before {
+  content: "\e92e";
+  color: #595959;
+}
+.r-product-infringement:before {
+  content: "\e92f";
+  color: #e3707f;
+}
+.r-product-itemtype:before {
+  content: "\e930";
+  color: #595959;
+}
+.r-product-location:before {
+  content: "\e931";
+  color: #595959;
+}
+.r-product-logo:before {
+  content: "\e932";
+  color: #595959;
+}
+.r-product-main-account:before {
+  content: "\e933";
+  color: #44d25c;
+}
+.r-product-mobile:before {
+  content: "\e934";
+  color: #595959;
+}
+.r-product-phone:before {
+  content: "\e935";
+  color: #595959;
+}
+.r-product-platform:before {
+  content: "\e936";
+  color: #595959;
+}
+.r-product-price:before {
+  content: "\e937";
+  color: #595959;
+}
+.r-product-purchase-price:before {
+  content: "\e938";
+  color: #595959;
+}
+.r-product-purchase-type:before {
+  content: "\e939";
+  color: #595959;
+}
+.r-product-seller:before {
+  content: "\e93a";
+  color: #595959;
+}
+.r-product-shipping:before {
+  content: "\e93b";
+  color: #595959;
+}
+.r-product-transact-history:before {
+  content: "\e93c";
+  color: #595959;
+}
+.r-product-transact-number:before {
+  content: "\e93d";
+  color: #595959;
+}
+.r-product-vpn:before {
+  content: "\e93e";
+  color: #595959;
+}
+.r-selection-select-all:before {
+  content: "\e93f";
+}
+.r-selection-selection-actions:before {
+  content: "\e940";
+}
+.r-selection-unselect-all:before {
+  content: "\e941";
+}
+.r-status-accepted:before {
+  content: "\e942";
+}
+.r-status-autoqualified:before {
+  content: "\e943";
+}
+.r-status-filed:before {
+  content: "\e944";
+}
+.r-status-for-internal:before {
+  content: "\e945";
+}
+.r-status-forreview:before {
+  content: "\e946";
+}
+.r-status-forrework:before {
+  content: "\e947";
+}
+.r-status-haspotential:before {
+  content: "\e948";
+}
+.r-status-invalid:before {
+  content: "\e949";
+}
+.r-status-monitoring:before {
+  content: "\e94a";
+}
+.r-status-qualified:before {
+  content: "\e94b";
+}
+.r-status-rejected:before {
+  content: "\e94c";
+}
+.r-status-researched:before {
+  content: "\e94d";
+}
+.r-status-reworked:before {
+  content: "\e94e";
+}
+.r-status-submitted:before {
+  content: "\e94f";
+}
+.r-status-wip:before {
+  content: "\e950";
+}
+.r-upload-file1:before {
+  content: "\e951";
+}
