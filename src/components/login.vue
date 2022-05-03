@@ -1,52 +1,63 @@
-<script>
+<script setup lang="ts">
 
-export default {
-  name: 'Login',
-  data() {
-    return {
-      username: null,
-      password: null,
-    }
-  },
-  methods: {
-    getData() {
-      console.log('values: ', this.username, this.password)
-    },
-  },
+const router = useRouter()
+
+const username = ref('')
+const password = ref('')
+
+const getData = () => {
+  console.warn('values:', username.value, password.value)
+  router.push('/landingpage')
 }
 </script>
 
 <template>
-  <div id="body">
-    <div class="body-item1">
-      <img src="artemis_login_svg/Logo.svg" alt="">
-      <h1 class="title">
-        Artemis.<span class="small">cm</span>
-      </h1>
-      <p class="welcome-text">
-        Welcome back! Please sign in to start your session.
+  <body>
+    <div id="body">
+      <div class="body-item1">
+        <img src="artemis_login_svg/Logo.svg" alt="">
+        <h1 class="title">
+          Artemis.<span class="small">cm</span>
+        </h1>
+        <p class="welcome-text">
+          Welcome back! Please sign in to start your session.
+        </p>
+      </div>
+      <div class="body-item2">
+        <div class="textbox">
+          <input v-model="username" type="text" placeholder="Username" class="textbox-items">
+          <p class="r-login-user textbox-items" />
+        </div>
+        <div class="textbox">
+          <input v-model="password" placeholder="Password" type="password" class="textbox-items">
+          <p class="r-login-password textbox-items" />
+        </div>
+        <button type="button" class="button" @click="getData()">
+          Login
+        </button>
+      </div>
+      <p class="footer">
+        Accelerated Research, Trademark Enforcement and Management Information System Version 2 &#169; 2021
       </p>
     </div>
-    <div class="body-item2">
-      <div class="textbox">
-        <input v-model="username" type="text" placeholder="Username" class="textbox-items">
-        <p class="r-login-user textbox-items" />
-      </div>
-      <div class="textbox">
-        <input v-model="password" placeholder="Password" type="password" class="textbox-items">
-        <p class="r-login-password textbox-items" />
-      </div>
-      <button type="button" class="button" @click="getData()">
-        Login
-      </button>
+    <div>
+      <img id="bgImage" src="artemis_login_svg/CM-Login.svg" alt="BG">
     </div>
-    <p class="footer">
-      Accelerated Research, Trademark Enforcement and Management Information System Version 2 &#169; 2021
-    </p>
-  </div>
+  </body>
 </template>
 
 <style scoped>
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(1deg, #ADBBD8 0%, #FFFFFF 100%) no-repeat;
+    height: 100vh;
+    width: 100%;
+    gap: 50px;
+    padding: 50px;
+}
 
 #body {
     display: flex;
@@ -191,7 +202,7 @@ export default {
 /* media queries */
 
 @media screen and (max-width: 1024px) {
-    img {
+    #body img {
         width: 100px;
     }
     #body {
@@ -201,15 +212,39 @@ export default {
         padding-top: 30px;
         max-width: 450px;
     }
+    body {
+        gap: 50px;
+    }
+    #bgImage {
+        width: 390px;
+    }
 }
 
 @media screen and (max-width: 768px) {
-    img {
+    #body img {
         width: 100px;
     }
     #body {
-        padding-top: 200px;
         margin: 0 auto;
+        padding-top: 100px;
+    }
+    body {
+        display: block;
+        position: relative;
+    }
+    #bgImage {
+        display: inline-block;
+        position: absolute;
+        top: 250px;
+        right: 0px;
+        left: 0px;
+        bottom: 250px;
+        opacity: 7%;
+        z-index: 1;
+        margin-right: auto;
+        margin-left: auto;
+
+        width: 300px;
     }
 }
 
@@ -218,25 +253,29 @@ export default {
         width: 100px;
     }
     #body {
-        padding-top: 200px;
         margin: 0 auto;
+        padding-top: 50px;
     }
     .textbox {
-        width: 280px;
+        width: 250px;
         height: 38px;
         padding: 0 16px;
         border-radius: 4px;
     }
     .button {
-        width: 280px;
+        width: 250px;
         height: 36px;
     }
     .welcome-text {
-        max-width: 280px;
+        max-width: 250px;
     }
     .footer {
         padding-top: 30px;
-        max-width: 280px;
+        max-width: 250px;
+    }
+
+    #bgImage {
+        width: 250px;
     }
 }
 

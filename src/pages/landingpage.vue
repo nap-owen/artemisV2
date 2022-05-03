@@ -16,9 +16,8 @@ import LandingpageCom from '~/components/landingpage-com.vue'
 
 <template>
   <div>
-    <login />
+    <LandingpageCom />
   </div>
-  <!-- <landingpage /> -->
 </template>
 
 <route lang="yaml">

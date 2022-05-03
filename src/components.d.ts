@@ -5,9 +5,10 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    BgSvgLogin: typeof import('./components/bg-svg-login.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
+    Landingpage: typeof import('./components/landingpage-com.vue')['default']
+    LandingpageCom: typeof import('./components/landingpage-com.vue')['default']
     Login: typeof import('./components/login.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
