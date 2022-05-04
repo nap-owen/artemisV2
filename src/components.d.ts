@@ -5,14 +5,17 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Aftersearch: typeof import('./components/aftersearch.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
-    Landingpage: typeof import('./components/landingpage-com.vue')['default']
+    ImageProduct: typeof import('./components/image-product.vue')['default']
     LandingpageCom: typeof import('./components/landingpage-com.vue')['default']
     Login: typeof import('./components/login.vue')['default']
+    Product: typeof import('./components/product.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SellersReview: typeof import('./components/sellers-review.vue')['default']
   }
 }
 

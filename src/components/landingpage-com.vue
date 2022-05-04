@@ -1,3 +1,11 @@
+<script setup lang="ts">
+const text = ref('')
+const emit = defineEmits(['textAdded'])
+const displayData = () => {
+  emit('textAdded', text)
+}
+</script>
+
 <template>
   <body>
     <nav class="nav">
@@ -33,10 +41,10 @@
     <div class="search-box">
       <div class="search-item1">
         <p>Seller Name</p>
-        <input type="text" placeholder="Input Seller Name">
+        <input v-model="text" type="text" placeholder="Input Seller Name">
       </div>
       <div class="search-item2">
-        <button class="r-appbar-search" />
+        <button class="r-appbar-search" @click="displayData()" />
       </div>
     </div>
     <div class="campaign-button">
@@ -307,7 +315,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 80px;
+    padding-top: 20px;
+    /* padding: 20px 80px; */
     max-width: 1240px;
     margin: 0 auto;
   }

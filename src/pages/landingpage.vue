@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LandingpageCom from '~/components/landingpage-com.vue'
+import SellersReview1 from '~/components/sellers-review.vue'
 
 // import { useUserStore } from '~/stores/user'
 
@@ -17,6 +18,8 @@ import LandingpageCom from '~/components/landingpage-com.vue'
 <template>
   <div>
     <LandingpageCom />
+    <SellersReview1 />
+    <Footer />
   </div>
 </template>
 

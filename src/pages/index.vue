@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import LandingpageCom from '~/components/landingpage-com.vue'
 
 // import { useUserStore } from '~/stores/user'
 

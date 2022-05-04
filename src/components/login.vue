@@ -67,6 +67,10 @@ body {
     gap: 27px;
 }
 
+#bgImage {
+    pointer-events: none;
+}
+
 .body-item1 {
     display: flex;
     flex-direction: column;
