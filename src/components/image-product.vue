@@ -7,8 +7,8 @@ const props = defineProps<{
 </script>
 <template>
   <div class="image">
-    <img :src="`/public/JPG Campaigns/${props.product1}`" alt="">
-    <img :src="`/public/JPG Campaigns/${props.product2}`" alt="">
+    <img :src="`/JPG Campaigns/${props.product1}`" alt="">
+    <img :src="`/JPG Campaigns/${props.product2}`" alt="">
   </div>
 </template>
 

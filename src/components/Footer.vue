@@ -17,7 +17,7 @@
     </div>
     <div class="flex">
       <p>ARTEMIS V2</p>
-      <img src="/public/artemis_login_svg/Logo.svg" alt="">
+      <img src="artemis_login_svg/Logo.svg" alt="">
     </div>
   </div>
 </template>

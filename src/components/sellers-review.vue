@@ -4,9 +4,38 @@
  -->
 <script setup lang="ts">
 import Aftersearch1 from './aftersearch.vue'
-const addText = (text: string) => {
-  console.log(`This is the message: ${text}`)
-}
+const items = [{
+  campaign: 'Wuwear.jpg',
+  platform: 'Warcraft.jpg',
+}, {
+  campaign: 'AC-DC.jpg',
+  platform: 'acer laptop.jpg',
+}, {
+  campaign: 'Adidas.jpg',
+  platform: 'AEV.jpg',
+}, {
+  campaign: 'Airbus SAS.jpg',
+  platform: 'Amuse.jpg',
+}, {
+  campaign: 'Bally.jpg',
+  platform: 'Barbie.jpg',
+}, {
+  campaign: 'Bell.jpg',
+  platform: 'Bestway.jpg',
+}, {
+  campaign: 'Capcom.jpg',
+  platform: 'Chiro.jpg',
+}, {
+  campaign: 'Frisbee.jpg',
+  platform: 'Godzilla.jpg',
+}, {
+  campaign: 'Hickies.jpg',
+  platform: 'Hitachi.jpg',
+}, {
+  campaign: 'MagicPens.jpg',
+  platform: 'Mayka.jpg',
+}]
+
 </script>
 <template>
   <body>
@@ -15,16 +44,7 @@ const addText = (text: string) => {
       <h1>Sellers for Review</h1>
       <p>12 Sellers Ready for you to check for Acceptance</p>
       <div class="flex">
-        <product product1="Wuwear.jpg" product2="Warcraft.jpg" @textAdded="addText" />
-        <product product1="AC-DC.jpg" product2="acer laptop.jpg" />
-        <product product1="Adidas.jpg" product2="AEV.jpg" />
-        <product product1="Airbus SAS.jpg" product2="Amuse.jpg" />
-        <product product1="Bally.jpg" product2="Barbie.jpg" />
-        <product product1="Bell.jpg" product2="Bestway.jpg" />
-        <product product1="Capcom.jpg" product2="Chiro.jpg" />
-        <product product1="Frisbee.jpg" product2="Godzilla.jpg" />
-        <product product1="Hickies.jpg" product2="Hitachi.jpg" />
-        <product product1="MagicPens.jpg" product2="Mayka.jpg" />
+        <product v-for="(item, index) in items" :key="index" :product1="item.campaign" :product2="item.platform" />
       </div>
     </div>
   </body>

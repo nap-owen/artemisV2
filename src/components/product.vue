@@ -17,7 +17,7 @@ const props = defineProps<{
         <div id="img-item">
           <image-product :product1="props.product1" :product2="props.product2" />
         </div>
-        <img src="/public/avatar_png/Default-Listing.png" alt="">
+        <img src="avatar_png/Default-Listing.png" alt="">
       </div>
       <div class="flex">
         <div class="flex-item1">
