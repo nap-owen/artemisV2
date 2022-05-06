@@ -5,6 +5,20 @@ window.addEventListener('scroll', () => {
   header.classList.toggle('scrolling-active', windowPosition)
   header.classList.toggle('nav-scrolling', windowPosition)
 })
+
+const isOpen = ref(false)
+
+const menu = [{
+  title: 'My Profile',
+  link: '#',
+}, {
+  title: 'My Team',
+  link: '#',
+}, {
+  title: 'Go to Search Page',
+  link: '#',
+}]
+
 </script>
 
 <template>
@@ -25,17 +39,26 @@ window.addEventListener('scroll', () => {
         <a id="icon2" href="" class="r-appbar-spg" />
         <a id="icon3" href="" class="r-appbar-reportbug" />
         <a id="icon4" href="" class="r-appbar-notification" />
-        <div class="flex">
-          <p id="burger">
-            ☰
-          </p>
-          <img id="avatar_img" src="avatar_png/Profile2.png" alt="">
+        <div style="position: relative">
+          <button class="flex" @click="isOpen = !isOpen">
+            <p id="burger">
+              ☰
+            </p>
+            <img id="avatar_img" src="avatar_png/Profile2.png" alt="">
           <!-- <div id="dropdown" class="dropdown-avatar">
             <p>My Profile</p>
             <p>My Team</p>
             <p>Go to Search Page</p>
             <p>Logout</p>
           </div> -->
+          </button>
+          <transition name="fade" appear>
+            <div v-if="isOpen" class="dropdown">
+              <a v-for="(menuitem, index) in menu" :key="index" :href="menuitem.link">{{ menuitem.title }}</a>
+              <hr>
+              <a id="logout" href="">Logout</a>
+            </div>
+          </transition>
         </div>
       </div>
     </nav>
@@ -43,6 +66,56 @@ window.addEventListener('scroll', () => {
 </template>
 
 <style scoped>
+
+.fade-enter-active{
+  transition: .3s ease-in;
+}
+.fade-leave-active {
+  transition: .3s ease-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* dropdown styles */
+.dropdown {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  width: 239px;
+  height: 206px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  text-align: left;
+  color: #383A3D;
+
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 15%;
+  box-shadow: 0px 1px 6px #00000029;
+  font-size: 14px;
+}
+
+.dropdown a {
+  padding-left: 15px;
+}
+
+.dropdown a:hover {
+  color: #ADBBD8;
+}
+
+.dropdown #logout:hover {
+  color: #E3707F;
+}
+
+.dropdown hr {
+  color: #383A3D26;
+}
+
+/* ---------------- */
+
 /* Nav bar effect after Scrolling  */
   .scrolling-active {
     background-color: #fff;
@@ -79,16 +152,20 @@ window.addEventListener('scroll', () => {
       color: #ADBBD8;
   }
   .nav-scrolling #icon1:hover {
-      background: #ECF5FF;
+      background: #ECF5FF !important;
+      transform: scale(1.2)
   }
   .nav-scrolling #icon2:hover {
-      background: #ECF5FF;
+      background: #ECF5FF !important;
+      transform: scale(1.2)
   }
   .nav-scrolling #icon3:hover {
-      background: #ECF5FF;
+      background: #ECF5FF !important;
+      transform: rotate(45deg);
   }
   .nav-scrolling #icon4:hover {
-      background: #ECF5FF;
+      background: #ECF5FF !important;
+      transform: rotate(45deg);
   }
 
 /* flex */
@@ -108,11 +185,15 @@ window.addEventListener('scroll', () => {
       transition: .1s;
   }
 
+  .nav-scrolling .dropdown {
+    top: calc(100% + 25px);
+  }
+
   /* ----------------------------------- */
 
     /* nav bar design */
 
-.nav1 {
+  .nav1 {
     display: inline-block;
     width: 100%;
   }
@@ -135,13 +216,13 @@ window.addEventListener('scroll', () => {
     letter-spacing: 1.28px;
   }
 
-  #icon1:hover,
-  #icon2:hover {
+  .flex2 #icon1:hover,
+  .flex2 #icon2:hover {
     transform: scale(1.2)
   }
 
-  #icon3:hover,
-  #icon4:hover {
+  .flex2 #icon3:hover,
+  .flex2 #icon4:hover {
     transform: rotate(45deg);
   }
   .flex {
@@ -170,7 +251,10 @@ window.addEventListener('scroll', () => {
     background: #3B5998;
     border: 1px solid #70707033;
   }
-  .flex2 a {
+  .flex2 #icon1,
+  .flex2 #icon2,
+  .flex2 #icon3,
+  .flex2 #icon4 {
     width: 40px;
     height: 40px;
     display: flex;
@@ -179,7 +263,10 @@ window.addEventListener('scroll', () => {
     font-size: 18px;
     transform: scale(1)
   }
-  .flex2 a:hover {
+  .flex2 #icon1:hover,
+  .flex2 #icon2:hover,
+  .flex2 #icon3:hover,
+  .flex2 #icon4:hover {
     display: flex;
     align-items: center;
     justify-content: center;

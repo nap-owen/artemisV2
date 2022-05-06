@@ -23,6 +23,7 @@
 </template>
 
 <style scoped>
+
 .container {
     padding-top: 150px;
     padding-bottom: 20px;

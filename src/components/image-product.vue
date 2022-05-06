@@ -13,6 +13,7 @@ const props = defineProps<{
 </template>
 
 <style scoped>
+
 .image {
     display: flex;
     align-items: flex-start;
