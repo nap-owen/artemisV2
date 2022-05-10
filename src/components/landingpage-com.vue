@@ -3,32 +3,74 @@ import Navbar1 from './navbar.vue'
 
 const text = ref('')
 
+const isClick = ref(false)
 const isSearchBarActive = ref(false)
+
+const isClickCampaign = ref(false)
+
+const isClickSearchCampaignDropdown2 = ref(false)
+
+const isActive = (a: boolean) => {
+  if (a === true) {
+    isClick.value = a
+    isSearchBarActive.value = a
+  }
+
+  else {
+    isClick.value = false
+    isSearchBarActive.value = false
+  }
+}
+
+const isActiveDropdown2 = (index: number) => {
+
+}
+
+document.addEventListener('click', (event) => {
+  const insideElementCampaign = document.getElementById('campaign-container')
+  const isClickInsideCampaign = insideElementCampaign?.contains(event.target)
+
+  if (!isClickInsideCampaign)
+    isClickCampaign.value = false
+
+  const insideElementSearchBox = document.getElementById('search-box-container')
+  const isClickInsideSearchBox = insideElementSearchBox?.contains(event.target)
+
+  // console.log(isClickInsideSearchBox)
+  if (!isClickInsideSearchBox)
+    isActive(false)
+})
+
+const campaign_menu = [{
+  menu: 'Go to Listings',
+}, {
+  menu: 'Go to Cases',
+}]
 
 const searchItems = [{
   seller: 'Marvin Marindoque',
-  company: 'Uno',
-  logo: '/JPG Campaigns/Uno.jpg',
-}, {
-  seller: 'Marvin Marindoque',
   company: 'Barbie',
   logo: '/JPG Campaigns/Barbie.jpg',
 }, {
   seller: 'Marvin Marindoque',
-  company: 'Barbie',
-  logo: '/JPG Campaigns/Barbie.jpg',
+  company: 'BMW',
+  logo: '/JPG Campaigns/BMW.jpg',
 }, {
   seller: 'Marvin Marindoque',
-  company: 'Barbie',
-  logo: '/JPG Campaigns/Barbie.jpg',
+  company: 'Emoji',
+  logo: '/JPG Campaigns/Emoji.jpg',
 }, {
   seller: 'Marvin Marindoque',
-  company: 'Barbie',
-  logo: '/JPG Campaigns/Barbie.jpg',
+  company: 'Frisbee',
+  logo: '/JPG Campaigns/Frisbee.jpg',
 }, {
   seller: 'Marvin Marindoque',
-  company: 'Barbie',
-  logo: '/JPG Campaigns/Barbie.jpg',
+  company: 'Mickey Mouse',
+  logo: '/JPG Campaigns/Mickey Mouse.jpg',
+}, {
+  seller: 'Marvin Marindoque',
+  company: 'Warcraft',
+  logo: '/JPG Campaigns/Warcraft.jpg',
 }]
 
 window.addEventListener('scroll', () => {
@@ -36,6 +78,11 @@ window.addEventListener('scroll', () => {
   const windowPosition = window.scrollY > 20
   header.classList.toggle('search-scrolling', windowPosition)
 })
+
+// const campaigns = computed(() => {
+//   const lists = ['Sample1', 'Sample2', 'Sample3', 'Sample4']
+//   return lists.filter(l => l.toLowerCase().includes(text.value.toLowerCase()))
+// })
 </script>
 
 <template>
@@ -43,39 +90,64 @@ window.addEventListener('scroll', () => {
     <div class="container">
       <!-- component nav bar here -->
       <Navbar1 />
-      <div class="search-box">
-        <div class="search-item1">
-          <p>Seller Name</p>
-          <!-- when click input 'Seller Name'
+      <div id="search-box-container" style="position: relative">
+        <div class="search-box">
+          <div class="search-item1">
+            <p>Seller Name</p>
+            <!-- when click input 'Seller Name'
             code: ? Input Seller Name : Seller Name
-        -->
-          <input v-model="text" type="text" placeholder="Input Seller Name" @click="isSearchBarActive=true" @blur="isSearchBarActive=false">
+          -->
+            <input v-model="text" type="text" placeholder="Input Seller Name" @click="isClick=true" @blur="isClick=false">
+          </div>
+          <div class="search-item2">
+            <button class="r-appbar-search btn-search" :class="{'flag btn-slide': isClick}" @click="isActive(!isClick)">
+              <span>
+                {{ isClick ? ' Search' : '' }}
+              </span>
+            </button>
+          </div>
         </div>
-        <div class="search-item2">
-          <button class="r-appbar-search btn-search" :class="{'flag btn-slide': isSearchBarActive}" @click="isSearchBarActive = true" @blur="isSearchBarActive=false">
-            <span>
-              {{ isSearchBarActive ? ' Search' : '' }}
-            </span>
-          </button>
+        <div v-if="isSearchBarActive" class="search-dropdown">
+          <a v-for="(item, index) in searchItems" :key="index" href="" class="search-dropdown-item">
+            <p>{{ item.seller }}</p>
+            <div class="search-dropdown-item2">
+              <p>{{ item.company }}</p>
+              <img id="image" :src=" item.logo " alt="Logo">
+            </div>
+          </a>
         </div>
       </div>
-      <div class="campaign-button">
-        <button>Select a Campaign Instead</button>
+
+      <div id="campaign-container" style="position: relative;">
+        <div>
+          <button class="campaign-button" :class="{'toggled': isClickCampaign}" @click="isClickCampaign=!isClickCampaign">
+            Select a Campaign Instead
+          </button>
+        </div>
+        <div v-if="isClickCampaign" class="search-campaign-dropdown">
+          <div class="search-campaign">
+            <input type="text" placeholder="Search Campaign">
+            <button class="r-appbar-search" />
+          </div>
+          <a class="search-campaign-box">
+            <div v-for="(campaign_item, index2) in searchItems" :key="index2" class="search-campaign-item" @click="isClickSearchCampaignDropdown2=!isClickSearchCampaignDropdown2">
+              <img :src="campaign_item.logo" alt="">
+              <p>{{ campaign_item.company }}</p>
+              <div v-if="isClickSearchCampaignDropdown2" class="campaign-sub-dropdown">
+                <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" href="">{{ item.menu }}</a>
+              </div>
+            </div>
+          </a>
+          <!-- <div v-if="isClickSearchCampaignDropdown2" class="campaign-sub-dropdown">
+            <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" href="">{{ item.menu }}</a>
+          </div> -->
+        </div>
       </div>
       <div id="bgImage">
         <img src="artemis_login_svg/CM-Landing.svg" alt="">
       </div>
     </div>
   </body>
-  <div class="search-dropdown">
-    <div v-for="(item, index) in searchItems" :key="index" class="search-dropdown-item">
-      <p>{{ item.seller }}</p>
-      <div class="search-dropdown-item2">
-        <p>{{ item.company }}</p>
-        <img id="image" :src=" item.logo " alt="Logo">
-      </div>
-    </div>
-  </div>
 </template>
 
 <style scoped>
@@ -86,6 +158,129 @@ window.addEventListener('scroll', () => {
     background: linear-gradient(0deg, #ffffff 0%, #adbbd8 100%) no-repeat;
     width: 100%;
   }
+/* Campaign sub dropdown */
+.campaign-sub-dropdown {
+  position: absolute;
+
+  width: 180px;
+  height: 107px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #7070703D;
+  padding: 0 16px;
+
+  font-size: 14px;
+
+  margin-top: 65px;
+  /* left: 102%; */
+  z-index: 99999;
+}
+/* ----------------------- */
+/* Campaign search dropdown */
+.search-campaign-dropdown {
+  position: absolute;
+
+  margin-top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 320px;
+  height: 345px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 22px 16px;
+
+  background: #FFFFFF;
+  border: 1px solid #7070703D;
+  border-radius: 16px;
+  gap: 23px;
+
+}
+
+.search-campaign {
+  width: 285px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 12px;
+  font-size: 14px;
+
+  border: 1px solid #DEDEDF;
+  border-radius: 4px;
+  color: #383A3D;
+}
+
+.search-campaign:hover {
+  color: #3E88DA;
+}
+
+.search-campaign input {
+  outline: none;
+  border: none;
+}
+
+.search-campaign-box {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  overflow: scroll;
+
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  padding: 5px 16px;
+
+  position: relative;
+}
+
+.search-campaign-box::-webkit-scrollbar {
+    display: none;
+}
+
+.search-campaign-item {
+  width: 285px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px 12px;
+
+  gap: 16px;
+
+}
+
+.search-campaign-item:hover {
+  background: #ECF5FF;
+  border-radius: 20px;
+  color: #3B5998;
+}
+
+.search-campaign-item img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+/* ---------------- */
+
 /* Search-dropdown */
 .search-dropdown {
   width: 650px;
@@ -95,30 +290,53 @@ window.addEventListener('scroll', () => {
   border: 1px solid #7070703D;
   box-shadow: 0px 1px 6px #00000029;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
 
-  padding: 0 16px;
+  padding: 24px;
 
   margin: 0 auto;
+
+  gap: 10px;
+  overflow: scroll;
+
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
+  /* position */
+  margin-top: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.search-dropdown::-webkit-scrollbar {
+    display: none;
 }
 
 .search-dropdown-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 618px;
+  width: 100%;
   height: 40px;
   font-size: 14px;
   font-weight: bold;
-  padding: 24px 16px;
-  border: 1px solid black;
+  padding: 11px 16px;
+  margin: 0 auto;
+}
+
+.search-dropdown-item:hover {
+  background: #DFE6EE;
+  border-radius: 20px;
+  color: #8B9DC3;
 }
 
 .search-dropdown-item2 {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   gap: 12px;
 }
@@ -161,6 +379,11 @@ window.addEventListener('scroll', () => {
   }
   .search-box:hover input {
     color: #383A3D;
+  }
+
+  .search-box:active,
+  .search-box:focus-within {
+    border: 2px solid #3B5998;
   }
 
   .search-item1 {
@@ -284,7 +507,9 @@ window.addEventListener('scroll', () => {
   }
   /* campaign design */
   .campaign-button {
-    margin: 27px auto;
+    margin-top: 27px;
+    margin-left: auto;
+    margin-right: auto;
 
     display: flex;
     align-items: center;
@@ -297,7 +522,7 @@ window.addEventListener('scroll', () => {
 
     font-size: 14px;
     color: #3B5998;
-    font-weight: bold;
+    font-weight: 500;
   }
 
   .campaign-button:hover {
@@ -306,7 +531,9 @@ window.addEventListener('scroll', () => {
     opacity: 60%;
   }
 
-  .campaign-button:active {
+  .campaign-button:active,
+  .campaign-button:focus-within,
+  .campaign-button.toggled {
     color: #FFFFFF;
     background: #3B5998;
     border: 1px solid #70707033;

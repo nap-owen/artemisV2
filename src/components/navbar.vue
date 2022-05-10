@@ -6,6 +6,13 @@ window.addEventListener('scroll', () => {
   header.classList.toggle('nav-scrolling', windowPosition)
 })
 
+document.addEventListener('click', (event) => {
+  const insideElement = document.getElementById('dropdown-container')
+  const isClickInside = insideElement?.contains(event.target)
+  if (!isClickInside)
+    isOpen.value = false
+})
+
 const isOpen = ref(false)
 
 const menu = [{
@@ -25,7 +32,7 @@ const menu = [{
   <div class="nav1">
     <nav class="nav">
       <div class="flex1">
-        <img src="artemis_login_svg/Logo.svg" alt="">
+        <img src="artemis_login_svg/CM_Logo.svg" alt="">
         <p>ARTEMIS</p>
         <p id="subtitle">
           | Case Management
@@ -39,26 +46,18 @@ const menu = [{
         <a id="icon2" href="" class="r-appbar-spg" />
         <a id="icon3" href="" class="r-appbar-reportbug" />
         <a id="icon4" href="" class="r-appbar-notification" />
-        <div style="position: relative">
+        <div id="dropdown-container" style="position: relative">
           <button class="flex" @click="isOpen = !isOpen">
             <p id="burger">
               ☰
             </p>
             <img id="avatar_img" src="avatar_png/Profile2.png" alt="">
-          <!-- <div id="dropdown" class="dropdown-avatar">
-            <p>My Profile</p>
-            <p>My Team</p>
-            <p>Go to Search Page</p>
-            <p>Logout</p>
-          </div> -->
           </button>
-          <transition name="fade" appear>
-            <div v-if="isOpen" class="dropdown">
-              <a v-for="(menuitem, index) in menu" :key="index" :href="menuitem.link">{{ menuitem.title }}</a>
-              <hr>
-              <a id="logout" href="">Logout</a>
-            </div>
-          </transition>
+          <div v-if="isOpen" class="dropdown">
+            <a v-for="(menuitem, index) in menu" :key="index" :href="menuitem.link">{{ menuitem.title }}</a>
+            <hr>
+            <a id="logout" href="">Logout</a>
+          </div>
         </div>
       </div>
     </nav>
@@ -66,18 +65,6 @@ const menu = [{
 </template>
 
 <style scoped>
-
-.fade-enter-active{
-  transition: .3s ease-in;
-}
-.fade-leave-active {
-  transition: .3s ease-out;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
 
 /* dropdown styles */
 .dropdown {
@@ -96,6 +83,7 @@ const menu = [{
   right: 15%;
   box-shadow: 0px 1px 6px #00000029;
   font-size: 14px;
+  z-index: 2;
 }
 
 .dropdown a {
@@ -174,11 +162,12 @@ const menu = [{
     border: 1px solid #70707033;
     transition: .1s;
   }
-  .nav-scrolling .flex:hover p{
-      color: #ADBBD8;
+  .nav-scrolling .flex:hover p {
+      color: #ADBBD8 ;
+      /* color: #FFFFFF; */
   }
-  .nav-scrolling .flex:active p{
-      color: #FFFFFF;
+  .nav-scrolling .flex:active{
+      color: #FFFFFF !important;
   }
   .nav-scrolling .nav{
       padding-top: 0px;
@@ -247,9 +236,12 @@ const menu = [{
     border: 1px solid #70707033;
   }
 
-  .flex:active{
+  .flex:active,
+  .flex:focus-within{
     background: #3B5998;
     border: 1px solid #70707033;
+    transition: .1s;
+    color: #ECF5FF;
   }
   .flex2 #icon1,
   .flex2 #icon2,
