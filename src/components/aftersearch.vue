@@ -43,8 +43,11 @@ const items = [{
 .container {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   flex-direction: column;
   text-align: left;
+  padding: 0 10px;
+
   max-width: 1240px;
   margin: 0 auto;
   color: #383A3D;
@@ -55,11 +58,26 @@ const items = [{
     display: flex;
     flex-wrap: wrap;
     max-width: 1240px;
-    justify-content: space-between;
+    justify-content: space-around;
     row-gap: 56px;
     column-gap: 0px;
     align-items: center;
     margin: 56px auto;
 }
 
+/* media */
+@media screen and (max-width:1440px) {
+  .container{
+    padding: 0 16px;
+  }
+}
+
+@media screen  and (max-width:768px) {
+  .container h1{
+    font-size: 30px;
+  }
+  .container p{
+    font-size: 12px;
+  }
+}
 </style>

@@ -40,6 +40,12 @@ const props = defineProps<{
     * {
       box-sizing: border-box;
     }
+    .line-clamp {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
     /* body img {
         width: 200px;
         height: 168px;
@@ -75,6 +81,48 @@ const props = defineProps<{
       transform: scale(.75);
     }
 
+    /* media */
+    @media screen and (max-width:1160px) {
+      #img-container{
+        width: 180px;
+        height: 148px;
+      }
+      #img-container img {
+        top: -45%;
+        transform: scale(1.5);
+        transition:.5s;
+      }
+      #img-container img:hover {
+        transform: scale(.75);
+      }
+    }
+
+    @media screen and (max-width:1024px) {
+      #img-container{
+        width: 150px ;
+        height: 130px;
+      }
+      #img-container img {
+        top: -25%;
+        transform: scale(2);
+        transition:.5s;
+      }
+      #img-container img:hover {
+        transform: scale(1);
+      }
+    }
+
+    @media screen and (max-width:768px) {
+      #img-container img {
+        top: -10%;
+        transform: scale(2);
+        transition:.5s;
+      }
+      #img-container img:hover {
+        transform: scale(1);
+      }
+    }
+
     /* container design */
 
     .container {
@@ -92,11 +140,12 @@ const props = defineProps<{
     .flex {
         display: flex;
         align-items: left;
-        justify-content: flex-start;
+        justify-content: center;
         flex-direction: column;
         gap: 10px;
         width: 358px;
     }
+
     .flex-item1 {
         display: flex;
         align-items: center;
@@ -142,5 +191,50 @@ const props = defineProps<{
     }
     .flex-item2 p {
         font-size: 14px;
+    }
+
+    /* media */
+    @media screen and (max-width:1186px) {
+      .container{
+        width: 480px;
+        height: 168px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .flex{
+        width: 250px;
+      }
+      .flex p {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+    @media screen and (max-width:1024px) {
+      .container{
+        width: 350px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .flex {
+        height: 150px;
+      }
+    }
+    @media screen and (max-width:768px) {
+      .container{
+        max-width: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container p {
+        font-size: 12px;
+      }
+      .flex {
+        height: 150px;
+      }
     }
 </style>

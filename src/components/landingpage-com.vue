@@ -8,7 +8,7 @@ const isSearchBarActive = ref(false)
 
 const isClickCampaign = ref(false)
 
-const isClickSearchCampaignDropdown2 = ref(false)
+const menuSelected = ref(-1)
 
 const isActive = (a: boolean) => {
   if (a === true) {
@@ -22,17 +22,14 @@ const isActive = (a: boolean) => {
   }
 }
 
-const isActiveDropdown2 = (index: number) => {
-
-}
-
 document.addEventListener('click', (event) => {
   const insideElementCampaign = document.getElementById('campaign-container')
   const isClickInsideCampaign = insideElementCampaign?.contains(event.target)
 
-  if (!isClickInsideCampaign)
+  if (!isClickInsideCampaign) {
     isClickCampaign.value = false
-
+    menuSelected.value = -1
+  }
   const insideElementSearchBox = document.getElementById('search-box-container')
   const isClickInsideSearchBox = insideElementSearchBox?.contains(event.target)
 
@@ -130,17 +127,14 @@ window.addEventListener('scroll', () => {
             <button class="r-appbar-search" />
           </div>
           <a class="search-campaign-box">
-            <div v-for="(campaign_item, index2) in searchItems" :key="index2" class="search-campaign-item" @click="isClickSearchCampaignDropdown2=!isClickSearchCampaignDropdown2">
+            <div v-for="(campaign_item, index2) in searchItems" :key="index2" class="search-campaign-item" @click="menuSelected = index2">
               <img :src="campaign_item.logo" alt="">
               <p>{{ campaign_item.company }}</p>
-              <div v-if="isClickSearchCampaignDropdown2" class="campaign-sub-dropdown">
+              <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
                 <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" href="">{{ item.menu }}</a>
               </div>
             </div>
           </a>
-          <!-- <div v-if="isClickSearchCampaignDropdown2" class="campaign-sub-dropdown">
-            <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" href="">{{ item.menu }}</a>
-          </div> -->
         </div>
       </div>
       <div id="bgImage">
@@ -176,11 +170,10 @@ window.addEventListener('scroll', () => {
   padding: 0 16px;
 
   font-size: 14px;
-
-  margin-top: 65px;
-  /* left: 102%; */
-  z-index: 99999;
+  left: 73%;
+  margin-top: 50px;
 }
+
 /* ----------------------- */
 /* Campaign search dropdown */
 .search-campaign-dropdown {
@@ -204,6 +197,7 @@ window.addEventListener('scroll', () => {
   border-radius: 16px;
   gap: 23px;
 
+  overflow: visible;
 }
 
 .search-campaign {
@@ -244,6 +238,7 @@ window.addEventListener('scroll', () => {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   padding: 5px 16px;
+  width: 740px;
 
   position: relative;
 }
@@ -277,6 +272,12 @@ window.addEventListener('scroll', () => {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+}
+
+.search-campaign-item p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* ---------------- */
@@ -326,6 +327,12 @@ window.addEventListener('scroll', () => {
   font-weight: bold;
   padding: 11px 16px;
   margin: 0 auto;
+}
+
+.search-dropdown-item p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .search-dropdown-item:hover {
@@ -445,7 +452,7 @@ window.addEventListener('scroll', () => {
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 300px;
+    width: 250px;
     height: 40px;
     z-index: 4;
     position: fixed;
@@ -485,6 +492,12 @@ window.addEventListener('scroll', () => {
 
   .search-scrolling .search-item1 input{
     font-size: 14px;
+  }
+
+  @media screen and (max-width:950px) {
+    .search-scrolling {
+      display: none;
+    }
   }
 
   @media screen and (max-width: 768px) {

@@ -13,7 +13,9 @@
 <template>
   <div class="container">
     <div>
-      <p>Accelerated Research, Trademark Enforcement and Management Information System Version 2 Ⓒ 2021</p>
+      <p id="para1">
+        Accelerated Research, Trademark Enforcement and Management Information System Version 2 Ⓒ 2021
+      </p>
     </div>
     <div class="flex">
       <p>ARTEMIS V2</p>
@@ -27,8 +29,8 @@
 .container {
     padding-top: 150px;
     padding-bottom: 20px;
-    /* padding-left: 20px;
-    padding-right: 20px; */
+    padding-left: 20px;
+    padding-right: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -47,5 +49,18 @@
     align-items: center;
     justify-content: center;
     gap: 18px;
+}
+@media screen and (max-width: 768px) {
+  #para1 {
+    max-width: 500px;
+    min-width: 300px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .container {
+    flex-direction: column;
+    gap: 5px;
+  }
 }
 </style>

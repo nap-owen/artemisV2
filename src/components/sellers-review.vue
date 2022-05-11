@@ -61,6 +61,7 @@ const items = [{
   margin: 0 auto;
   color: #383A3D;
   margin-top: 74px;
+  padding: 0 10px;
 }
 
 .container h1 {
@@ -77,9 +78,23 @@ const items = [{
   max-width: 1240px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   row-gap: 56px;
   column-gap: 0px;
+}
+
+@media screen  and (max-width:1440px) {
+  .container{
+    padding: 0 16px;
+  }
+}
+@media screen  and (max-width:768px) {
+  .container h1{
+    font-size: 30px;
+  }
+  .container p{
+    font-size: 12px;
+  }
 }
 </style>

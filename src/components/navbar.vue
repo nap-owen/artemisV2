@@ -291,7 +291,7 @@ const menu = [{
   }
 
   #browse:hover {
-    width: 150px;
+    width: 140px;
     height: 40px;
     background: #A5B1CA;
     border-radius: 20px;
@@ -316,6 +316,12 @@ const menu = [{
   }
 
   /* media */
+
+  @media screen and (max-width:1120px) {
+    .nav-scrolling #browse {
+      display: none;
+    }
+  }
 
   @media screen and (max-width: 1024px) {
     .nav {
