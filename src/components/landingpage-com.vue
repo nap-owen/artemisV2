@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import Navbar1 from './navbar.vue'
 
+// try emitting
+
 const text = ref('')
 
 const isClick = ref(false)
@@ -10,10 +12,19 @@ const isClickCampaign = ref(false)
 
 const menuSelected = ref(-1)
 
+const router = useRouter()
+
+// const emit = defineEmits<{
+//   (isClick: boolean): void
+// }>()
+
+// const emit = defineEmits(['isClick'])
+
 const isActive = (a: boolean) => {
   if (a === true) {
     isClick.value = a
     isSearchBarActive.value = a
+    // emit(isClick, isClick.value)
   }
 
   else {
@@ -131,7 +142,7 @@ window.addEventListener('scroll', () => {
               <img :src="campaign_item.logo" alt="">
               <p>{{ campaign_item.company }}</p>
               <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
-                <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" href="">{{ item.menu }}</a>
+                <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push('/productReview')">{{ item.menu }}</a>
               </div>
             </div>
           </a>
@@ -172,6 +183,10 @@ window.addEventListener('scroll', () => {
   font-size: 14px;
   left: 73%;
   margin-top: 50px;
+}
+
+.campaign-sub-item {
+  cursor: pointer;
 }
 
 /* ----------------------- */
@@ -241,6 +256,7 @@ window.addEventListener('scroll', () => {
   width: 740px;
 
   position: relative;
+  cursor: pointer;
 }
 
 .search-campaign-box::-webkit-scrollbar {

@@ -16,10 +16,10 @@ const items = [{
 
 <template>
   <body>
-    <div class="container">
+    <div class="afterSearch_container">
       <h1>Here's what we found</h1>
       <p>4 Listings with the same Seller Name in this Campaign.</p>
-      <div class="flex">
+      <div class="afterSearch_flex">
         <product v-for="(item, index) in items" :key="index" :product1="item.campaign" :product2="item.platform" />
       </div>
     </div>
@@ -31,16 +31,16 @@ const items = [{
     box-sizing: border-box;
 }
 
-.container h1 {
+.afterSearch_container h1 {
     font-size: 35px;
     font-weight: 900;
 }
-.container p {
+.afterSearch_container p {
     font-size: 14px;
     font-weight: bold;
 }
 
-.container {
+.afterSearch_container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -54,7 +54,7 @@ const items = [{
   margin-top: 74px;
 }
 
-.flex {
+.afterSearch_flex {
     display: flex;
     flex-wrap: wrap;
     max-width: 1240px;
@@ -67,16 +67,19 @@ const items = [{
 
 /* media */
 @media screen and (max-width:1440px) {
-  .container{
+  .afterSearch_container{
     padding: 0 16px;
   }
 }
 
 @media screen  and (max-width:768px) {
-  .container h1{
+  .afterSearch_container{
+    align-items: center;
+  }
+  .afterSearch_container h1{
     font-size: 30px;
   }
-  .container p{
+  .afterSearch_container p{
     font-size: 12px;
   }
 }

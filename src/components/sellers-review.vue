@@ -96,5 +96,8 @@ const items = [{
   .container p{
     font-size: 12px;
   }
+  .container{
+    align-items: center;
+  }
 }
 </style>

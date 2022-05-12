@@ -1,4 +1,7 @@
 <script setup lang="ts">
+
+const isOpen = ref(false)
+
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.nav1')
   const windowPosition = window.scrollY > 20
@@ -12,19 +15,6 @@ document.addEventListener('click', (event) => {
   if (!isClickInside)
     isOpen.value = false
 })
-
-const isOpen = ref(false)
-
-const menu = [{
-  title: 'My Profile',
-  link: '#',
-}, {
-  title: 'My Team',
-  link: '#',
-}, {
-  title: 'Go to Search Page',
-  link: '#',
-}]
 
 </script>
 
@@ -42,9 +32,18 @@ const menu = [{
         <p id="browse">
           Browse Cases
         </p>
-        <a id="icon1" href="" class="r-appbar-counterfeitchecker" />
-        <a id="icon2" href="" class="r-appbar-spg" />
-        <a id="icon3" href="" class="r-appbar-reportbug" />
+        <div class="icon1">
+          <a id="icon1" href="" class="r-appbar-counterfeitchecker" />
+          <tooltip id="tooltip1" text="Access Counterfeit Checker" />
+        </div>
+        <div class="icon2">
+          <a id="icon2" href="" class="r-appbar-spg" />
+          <tooltip id="tooltip2" text="Submissions Pack Monitoring Page" />
+        </div>
+        <div class="icon3">
+          <a id="icon3" href="" class="r-appbar-reportbug" />
+          <tooltip id="tooltip3" text="Report a Bug" />
+        </div>
         <a id="icon4" href="" class="r-appbar-notification" />
         <div id="dropdown-container" style="position: relative">
           <button class="flex" @click="isOpen = !isOpen">
@@ -53,11 +52,12 @@ const menu = [{
             </p>
             <img id="avatar_img" src="avatar_png/Profile2.png" alt="">
           </button>
-          <div v-if="isOpen" class="dropdown">
+          <menuDropdown-navbar :is-open="isOpen" />
+          <!-- <div v-if="isOpen" class="dropdown">
             <a v-for="(menuitem, index) in menu" :key="index" :href="menuitem.link">{{ menuitem.title }}</a>
             <hr>
             <a id="logout" href="">Logout</a>
-          </div>
+          </div> -->
         </div>
       </div>
     </nav>
@@ -66,43 +66,24 @@ const menu = [{
 
 <style scoped>
 
-/* dropdown styles */
-.dropdown {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-  width: 239px;
-  height: 206px;
-  background: #FFFFFF;
-  border-radius: 16px;
-  text-align: left;
-  color: #383A3D;
-
+/* tooltip styles */
+#tooltip1,
+#tooltip2,
+#tooltip3 {
+  display: none;
+  margin: 10px auto;
   position: absolute;
-  top: calc(100% + 10px);
-  right: 15%;
-  box-shadow: 0px 1px 6px #00000029;
-  font-size: 14px;
-  z-index: 2;
 }
-
-.dropdown a {
-  padding-left: 15px;
-}
-
-.dropdown a:hover {
-  color: #ADBBD8;
-}
-
-.dropdown #logout:hover {
-  color: #E3707F;
-}
-
-.dropdown hr {
-  color: #383A3D26;
-}
-
 /* ---------------- */
+
+/* div tooltip */
+.icon1:hover #tooltip1,
+.icon2:hover #tooltip2,
+.icon3:hover #tooltip3 {
+  display: flex;
+}
+
+/* ----------------- */
 
 /* Nav bar effect after Scrolling  */
   .scrolling-active {

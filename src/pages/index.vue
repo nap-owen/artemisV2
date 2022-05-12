@@ -17,7 +17,6 @@
   <div>
     <login />
   </div>
-  <!-- <landingpage /> -->
 </template>
 
 <route lang="yaml">
