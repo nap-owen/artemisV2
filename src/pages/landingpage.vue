@@ -13,12 +13,20 @@ import SellersReview1 from '~/components/sellers-review.vue'
 //     router.push(`/hi/${encodeURIComponent(name)}`)
 // }
 
+interface Item {
+  seller: string
+  company: string
+  logo: string
+}
+
+const var1 = ref<Item>()
+
 </script>
 
 <template>
   <div>
-    <LandingpageCom />
-    <SellersReview1 />
+    <LandingpageCom @click-by="var1=$event" />
+    <SellersReview1 :search-item="var1" />
     <Footer />
   </div>
 </template>

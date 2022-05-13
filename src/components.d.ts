@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Aftersearch: typeof import('./components/aftersearch.vue')['default']
+    Button: typeof import('./components/button.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
     ImageProduct: typeof import('./components/image-product.vue')['default']
@@ -13,7 +14,9 @@ declare module '@vue/runtime-core' {
     Login: typeof import('./components/login.vue')['default']
     MenuDropdownNavbar: typeof import('./components/menuDropdown-navbar.vue')['default']
     Navbar: typeof import('./components/navbar.vue')['default']
+    Navbar2Sticky: typeof import('./components/navbar2-sticky.vue')['default']
     Product: typeof import('./components/product.vue')['default']
+    ProductReviewCom: typeof import('./components/productReviewCom.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

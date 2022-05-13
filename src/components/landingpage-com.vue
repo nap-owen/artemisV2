@@ -14,9 +14,9 @@ const menuSelected = ref(-1)
 
 const router = useRouter()
 
-// const emit = defineEmits<{
-//   (isClick: boolean): void
-// }>()
+const emit = defineEmits<{
+  (e: 'clickBy', text: object): void
+}>()
 
 // const emit = defineEmits(['isClick'])
 
@@ -55,31 +55,37 @@ const campaign_menu = [{
   menu: 'Go to Cases',
 }]
 
-const searchItems = [{
+interface Item {
+  seller: string
+  company: string
+  logo: string
+}
+
+const searchItems = reactive<Item[]>([{
   seller: 'Marvin Marindoque',
   company: 'Barbie',
   logo: '/JPG Campaigns/Barbie.jpg',
 }, {
-  seller: 'Marvin Marindoque',
+  seller: 'John Dave Omandam',
   company: 'BMW',
   logo: '/JPG Campaigns/BMW.jpg',
 }, {
-  seller: 'Marvin Marindoque',
+  seller: 'John Michael Tolentino',
   company: 'Emoji',
   logo: '/JPG Campaigns/Emoji.jpg',
 }, {
-  seller: 'Marvin Marindoque',
+  seller: 'Joe June Labajo',
   company: 'Frisbee',
   logo: '/JPG Campaigns/Frisbee.jpg',
 }, {
-  seller: 'Marvin Marindoque',
+  seller: 'Earl John Miñoza',
   company: 'Mickey Mouse',
   logo: '/JPG Campaigns/Mickey Mouse.jpg',
 }, {
-  seller: 'Marvin Marindoque',
+  seller: 'Johannah Mae Cirilo',
   company: 'Warcraft',
   logo: '/JPG Campaigns/Warcraft.jpg',
-}]
+}])
 
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.search-box')
@@ -116,7 +122,7 @@ window.addEventListener('scroll', () => {
           </div>
         </div>
         <div v-if="isSearchBarActive" class="search-dropdown">
-          <a v-for="(item, index) in searchItems" :key="index" href="" class="search-dropdown-item">
+          <a v-for="(item, index) in searchItems" :key="index" href="javascript:void(0);" class="search-dropdown-item" @click="emit('clickBy', item)">
             <p>{{ item.seller }}</p>
             <div class="search-dropdown-item2">
               <p>{{ item.company }}</p>
@@ -240,6 +246,7 @@ window.addEventListener('scroll', () => {
 .search-campaign input {
   outline: none;
   border: none;
+  width: 88%;
 }
 
 .search-campaign-box {
@@ -458,6 +465,7 @@ window.addEventListener('scroll', () => {
   .search-box input {
     outline: none;
     border: none;
+    width: 250%;
   }
 
   .search-scrolling {

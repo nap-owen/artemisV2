@@ -36,10 +36,20 @@ const items = [{
   platform: 'Mayka.jpg',
 }]
 
+const props = defineProps<{
+  itemSearch: Item
+}>()
+
+interface Item {
+  seller: string
+  company: string
+  logo: string
+}
+
 </script>
 <template>
   <body>
-    <Aftersearch1 />
+    <Aftersearch1 :search-item="props.itemSearch" />
     <div class="container">
       <h1>Sellers for Review</h1>
       <p>12 Sellers Ready for you to check for Acceptance</p>

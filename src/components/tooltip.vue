@@ -16,9 +16,9 @@ const props = defineProps<{
 .tooltip-container{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
-    width: auto;
+    width: max-content;
 
     padding: 5px 10px;
 
@@ -33,7 +33,7 @@ const props = defineProps<{
 }
 
 /* media */
-@media screen and (max-width:1024px) {
+@media screen and (max-width:768px) {
     .tooltip-container{
         width: 150px;
     }

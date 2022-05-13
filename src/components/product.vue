@@ -5,7 +5,7 @@ to be used for duplication
 const props = defineProps<{
   product1: string
   product2: string
-  name: string
+  seller: string
 }>()
 
 </script>
@@ -28,7 +28,7 @@ const props = defineProps<{
           <p>For Review</p>
         </div>
         <div class="flex-item2">
-          <h3>Sample Seller Name</h3>
+          <h3>{{ props.seller }}</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
         </div>
       </div>
