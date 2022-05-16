@@ -1,22 +1,26 @@
 <!-- image component for the product -->
 <script setup lang="ts">
 const props = defineProps<{
-  product1: string
-  product2: string
+  platform: string
+  campaign: string
+  company_campaign: string
+  campaign_url: string
 }>()
+
+console.log(props.campaign)
 </script>
 <template>
   <div class="image">
-    <div class="img1">
-      <img :src="`/JPG Campaigns/${props.product1}`" alt="">
+    <a :href="campaign_url" class="img1">
+      <img :src="props.platform" alt="">
       <div class="tooltip-div">
         <tooltip id="tooltip1" text="Click to Open Product page" />
       </div>
-    </div>
+    </a>
     <div class="img2">
-      <img :src="`/JPG Campaigns/${props.product2}`" alt="">
+      <img :src="props.campaign" alt="">
       <div class="tooltip-div">
-        <tooltip id="tooltip2" :text="props.product2" />
+        <tooltip id="tooltip2" :text="props.company_campaign" />
       </div>
     </div>
   </div>

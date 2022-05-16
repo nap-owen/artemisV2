@@ -6,7 +6,8 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Aftersearch: typeof import('./components/aftersearch.vue')['default']
-    Button: typeof import('./components/button.vue')['default']
+    ButtonCom: typeof import('./components/buttonCom.vue')['default']
+    Clickable: typeof import('./components/clickable.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
     ImageProduct: typeof import('./components/image-product.vue')['default']

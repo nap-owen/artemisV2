@@ -3,6 +3,10 @@ import Navbar1 from './navbar.vue'
 
 // try emitting
 
+const props = defineProps<{
+  results: []
+}>()
+
 const text = ref('')
 
 const isClick = ref(false)
@@ -122,11 +126,11 @@ window.addEventListener('scroll', () => {
           </div>
         </div>
         <div v-if="isSearchBarActive" class="search-dropdown">
-          <a v-for="(item, index) in searchItems" :key="index" href="javascript:void(0);" class="search-dropdown-item" @click="emit('clickBy', item)">
-            <p>{{ item.seller }}</p>
+          <a v-for="(item, index) in props.results" :key="index" class="search-dropdown-item" @click="emit('clickBy', item)">
+            <p>{{ item.seller_name }}</p>
             <div class="search-dropdown-item2">
               <p>{{ item.company }}</p>
-              <img id="image" :src=" item.logo " alt="Logo">
+              <img id="image" :src=" item.campaign_logo " alt="Logo">
             </div>
           </a>
         </div>
@@ -422,13 +426,11 @@ window.addEventListener('scroll', () => {
 
   .search-item1 p {
     font-size: 12px;
+    font-weight: bold;
   }
 
   .search-item1 input {
     font-size: 16px;
-  }
-  .search-item1 p {
-    font-weight: bold;
   }
 
   .search-item2 {
@@ -517,6 +519,9 @@ window.addEventListener('scroll', () => {
   .search-scrolling .search-item1 input{
     font-size: 14px;
   }
+  .search-scrolling .search-item1 input {
+    width: 120%;
+  }
 
   @media screen and (max-width:950px) {
     .search-scrolling {
@@ -526,7 +531,7 @@ window.addEventListener('scroll', () => {
 
   @media screen and (max-width: 768px) {
     .search-box {
-      width: 80%;
+      width: 70%;
     }
   }
 

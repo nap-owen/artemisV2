@@ -49,8 +49,8 @@ onClickOutside(
     </div>
   </div>
   <hr>
-  <div>
-    <Navbar2Sticky />
+  <div class="nav2">
+    <Navbar2Sticky :page-number="1" />
   </div>
 </template>
 
@@ -221,5 +221,11 @@ hr {
   width: 80px;
   height: 40px;
 }
+
+/* nav 2 */
+
+/* .nav2 {
+  margin: 0 auto;
+} */
 
 </style>

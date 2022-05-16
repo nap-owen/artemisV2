@@ -1,48 +1,62 @@
 <script setup lang="ts">
 
+const isClick = ref(false)
+
 const props = defineProps<{
-  searchItem: Item
+  // searchItem: Item
+  results: []
 }>()
 
-interface Item {
-  seller: string
-  company: string
-  logo: string
-}
+// interface Item {
+//   seller: string
+//   company: string
+//   logo: string
+// }
 
-const items = [{
-  campaign: 'Amuse.jpg',
-  platform: 'Barbie.jpg',
-  // seller: `${props.searchItem.seller}`,
-  seller: 'Marvin Marindoque',
-}, {
-  campaign: 'Adidas.jpg',
-  platform: 'Bally.jpg',
-  seller: 'John Michael Tolentino',
-  // seller: `${props.searchItem.seller}`,
-}, {
-  campaign: 'Bell.jpg',
-  platform: 'Frisbee.jpg',
-  seller: 'John Dave Omandam',
-  // seller: `${props.searchItem.seller}`,
-}, {
-  campaign: 'MagicPens.jpg',
-  platform: 'Airbus SAS.jpg',
-  seller: 'Joe June Labajo',
-  // seller: `${props.searchItem.seller}`,
-}]
+// const items = [{
+//   campaign: 'Amuse.jpg',
+//   platform: 'Barbie.jpg',
+//   // seller: `${props.searchItem.seller}`,
+//   seller: 'Marvin Marindoque',
+// }, {
+//   campaign: 'Adidas.jpg',
+//   platform: 'Bally.jpg',
+//   seller: 'John Michael Tolentino',
+//   // seller: `${props.searchItem.seller}`,
+// }, {
+//   campaign: 'Bell.jpg',
+//   platform: 'Frisbee.jpg',
+//   seller: 'John Dave Omandam',
+//   // seller: `${props.searchItem.seller}`,
+// }, {
+//   campaign: 'MagicPens.jpg',
+//   platform: 'Airbus SAS.jpg',
+//   seller: 'Joe June Labajo',
+//   // seller: `${props.searchItem.seller}`,
+// }]
 </script>
 
 <template>
-  <body>
+  <div v-if="isClick">
     <div class="afterSearch_container">
       <h1>Here's what we found</h1>
       <p>4 Listings with the same Seller Name in this Campaign.</p>
       <div class="afterSearch_flex">
-        <product v-for="(item, index) in items" :key="index" :product1="item.campaign" :product2="item.platform" :seller="item.seller" />
+        <product
+          v-for="(item, index) in props.results"
+          :id="item.id"
+          :key="index"
+          :platform="item.platform_logo"
+          :campaign="item.campaign_logo"
+          :list_info="item.list_info"
+          :seller="item.seller_name"
+          :company_campaign="item.company"
+          :campaign_url="item.campaign_url"
+          :preview_img="item.preview_img"
+        />
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <style scoped>

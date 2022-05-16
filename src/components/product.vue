@@ -3,37 +3,44 @@ to be used for duplication
  -->
 <script setup lang="ts">
 const props = defineProps<{
-  product1: string
-  product2: string
+  platform: string
+  campaign: string
+  id: number
   seller: string
+  list_info: string
+  company_campaign: string
+  campaign_url: string
+  preview_img: string
 }>()
-
+console.log(props.preview_pic)
+// product 1 = platform
+// product 2 = campaign
 </script>
 <template>
-  <body>
+  <div>
     <div class="container">
       <div id="img-container">
         <!-- image component attached here -->
         <div id="img-item">
-          <image-product :product1="props.product1" :product2="props.product2" />
+          <image-product :platform="props.platform" :campaign="props.campaign" :company_campaign="props.company_campaign" :campaign_url="campaign_url" />
         </div>
-        <img src="avatar_png/Default-Listing.png" alt="">
+        <img :src="props.preview_img" alt="" @error="(event) => event.target.src='/avatar_png/Default-Listing.png'">
       </div>
       <div class="flex">
         <div class="flex-item1">
           <div class="idNumber">
-            <p>id number</p>
+            <p>{{ props.id }}</p>
           </div>
-          <p class="r-appbar-search" />
+          <p class="r-status-forreview" />
           <p>For Review</p>
         </div>
         <div class="flex-item2">
           <h3>{{ props.seller }}</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+          <p>{{ props.list_info }}</p>
         </div>
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <style scoped>
@@ -136,7 +143,29 @@ const props = defineProps<{
         height: 168px;
         width: 576px;
         padding: 0px;
+        border-radius: 12px;
+
+        position: relative;
     }
+
+    .container::before{
+      content: "";
+      top: 0;
+      left: 0;
+      position: absolute;
+      width: 0;
+      height: 100%;
+      transition: all .5s;
+      transform: translateX(-100%);
+      border-radius: 12px;
+      z-index: -1;
+    }
+    .container:hover::before{
+      transform: translateX(0);
+      background: #f3f1f1;
+      width: 100%;
+    }
+
     .flex {
         display: flex;
         align-items: left;
@@ -154,7 +183,7 @@ const props = defineProps<{
     }
 
     .idNumber {
-        width: 70px;
+        width: auto;
         height: 20px;
 
         display: flex;
@@ -162,6 +191,8 @@ const props = defineProps<{
         justify-content: center;
         border-radius: 4px;
         background: #c0dfff;
+
+        padding: 4px;
     }
 
     .idNumber p {

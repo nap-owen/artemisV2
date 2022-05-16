@@ -1,60 +1,41 @@
-<!-- This is for the container
-    where the product will be
-    injected.
- -->
 <script setup lang="ts">
 import Aftersearch1 from './aftersearch.vue'
-const items = [{
-  campaign: 'Wuwear.jpg',
-  platform: 'Warcraft.jpg',
-}, {
-  campaign: 'AC-DC.jpg',
-  platform: 'acer laptop.jpg',
-}, {
-  campaign: 'Adidas.jpg',
-  platform: 'AEV.jpg',
-}, {
-  campaign: 'Airbus SAS.jpg',
-  platform: 'Amuse.jpg',
-}, {
-  campaign: 'Bally.jpg',
-  platform: 'Barbie.jpg',
-}, {
-  campaign: 'Bell.jpg',
-  platform: 'Bestway.jpg',
-}, {
-  campaign: 'Capcom.jpg',
-  platform: 'Chiro.jpg',
-}, {
-  campaign: 'Frisbee.jpg',
-  platform: 'Godzilla.jpg',
-}, {
-  campaign: 'Hickies.jpg',
-  platform: 'Hitachi.jpg',
-}, {
-  campaign: 'MagicPens.jpg',
-  platform: 'Mayka.jpg',
-}]
+
+// company: r.campaign,
+// campaign_logo: r.campaign_image,
+// platform_logo: r.platform_image,
+// list_info: r.listing_info.listing_title,
+// id: r.id,
+// seller_name: r.seller[0].name,
 
 const props = defineProps<{
-  itemSearch: Item
+  // itemSearch: Item
+  results: []
+  campaign: string
 }>()
-
-interface Item {
-  seller: string
-  company: string
-  logo: string
-}
+console.log('sellers')
+console.log(props.results)
 
 </script>
 <template>
   <body>
-    <Aftersearch1 :search-item="props.itemSearch" />
+    <!-- :search-item="props.itemSearch" -->
+    <Aftersearch1 :results="results" />
     <div class="container">
       <h1>Sellers for Review</h1>
       <p>12 Sellers Ready for you to check for Acceptance</p>
       <div class="flex">
-        <product v-for="(item, index) in items" :key="index" :product1="item.campaign" :product2="item.platform" />
+        <product
+          v-for="(item, index) in props.results"
+          :id="item.id" :key="index"
+          :platform="item.platform_logo"
+          :campaign="item.campaign_logo"
+          :list_info="item.list_info"
+          :seller="item.seller_name"
+          :company_campaign="item.company"
+          :campaign_url="item.campaign_url"
+          :preview_img="item.preview_img"
+        />
       </div>
     </div>
   </body>
