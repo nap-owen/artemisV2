@@ -28,9 +28,7 @@ console.log(props.preview_pic)
       </div>
       <div class="flex">
         <div class="flex-item1">
-          <div class="idNumber">
-            <p>{{ props.id }}</p>
-          </div>
+          <IdNumberCom :id-number="props.id" />
           <p class="r-status-forreview" />
           <p>For Review</p>
         </div>
@@ -180,25 +178,6 @@ console.log(props.preview_pic)
         align-items: center;
         justify-content: flex-start;
         gap: 10px;
-    }
-
-    .idNumber {
-        width: auto;
-        height: 20px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 4px;
-        background: #c0dfff;
-
-        padding: 4px;
-    }
-
-    .idNumber p {
-        font-weight: bold;
-        color: #2D599E;
-        opacity: 100%;
     }
 
     .flex-item1 div {

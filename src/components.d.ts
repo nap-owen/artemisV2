@@ -7,9 +7,11 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Aftersearch: typeof import('./components/aftersearch.vue')['default']
     ButtonCom: typeof import('./components/buttonCom.vue')['default']
+    CampaignManagementProductCom: typeof import('./components/campaignManagement-productCom.vue')['default']
     Clickable: typeof import('./components/clickable.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     Footer: typeof import('./components/Footer.vue')['default']
+    IdNumberCom: typeof import('./components/idNumberCom.vue')['default']
     ImageProduct: typeof import('./components/image-product.vue')['default']
     LandingpageCom: typeof import('./components/landingpage-com.vue')['default']
     Login: typeof import('./components/login.vue')['default']

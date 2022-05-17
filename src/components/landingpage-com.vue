@@ -7,7 +7,23 @@ const props = defineProps<{
   results: []
 }>()
 
+const ucFirst = (str: string) => {
+  if (typeof str !== 'string')
+    throw new Error('Given value is not a string')
+
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+const getCampaignImage = (name) => {
+  name = ucFirst(name).replace(/\(.+?\)/g, '')
+    .replace(/[^a-z0-9+]+/gi, '')
+    .replace(/\s/g, '')
+
+  return `https://artemisapi.newalchemysolutions.com/jpg/campaigns/${name}.jpg`
+}
+
 const text = ref('')
+const campaign_text = ref('')
 
 const isClick = ref(false)
 const isSearchBarActive = ref(false)
@@ -18,13 +34,15 @@ const menuSelected = ref(-1)
 
 const router = useRouter()
 
-const emit = defineEmits<{
-  (e: 'clickBy', text: object): void
-}>()
-
-// const emit = defineEmits(['isClick'])
+const filteredResults = computed(() => text.value ? props.results.filter(r => r.seller_name.toLowerCase().includes(text.value.toLowerCase())) : props.results)
+const campaignFiltered = computed(() => campaign_text.value ? props.results.filter(r => r.company.toLowerCase().includes(campaign_text.value.toLowerCase())) : props.results)
 
 const isActive = (a: boolean) => {
+  if (text.value === '') {
+    isClick.value = false
+    isSearchBarActive.value = false
+    return
+  }
   if (a === true) {
     isClick.value = a
     isSearchBarActive.value = a
@@ -58,38 +76,6 @@ const campaign_menu = [{
 }, {
   menu: 'Go to Cases',
 }]
-
-interface Item {
-  seller: string
-  company: string
-  logo: string
-}
-
-const searchItems = reactive<Item[]>([{
-  seller: 'Marvin Marindoque',
-  company: 'Barbie',
-  logo: '/JPG Campaigns/Barbie.jpg',
-}, {
-  seller: 'John Dave Omandam',
-  company: 'BMW',
-  logo: '/JPG Campaigns/BMW.jpg',
-}, {
-  seller: 'John Michael Tolentino',
-  company: 'Emoji',
-  logo: '/JPG Campaigns/Emoji.jpg',
-}, {
-  seller: 'Joe June Labajo',
-  company: 'Frisbee',
-  logo: '/JPG Campaigns/Frisbee.jpg',
-}, {
-  seller: 'Earl John Miñoza',
-  company: 'Mickey Mouse',
-  logo: '/JPG Campaigns/Mickey Mouse.jpg',
-}, {
-  seller: 'Johannah Mae Cirilo',
-  company: 'Warcraft',
-  logo: '/JPG Campaigns/Warcraft.jpg',
-}])
 
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.search-box')
@@ -125,8 +111,9 @@ window.addEventListener('scroll', () => {
             </button>
           </div>
         </div>
+        <!-- @click="emit('clickBy', item)" -->
         <div v-if="isSearchBarActive" class="search-dropdown">
-          <a v-for="(item, index) in props.results" :key="index" class="search-dropdown-item" @click="emit('clickBy', item)">
+          <a v-for="(item, index) in filteredResults" :key="index" href="" class="search-dropdown-item">
             <p>{{ item.seller_name }}</p>
             <div class="search-dropdown-item2">
               <p>{{ item.company }}</p>
@@ -144,12 +131,12 @@ window.addEventListener('scroll', () => {
         </div>
         <div v-if="isClickCampaign" class="search-campaign-dropdown">
           <div class="search-campaign">
-            <input type="text" placeholder="Search Campaign">
+            <input v-model="campaign_text" type="text" placeholder="Search Campaign">
             <button class="r-appbar-search" />
           </div>
           <a class="search-campaign-box">
-            <div v-for="(campaign_item, index2) in searchItems" :key="index2" class="search-campaign-item" @click="menuSelected = index2">
-              <img :src="campaign_item.logo" alt="">
+            <div v-for="(campaign_item, index2) in campaignFiltered" :key="index2" class="search-campaign-item" @click="menuSelected = index2">
+              <img :src="getCampaignImage(campaign_item.company) " alt="">
               <p>{{ campaign_item.company }}</p>
               <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
                 <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push('/productReview')">{{ item.menu }}</a>
@@ -532,6 +519,9 @@ window.addEventListener('scroll', () => {
   @media screen and (max-width: 768px) {
     .search-box {
       width: 70%;
+    }
+    .search-item1 input {
+      width: 100%;
     }
   }
 

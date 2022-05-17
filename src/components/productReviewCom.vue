@@ -52,6 +52,9 @@ onClickOutside(
   <div class="nav2">
     <Navbar2Sticky :page-number="1" />
   </div>
+  <div>
+    <CampaignManagementProductCom />
+  </div>
 </template>
 
 <style scoped>
