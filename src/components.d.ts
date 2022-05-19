@@ -18,11 +18,13 @@ declare module '@vue/runtime-core' {
     MenuDropdownNavbar: typeof import('./components/menuDropdown-navbar.vue')['default']
     Navbar: typeof import('./components/navbar.vue')['default']
     Navbar2Sticky: typeof import('./components/navbar2-sticky.vue')['default']
+    NormalMenuBar: typeof import('./components/normalMenuBar.vue')['default']
     Product: typeof import('./components/product.vue')['default']
     ProductReviewCom: typeof import('./components/productReviewCom.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SearchCampaignCom: typeof import('./components/searchCampaignCom.vue')['default']
     SellersReview: typeof import('./components/sellers-review.vue')['default']
     Tooltip: typeof import('./components/tooltip.vue')['default']
   }

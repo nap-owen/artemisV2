@@ -72,18 +72,20 @@ console.log(props.preview_pic)
       width: 200px;
       height: 168px;
       border-radius: 12px;
+      /* position: relative; */
     }
 
     #img-container img {
       width: 100%;
-      position: relative;
-      top: -45%;
-      transform: scale(1.5);
+      /* position: absolute; */
+      /* top: -15%; */
+      transform:  translateY(-15%) scale(1.5);
+
       transition: .5s;
     }
 
     #img-container img:hover {
-      transform: scale(.75);
+      transform: scale(.75) translateY(-15%);
     }
 
     /* media */
@@ -93,7 +95,7 @@ console.log(props.preview_pic)
         height: 148px;
       }
       #img-container img {
-        top: -45%;
+        /* top: -45%; */
         transform: scale(1.5);
         transition:.5s;
       }

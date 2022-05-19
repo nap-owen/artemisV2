@@ -1,7 +1,17 @@
+<script setup lang="ts">
+const props = defineProps<{
+  source: string
+  id: number
+}>()
+</script>
+
 <template>
   <div class="container-product">
     <div class="img-div1">
-      <img src="" alt="">
+      <div class="img-item">
+        <image-product />
+      </div>
+      <img :src="props.source" alt="">
     </div>
     <div class="txt-div">
       <div class="upper">
@@ -10,7 +20,7 @@
           <p>For Review</p>
         </div>
         <div class="upperRight">
-          <IdNumberCom :id-number="123123" />
+          <IdNumberCom :id-number="id" />
         </div>
       </div>
       <div class="lower">
@@ -36,15 +46,34 @@
     justify-content: space-evenly;
     flex-direction: column;
     gap: 10px;
+    margin: 0 auto;
 }
 .img-div1 {
     width: 280px;
     height: 165px;
-
-    background: red;
-
     border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #70707066;
 }
+.img-div1 img {
+  position: absolute;
+  top: -85%;
+}
+
+.img-div1 img:hover {
+  transform: scale(.5);
+  transition: .5s;
+}
+
+.img-item{
+  position: absolute;
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-bottom: 8px;
+  z-index: 1;
+}
+
 .txt-div {
     display: flex;
     align-items: center;

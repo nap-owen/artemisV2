@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, useWindowScroll } from '@vueuse/core'
+import Footer1 from './Footer.vue'
+
+// const { x, y } = useWindowScroll()
+
+const props = defineProps<{
+  results: []
+}>()
 
 const isOpen = ref(false)
 
@@ -11,6 +18,28 @@ onClickOutside(
     isOpen.value = false
   },
 )
+
+const items = [{
+  id: 1000000,
+}, {
+  id: 2000000,
+}, {
+  id: 3000000,
+}, {
+  id: 4000000,
+}, {
+  id: 5000000,
+}, {
+  id: 6000000,
+}, {
+  id: 7000000,
+}, {
+  id: 8000000,
+}, {
+  id: 9000000,
+}, {
+  id: 10000000,
+}]
 </script>
 
 <template>
@@ -50,10 +79,16 @@ onClickOutside(
   </div>
   <hr>
   <div class="nav2">
-    <Navbar2Sticky :page-number="1" />
+    <Navbar2Sticky :page-number="1" :results="props.results" />
   </div>
+  <div class="list">
+    <div v-for="(item, index) in items" :key="index">
+      <CampaignManagementProductCom :id="item.id" source="/avatar_png/Default-Listing.png" />
+    </div>
+  </div>
+
   <div>
-    <CampaignManagementProductCom />
+    <Footer1 />
   </div>
 </template>
 
@@ -227,8 +262,23 @@ hr {
 
 /* nav 2 */
 
-/* .nav2 {
+.nav2 {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #FFFFFF;
+}
+
+/* list */
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1240px;
   margin: 0 auto;
-} */
+  flex-wrap:wrap;
+  gap: 25px;
+  margin-top: 40px;
+}
 
 </style>

@@ -7,6 +7,21 @@ const props = defineProps<{
   campaign_url: string
 }>()
 
+const ucFirst = (str: string) => {
+  if (typeof str !== 'string')
+    throw new Error('Given value is not a string')
+
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+const getCampaignImage = (name) => {
+  name = ucFirst(name).replace(/\(.+?\)/g, '')
+    .replace(/[^a-z0-9+]+/gi, '')
+    .replace(/\s/g, '')
+
+  return `https://artemisapi.newalchemysolutions.com/jpg/campaigns/${name}.jpg`
+}
+
 console.log(props.campaign)
 </script>
 <template>
@@ -17,8 +32,8 @@ console.log(props.campaign)
         <tooltip id="tooltip1" text="Click to Open Product page" />
       </div>
     </a>
-    <div class="img2">
-      <img :src="props.campaign" alt="">
+    <div v-if="company_campaign" class="img2">
+      <img :src="getCampaignImage(props.campaign)" alt="">
       <div class="tooltip-div">
         <tooltip id="tooltip2" :text="props.company_campaign" />
       </div>
@@ -38,6 +53,7 @@ console.log(props.campaign)
 }
 .tooltip-div {
   /* min-width: 250px; */
+  /* z-index: 99; */
 }
 
 .image img {
@@ -61,6 +77,7 @@ console.log(props.campaign)
   /* max-width: 250px; */
 
   text-align: left;
+
 }
 
 .img1:hover #tooltip1,

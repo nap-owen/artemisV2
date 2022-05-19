@@ -21,7 +21,7 @@ onClickOutside(
 </script>
 
 <template>
-  <button ref="dropdownRef" class="clickable" @click="isClick=!isClick">
+  <button ref="dropdownRef" class="clickable" @click="isClick=true">
     <div v-if="isClick">
       <p :class="props.icon" />
     </div>

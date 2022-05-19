@@ -1,10 +1,22 @@
 <script setup lang="ts">
+import { onClickOutside } from '@vueuse/core'
 import ButtonCom from './buttonCom.vue'
+
 const props = defineProps<{
   pageNumber: number
+  results: []
 }>()
 
 const page = ref(props.pageNumber)
+
+const firstButtonClick = ref(false)
+const firstButton = ref(null)
+onClickOutside(
+  firstButton,
+  (event) => {
+    firstButtonClick.value = false
+  },
+)
 
 const decrement = () => {
   if (page.value > 1)
@@ -28,22 +40,39 @@ const greatIncrement = () => {
   if (page.value >= 1)
     page.value = page.value + 5
 }
+const isClick = ref(false)
+
+const dropdownRef = ref(null)
+onClickOutside(
+  dropdownRef,
+  (event) => {
+    isClick.value = false
+  },
+)
+
+const menuItems1 = ['Breakdown by Platforms', 'Breakdown by Payment Platforms', 'Breakdown by Payment Types']
 </script>
 
 <template>
   <div class="container">
     <div class="upperDiv">
       <div class="upperLeft">
-        <button class="upperLeft1">
+        <button ref="dropdownRef" class="upperLeft1" @click="isClick=!isClick">
           <img src="/JPG Campaigns/Nestle.jpg " alt="">
           <p>Nestle</p>
+          <div v-if="isClick" class="searchCampaign">
+            <SearchCampaignCom :results="props.results" />
+          </div>
         </button>
         <div class="upperLeft2">
           <input type="text" placeholder="Search">
           <button class="r-appbar-search search-btn" />
         </div>
-        <button>
+        <button ref="firstButton" class="firstButton" @click="firstButtonClick=!firstButtonClick">
           <ButtonCom icon="r-actionbar-breakdown" />
+          <div v-if="firstButtonClick" class="firstButton-item">
+            <NormalMenuBar :titles="menuItems1" />
+          </div>
         </button>
         <button>
           <ButtonCom icon="r-actionbar-selection" />
@@ -312,5 +341,20 @@ const greatIncrement = () => {
 
   font-size: 12px;
   padding: 5px;
+}
+
+/* search campaign */
+.searchCampaign {
+  position: absolute;
+  top: 60%;
+}
+
+/* 1st button */
+.firstButton {
+  position: relative;
+}
+.firstButton-item {
+  position: absolute;
+  top: 50px;
 }
 </style>

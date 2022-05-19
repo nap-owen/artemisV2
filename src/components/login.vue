@@ -1,14 +1,82 @@
 <script setup lang="ts">
+import axios from 'axios'
+import { useUserStore1 } from '~/stores/users'
 
+const store = useUserStore1()
+
+// encrypted => localStorage
+// decrypt from localStorage => pinia
+
+// const users = ref()
 const router = useRouter()
 
 const username = ref('')
 const password = ref('')
+const headers = { headers: { 'Content-Type': 'application/json', 'Gui': 'Case Management', 'Authorization': '' } }
 
-const getData = () => {
-  console.warn('values:', username.value, password.value)
-  router.push('/landingpage')
+const randomString = (length: number) => {
+  let result = ''
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_+=-'
+  const charactersLength = characters.length
+
+  for (let i = 0; i < length; i++)
+    result += characters.charAt(Math.floor(Math.random() * charactersLength))
+
+  return result
 }
+const postData = () => {
+  axios.post(`${import.meta.env.VITE_VUE_APP_URL}/login`,
+    {
+      user_id: username.value,
+      password: password.value,
+    }, headers)
+    .then((response) => {
+      let results = response.data.data
+      headers.headers.Authorization = `Bearer ${response.data.meta.access_token}`
+      results = { ...results, ...headers }
+      console.log(results)
+      if (response.status === 200) {
+        // users.value = {
+        //   username: response.data.data.user_id,
+        //   f_name: response.data.data.first_name,
+        //   l_name: response.data.data.last_name,
+        //   r: response.data.data.role,
+        //   access_level: response.data.data.access_level,
+        // }
+        // using useBase64 in vueuse
+        // const { promise } = useBase64(JSON.stringify(users.value))
+        // console.log(await promise.value)
+        // const s = (await promise.value).split(',')
+        // console.log(s)
+        // let value = s[1].split('')
+
+        const encrypted = btoa(JSON.stringify(results))
+        console.log({ btoa: encrypted })
+        // console.log(e)
+        let value = encrypted.split('')
+        // console.log(value)
+        for (let i = 0; i < value.length; i++) {
+          if (i % 5 === 0 && i !== 0) {
+            const s = randomString(1)
+            console.log({ adeed: s })
+            value.splice(i, 0, s)
+          }
+        }
+
+        value = value.join('')
+        localStorage.removeItem('user')
+        useLocalStorage('user', value)
+        store.show()
+        store.decrypt()
+
+        router.push('/landingpage')
+        // console.log(store.value.value)
+      }
+
+    //   console.log(JSON.parse(results).headers.Authorization)
+    })
+}
+
 </script>
 
 <template>
@@ -32,7 +100,7 @@ const getData = () => {
           <input v-model="password" placeholder="Password" type="password" class="textbox-items">
           <p class="r-login-password textbox-items" />
         </div>
-        <button type="button" class="button" @click="getData()">
+        <button type="button" class="button" @click="postData()">
           Login
         </button>
       </div>
