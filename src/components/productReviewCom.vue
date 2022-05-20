@@ -106,6 +106,7 @@ hr {
   display: none;
   margin: 10px auto;
   position: absolute;
+  z-index: 3;
 }
 /* ---------------- */
 

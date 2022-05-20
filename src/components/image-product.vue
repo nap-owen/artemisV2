@@ -21,8 +21,6 @@ const getCampaignImage = (name) => {
 
   return `https://artemisapi.newalchemysolutions.com/jpg/campaigns/${name}.jpg`
 }
-
-console.log(props.campaign)
 </script>
 <template>
   <div class="image">

@@ -1,49 +1,23 @@
 <script setup lang="ts">
 
-const isClick = ref(false)
-
 const props = defineProps<{
   // searchItem: Item
   results: []
+  seller_name: string
 }>()
 
-// interface Item {
-//   seller: string
-//   company: string
-//   logo: string
-// }
+const filteredResults = computed(() => props.seller_name ? props.results.filter(r => r.seller_name.toLowerCase().includes(props.seller_name.toLowerCase())) : props.results)
 
-// const items = [{
-//   campaign: 'Amuse.jpg',
-//   platform: 'Barbie.jpg',
-//   // seller: `${props.searchItem.seller}`,
-//   seller: 'Marvin Marindoque',
-// }, {
-//   campaign: 'Adidas.jpg',
-//   platform: 'Bally.jpg',
-//   seller: 'John Michael Tolentino',
-//   // seller: `${props.searchItem.seller}`,
-// }, {
-//   campaign: 'Bell.jpg',
-//   platform: 'Frisbee.jpg',
-//   seller: 'John Dave Omandam',
-//   // seller: `${props.searchItem.seller}`,
-// }, {
-//   campaign: 'MagicPens.jpg',
-//   platform: 'Airbus SAS.jpg',
-//   seller: 'Joe June Labajo',
-//   // seller: `${props.searchItem.seller}`,
-// }]
 </script>
 
 <template>
-  <div v-if="isClick">
+  <div>
     <div class="afterSearch_container">
       <h1>Here's what we found</h1>
       <p>4 Listings with the same Seller Name in this Campaign.</p>
       <div class="afterSearch_flex">
         <product
-          v-for="(item, index) in props.results"
+          v-for="(item, index) in filteredResults"
           :id="item.id"
           :key="index"
           :platform="item.platform_logo"

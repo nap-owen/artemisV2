@@ -6,7 +6,7 @@ import SellersReview1 from '~/components/sellers-review.vue'
 const headers = JSON.parse(JSON.parse(localStorage.getItem('lawfirm')).headers)
 const results = ref()
 
-const campaign1 = ref()
+const campaign = ref()
 
 const getData = () => {
   axios.get(`${import.meta.env.VITE_VUE_APP_URL}/listings/for_review/main?page_size=100&page=1`, headers)
@@ -25,8 +25,6 @@ const getData = () => {
           preview_img: `${import.meta.env.VITE_VUE_APP_URL}/files/${r.evidences.preview}`,
         }
       })
-      console.log(results.value[0].campaign_logo)
-      console.log(response)
     })
     .catch((error) => {
       console.log(error)
@@ -35,31 +33,36 @@ const getData = () => {
     })
 }
 
-// company: r.campaign,
-// campaign_logo: r.campaign_image,
-// platform_logo: r.platform_image,
-// list_info: r.listing_info.listing_title,
-// id: r.id,
-// seller_name: r.seller[0].name,
-
-interface Item {
-  seller: string
-  company: string
-  logo: string
+const getCampaignData = () => {
+  axios.get(`${import.meta.env.VITE_VUE_APP_URL}/my/campaigns/main?page_size=1000`, headers)
+    .then((response) => {
+      campaign.value = response.data.data.map((r: any) => {
+        return {
+          id: r.id,
+          campaign_name: r.name,
+        }
+      })
+      // console.log(campaign.value)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+    .then(() => {
+    })
 }
-
-const var1 = ref<Item>()
 
 onMounted(() => {
   getData()
+  getCampaignData()
 })
+
 </script>
 
 <template>
   <div>
     <!-- :search-item="var1" -->
-    <LandingpageCom :results="results" @click-by="var1=$event" />
-    <SellersReview1 :results="results" :campaign="campaign1" />
+    <LandingpageCom :results="results" :campaign="campaign" @click-by="var1=$event" />
+    <SellersReview1 :results="results" />
     <Footer />
   </div>
 </template>

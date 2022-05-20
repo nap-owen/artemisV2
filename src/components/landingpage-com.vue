@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Navbar1 from './navbar.vue'
-
+import Aftersearch1 from './aftersearch.vue'
 // try emitting
 
 const props = defineProps<{
   results: []
+  campaign: []
 }>()
 
 const ucFirst = (str: string) => {
@@ -35,8 +36,13 @@ const menuSelected = ref(-1)
 const router = useRouter()
 
 const filteredResults = computed(() => text.value ? props.results.filter(r => r.seller_name.toLowerCase().includes(text.value.toLowerCase())) : props.results)
-const campaignFiltered = computed(() => campaign_text.value ? props.results.filter(r => r.company.toLowerCase().includes(campaign_text.value.toLowerCase())) : props.results)
+const campaignFiltered = computed(() => campaign_text.value ? props.campaign.filter(r => r.campaign_name.toLowerCase().includes(campaign_text.value.toLowerCase())) : props.campaign)
 
+// for searching
+const isSearchSeller = ref(false)
+const seller_name = ref()
+
+//
 const isActive = (a: boolean) => {
   if (text.value === '') {
     isClick.value = false
@@ -113,13 +119,13 @@ window.addEventListener('scroll', () => {
         </div>
         <!-- @click="emit('clickBy', item)" -->
         <div v-if="isSearchBarActive" class="search-dropdown">
-          <a v-for="(item, index) in filteredResults" :key="index" href="" class="search-dropdown-item">
+          <button v-for="(item, index) in filteredResults" :key="index" class="search-dropdown-item" @click="isSearchSeller=true; seller_name=item.seller_name">
             <p>{{ item.seller_name }}</p>
             <div class="search-dropdown-item2">
               <p>{{ item.company }}</p>
               <img id="image" :src=" item.campaign_logo " alt="Logo">
             </div>
-          </a>
+          </button>
         </div>
       </div>
 
@@ -136,8 +142,8 @@ window.addEventListener('scroll', () => {
           </div>
           <a class="search-campaign-box">
             <div v-for="(campaign_item, index2) in campaignFiltered" :key="index2" class="search-campaign-item" @click="menuSelected = index2">
-              <img :src="getCampaignImage(campaign_item.company) " alt="">
-              <p>{{ campaign_item.company }}</p>
+              <img :src="getCampaignImage(campaign_item.campaign_name)" alt="">
+              <p>{{ campaign_item.campaign_name }}</p>
               <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
                 <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push('/productReview')">{{ item.menu }}</a>
               </div>
@@ -150,6 +156,9 @@ window.addEventListener('scroll', () => {
       </div>
     </div>
   </body>
+  <div v-if="isSearchSeller">
+    <Aftersearch1 :results="props.results" :seller_name="seller_name" />
+  </div>
 </template>
 
 <style scoped>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Aftersearch1 from './aftersearch.vue'
 
 // company: r.campaign,
 // campaign_logo: r.campaign_image,
@@ -11,16 +10,15 @@ import Aftersearch1 from './aftersearch.vue'
 const props = defineProps<{
   // itemSearch: Item
   results: []
-  campaign: string
 }>()
-console.log('sellers')
-console.log(props.results)
+// console.log('sellers')
+// console.log(props.results)
 
 </script>
 <template>
-  <body>
+  <div>
     <!-- :search-item="props.itemSearch" -->
-    <Aftersearch1 :results="results" />
+    <!-- <Aftersearch1 :results="results" /> -->
     <div class="container">
       <h1>Sellers for Review</h1>
       <p>12 Sellers Ready for you to check for Acceptance</p>
@@ -38,7 +36,7 @@ console.log(props.results)
         />
       </div>
     </div>
-  </body>
+  </div>
 </template>
 
 <style scoped>

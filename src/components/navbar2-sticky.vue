@@ -9,15 +9,6 @@ const props = defineProps<{
 
 const page = ref(props.pageNumber)
 
-const firstButtonClick = ref(false)
-const firstButton = ref(null)
-onClickOutside(
-  firstButton,
-  (event) => {
-    firstButtonClick.value = false
-  },
-)
-
 const decrement = () => {
   if (page.value > 1)
     page.value = page.value - 1
@@ -40,24 +31,55 @@ const greatIncrement = () => {
   if (page.value >= 1)
     page.value = page.value + 5
 }
+// ref for buttons
 const isClick = ref(false)
+const isFirstClick = ref(false)
+const isThirdClick = ref(false)
 
+const firstButton = ref(null)
+const thirdButton = ref(null)
 const dropdownRef = ref(null)
-onClickOutside(
-  dropdownRef,
-  (event) => {
-    isClick.value = false
-  },
-)
 
-const menuItems1 = ['Breakdown by Platforms', 'Breakdown by Payment Platforms', 'Breakdown by Payment Types']
+const outsideClick = (target: string) => {
+  switch (target) {
+    case 'dropdownRef': {
+      onClickOutside(
+        dropdownRef,
+        (event) => {
+          isClick.value = false
+        },
+      )
+      break
+    }
+    case 'firstButton': {
+      onClickOutside(
+        firstButton,
+        (event) => {
+          isFirstClick.value = false
+        },
+      )
+      break
+    }
+    case 'thirdButton': {
+      onClickOutside(
+        thirdButton,
+        (event) => {
+          isThirdClick.value = false
+        },
+      )
+    }
+  }
+}
+
+const breakdownItems = ['Breakdown by Platforms', 'Breakdown by Payment Platforms', 'Breakdown by Payment Types']
+const layoutItems = ['Card View', 'View List']
 </script>
 
 <template>
   <div class="container">
     <div class="upperDiv">
       <div class="upperLeft">
-        <button ref="dropdownRef" class="upperLeft1" @click="isClick=!isClick">
+        <button ref="dropdownRef" class="upperLeft1" @click="isClick=!isClick; outsideClick('dropdownRef')">
           <img src="/JPG Campaigns/Nestle.jpg " alt="">
           <p>Nestle</p>
           <div v-if="isClick" class="searchCampaign">
@@ -68,10 +90,10 @@ const menuItems1 = ['Breakdown by Platforms', 'Breakdown by Payment Platforms', 
           <input type="text" placeholder="Search">
           <button class="r-appbar-search search-btn" />
         </div>
-        <button ref="firstButton" class="firstButton" @click="firstButtonClick=!firstButtonClick">
+        <button ref="firstButton" class="firstButton" @click="isFirstClick=!isFirstClick; outsideClick('firstButton')">
           <ButtonCom icon="r-actionbar-breakdown" />
-          <div v-if="firstButtonClick" class="firstButton-item">
-            <NormalMenuBar :titles="menuItems1" />
+          <div v-if="isFirstClick" class="firstButton-item">
+            <NormalMenuBar :titles="breakdownItems" />
           </div>
         </button>
         <button>
@@ -79,8 +101,11 @@ const menuItems1 = ['Breakdown by Platforms', 'Breakdown by Payment Platforms', 
         </button>
       </div>
       <div class="upperRight">
-        <button>
+        <button ref="thirdButton" class="thirdButton" @click="isThirdClick=!isThirdClick; outsideClick('thirdButton')">
           <ButtonCom icon="r-actionbar-layout" title="Layout" />
+          <div v-if="isThirdClick" class="thirdButton-item">
+            <NormalMenuBar :titles="layoutItems" />
+          </div>
         </button>
         <button>
           <ButtonCom icon="r-actionbar-platform" title="Platforms" />
@@ -356,5 +381,15 @@ const menuItems1 = ['Breakdown by Platforms', 'Breakdown by Payment Platforms', 
 .firstButton-item {
   position: absolute;
   top: 50px;
+}
+
+/* 3rd Button */
+.thirdButton {
+  position: relative;
+}
+.thirdButton-item {
+  position: absolute;
+  top: 50px;
+  right: 0;
 }
 </style>

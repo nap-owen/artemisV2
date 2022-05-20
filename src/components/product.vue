@@ -12,7 +12,6 @@ const props = defineProps<{
   campaign_url: string
   preview_img: string
 }>()
-console.log(props.preview_pic)
 // product 1 = platform
 // product 2 = campaign
 </script>

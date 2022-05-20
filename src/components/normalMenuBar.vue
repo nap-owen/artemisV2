@@ -21,7 +21,8 @@ const props = defineProps<{
   gap: 24px;
 
   /* max-width:100%; */
-  width: max-content;
+  max-width: auto;
+  width: 257px;
   height: max-content;
   padding: 24px 15px;
   background: #FFFFFF;

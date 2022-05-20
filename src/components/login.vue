@@ -14,16 +14,6 @@ const username = ref('')
 const password = ref('')
 const headers = { headers: { 'Content-Type': 'application/json', 'Gui': 'Case Management', 'Authorization': '' } }
 
-const randomString = (length: number) => {
-  let result = ''
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_+=-'
-  const charactersLength = characters.length
-
-  for (let i = 0; i < length; i++)
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-
-  return result
-}
 const postData = () => {
   axios.post(`${import.meta.env.VITE_VUE_APP_URL}/login`,
     {
@@ -34,7 +24,7 @@ const postData = () => {
       let results = response.data.data
       headers.headers.Authorization = `Bearer ${response.data.meta.access_token}`
       results = { ...results, ...headers }
-      console.log(results)
+      //   console.log(results)
       if (response.status === 200) {
         // users.value = {
         //   username: response.data.data.user_id,
@@ -50,23 +40,9 @@ const postData = () => {
         // console.log(s)
         // let value = s[1].split('')
 
-        const encrypted = btoa(JSON.stringify(results))
-        console.log({ btoa: encrypted })
-        // console.log(e)
-        let value = encrypted.split('')
-        // console.log(value)
-        for (let i = 0; i < value.length; i++) {
-          if (i % 5 === 0 && i !== 0) {
-            const s = randomString(1)
-            console.log({ adeed: s })
-            value.splice(i, 0, s)
-          }
-        }
-
-        value = value.join('')
-        localStorage.removeItem('user')
-        useLocalStorage('user', value)
-        store.show()
+        store.encrypt(results)
+        // store.show()
+        // to show the decrypted value
         store.decrypt()
 
         router.push('/landingpage')
