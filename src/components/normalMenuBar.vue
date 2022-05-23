@@ -6,9 +6,9 @@ const props = defineProps<{
 
 <template>
   <div class="container">
-    <div v-for="(title, index) in props.titles" :key="index" class="item">
-      <a href="">{{ title }}</a>
-    </div>
+    <a v-for="(title, index) in props.titles" :key="index" href="" class="item">
+      <p>{{ title }}</p>
+    </a>
   </div>
 </template>
 

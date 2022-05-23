@@ -2,11 +2,12 @@
 const props = defineProps<{
   icon: string
   title: string
+  isClick: boolean
 }>()
 </script>
 
 <template>
-  <button class="btn1">
+  <button class="btn1" :class="{'toggled': isClick}">
     <p :class="props.icon" />
     <p v-if="title">
       {{ props.title }}
@@ -42,7 +43,8 @@ const props = defineProps<{
 
 .btn1:active,
 .btn1:focus,
-.btn1:focus-within {
+.btn1:focus-within,
+.btn1.toggled {
     background: #3B5998;
     color: #FFFFFF;
 }

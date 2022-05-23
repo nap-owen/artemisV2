@@ -9,6 +9,9 @@ const props = defineProps<{
 
 const page = ref(props.pageNumber)
 
+const count = ref(0)
+const countClick = ref(0)
+
 const decrement = () => {
   if (page.value > 1)
     page.value = page.value - 1
@@ -35,9 +38,13 @@ const greatIncrement = () => {
 const isClick = ref(false)
 const isFirstClick = ref(false)
 const isThirdClick = ref(false)
+const isFourthClick = ref(false)
+const isFifthClick = ref(false)
 
 const firstButton = ref(null)
 const thirdButton = ref(null)
+const fourthButton = ref(null)
+const fifthButton = ref(null)
 const dropdownRef = ref(null)
 
 const outsideClick = (target: string) => {
@@ -67,54 +74,104 @@ const outsideClick = (target: string) => {
           isThirdClick.value = false
         },
       )
+      break
+    }
+    case 'fourthButton': {
+      onClickOutside(
+        fourthButton,
+        (event) => {
+          isFourthClick.value = false
+        },
+      )
+      break
+    }
+    case 'fifthButton': {
+      onClickOutside(
+        fifthButton,
+        (event) => {
+          isFifthClick.value = false
+        },
+      )
+      break
     }
   }
 }
 
 const breakdownItems = ['Breakdown by Platforms', 'Breakdown by Payment Platforms', 'Breakdown by Payment Types']
 const layoutItems = ['Card View', 'View List']
+const platformItems = [
+  { platform_name: 'All Platforms' },
+  { platform_name: 'Aliexpress' },
+  { platform_name: 'Dhgate' },
+  { platform_name: 'Ebay' },
+  { platform_name: 'Wish' },
+  { platform_name: '11street' },
+  { platform_name: '1688' },
+]
 </script>
 
 <template>
   <div class="container">
     <div class="upperDiv">
       <div class="upperLeft">
-        <button ref="dropdownRef" class="upperLeft1" @click="isClick=!isClick; outsideClick('dropdownRef')">
-          <img src="/JPG Campaigns/Nestle.jpg " alt="">
-          <p>Nestle</p>
+        <div ref="dropdownRef" class="upperLeft1-container">
+          <button class="upperLeft1" :class="{'toggled': isClick}" @click="isClick=!isClick; outsideClick('dropdownRef')">
+            <!-- <button class="upperLeft1" @click="addCount();isClick=true"></button> -->
+            <img src="/JPG Campaigns/Nestle.jpg " alt="">
+            <p>Nestle</p>
+          </button>
           <div v-if="isClick" class="searchCampaign">
             <SearchCampaignCom :results="props.results" />
           </div>
-        </button>
+          <!-- v-if="count===1 && isClick===true" -->
+        </div>
+
         <div class="upperLeft2">
           <input type="text" placeholder="Search">
           <button class="r-appbar-search search-btn" />
         </div>
-        <button ref="firstButton" class="firstButton" @click="isFirstClick=!isFirstClick; outsideClick('firstButton')">
-          <ButtonCom icon="r-actionbar-breakdown" />
+        <div ref="firstButton" class="firstButton">
+          <button @click="isFirstClick=!isFirstClick; outsideClick('firstButton')">
+            <ButtonCom icon="r-actionbar-breakdown" :is-click="isFirstClick" />
+          </button>
           <div v-if="isFirstClick" class="firstButton-item">
             <NormalMenuBar :titles="breakdownItems" />
           </div>
-        </button>
+        </div>
+        <!-- selection -->
         <button>
           <ButtonCom icon="r-actionbar-selection" />
         </button>
+        <!-- selection -->
       </div>
       <div class="upperRight">
-        <button ref="thirdButton" class="thirdButton" @click="isThirdClick=!isThirdClick; outsideClick('thirdButton')">
-          <ButtonCom icon="r-actionbar-layout" title="Layout" />
+        <div ref="thirdButton" class="thirdButton">
+          <button @click="isThirdClick=!isThirdClick; outsideClick('thirdButton')">
+            <ButtonCom icon="r-actionbar-layout" title="Layout" :is-click="isThirdClick" />
+          </button>
           <div v-if="isThirdClick" class="thirdButton-item">
             <NormalMenuBar :titles="layoutItems" />
           </div>
-        </button>
-        <button>
-          <ButtonCom icon="r-actionbar-platform" title="Platforms" />
-        </button>
-        <button>
-          <ButtonCom icon="r-actionbar-filters" title="Filters" />
-        </button>
+        </div>
+        <div ref="fourthButton" class="fourthButton">
+          <button @click="isFourthClick=!isFourthClick; outsideClick('fourthButton')">
+            <ButtonCom icon="r-actionbar-platform" title="Platforms" :is-click="isFourthClick" />
+          </button>
+          <div v-if="isFourthClick" class="fourthButton-item">
+            <PlatformDropdownCom :items="platformItems" />
+          </div>
+        </div>
+        <div ref="fifthButton" class="fifthButton">
+          <button @click="isFifthClick=!isFifthClick; outsideClick('fifthButton')">
+            <ButtonCom icon="r-actionbar-filters" title="Filters" :is-click="isFifthClick" />
+          </button>
+          <div v-if="isFifthClick" class="fifthButton-item">
+            <CMmodalCom :is-click="isFifthClick" @clickBy="(n: boolean) => isFifthClick=n" />
+          </div>
+        </div>
       </div>
     </div>
+    <PaymentMethodsCom />
     <div class="lowerDiv">
       <div class="lowerLeft">
         <button>
@@ -198,6 +255,12 @@ const layoutItems = ['Card View', 'View List']
   gap: 8px;
 }
 
+.upperLeft1-container {
+  position: relative;
+  width: 114px;
+  height: 40px;
+}
+
 .upperLeft1 {
   display: flex;
   align-items: center;
@@ -213,6 +276,8 @@ const layoutItems = ['Card View', 'View List']
 
   font-size: 14px;
   font-weight: bold;
+
+  /* position: relative; */
 }
 
 .upperLeft1:hover {
@@ -220,7 +285,8 @@ const layoutItems = ['Card View', 'View List']
 }
 
 .upperLeft1:active,
-.upperLeft1:focus {
+.upperLeft1:focus,
+.upperLeft1.toggled {
   background: #3B5998;
   color: #FFFFFF;
   font-weight: normal;
@@ -371,16 +437,18 @@ const layoutItems = ['Card View', 'View List']
 /* search campaign */
 .searchCampaign {
   position: absolute;
-  top: 60%;
+  top: 50px;;
+  left: 0;
 }
 
 /* 1st button */
+
 .firstButton {
   position: relative;
 }
 .firstButton-item {
   position: absolute;
-  top: 50px;
+  top: 45px;
 }
 
 /* 3rd Button */
@@ -391,5 +459,29 @@ const layoutItems = ['Card View', 'View List']
   position: absolute;
   top: 50px;
   right: 0;
+}
+
+/* 4th Button */
+.fourthButton {
+  position: relative;
+}
+
+.fourthButton-item {
+  position: absolute;
+  top: 50px;
+  right: 0;
+}
+
+/* 5th Button */
+.fifthButton {
+  position: relative;
+}
+
+.fifthButton-item {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }
 </style>

@@ -41,7 +41,7 @@ const postData = () => {
         // let value = s[1].split('')
 
         store.encrypt(results)
-        // store.show()
+        store.show()
         // to show the decrypted value
         store.decrypt()
 

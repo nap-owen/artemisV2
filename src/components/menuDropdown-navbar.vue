@@ -43,7 +43,7 @@ const menu = [{
   right: 15%;
   box-shadow: 0px 1px 6px #00000029;
   font-size: 14px;
-  z-index: 2;
+  z-index: 3;
 }
 
 .dropdown a {
