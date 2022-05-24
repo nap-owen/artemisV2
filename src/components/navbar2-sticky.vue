@@ -5,12 +5,10 @@ import ButtonCom from './buttonCom.vue'
 const props = defineProps<{
   pageNumber: number
   results: []
+  campaign: []
 }>()
 
 const page = ref(props.pageNumber)
-
-const count = ref(0)
-const countClick = ref(0)
 
 const decrement = () => {
   if (page.value > 1)
@@ -121,7 +119,7 @@ const platformItems = [
             <p>Nestle</p>
           </button>
           <div v-if="isClick" class="searchCampaign">
-            <SearchCampaignCom :results="props.results" />
+            <SearchCampaignCom :campaign="campaign" :results="props.results" />
           </div>
           <!-- v-if="count===1 && isClick===true" -->
         </div>
@@ -171,7 +169,6 @@ const platformItems = [
         </div>
       </div>
     </div>
-    <PaymentMethodsCom />
     <div class="lowerDiv">
       <div class="lowerLeft">
         <button>

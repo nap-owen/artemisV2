@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onClickOutside, useWindowScroll } from '@vueuse/core'
+import { onClickOutside } from '@vueuse/core'
 import Footer1 from './Footer.vue'
 
 // const { x, y } = useWindowScroll()
 
 const props = defineProps<{
   results: []
+  campaign: []
 }>()
 
 const isOpen = ref(false)
@@ -18,28 +19,6 @@ onClickOutside(
     isOpen.value = false
   },
 )
-
-const items = [{
-  id: 1000000,
-}, {
-  id: 2000000,
-}, {
-  id: 3000000,
-}, {
-  id: 4000000,
-}, {
-  id: 5000000,
-}, {
-  id: 6000000,
-}, {
-  id: 7000000,
-}, {
-  id: 8000000,
-}, {
-  id: 9000000,
-}, {
-  id: 10000000,
-}]
 </script>
 
 <template>
@@ -79,11 +58,18 @@ const items = [{
   </div>
   <hr>
   <div class="nav2">
-    <Navbar2Sticky :page-number="1" :results="props.results" />
+    <Navbar2Sticky :campaign="campaign" :page-number="1" :results="props.results" />
   </div>
   <div class="list">
-    <div v-for="(item, index) in items" :key="index">
-      <CampaignManagementProductCom :id="item.id" source="/avatar_png/Default-Listing.png" />
+    <div v-for="(item, index) in props.results" :key="index">
+      <CampaignManagementProductCom
+        :id="item.id"
+        :campaign_url="item.campaign_url"
+        :platform_logo="item.platform_logo"
+        :seller_name="item.seller_name"
+        :list_info="item.list_info"
+        source="/avatar_png/Default-Listing.png"
+      />
     </div>
   </div>
 

@@ -2,10 +2,11 @@
 
 const props = defineProps<{
   results: []
+  campaign: []
 }>()
 
 const campaign_text = ref('')
-const campaignFiltered = computed(() => campaign_text.value ? props.results.filter(r => r.company.toLowerCase().includes(campaign_text.value.toLowerCase())) : props.results)
+const campaignFiltered = computed(() => campaign_text.value ? props.campaign.filter(r => r.campaign_name.toLowerCase().includes(campaign_text.value.toLowerCase())) : props.campaign)
 
 const ucFirst = (str: string) => {
   if (typeof str !== 'string')
@@ -32,8 +33,8 @@ const getCampaignImage = (name) => {
     </div>
     <a class="search-campaign-box">
       <div v-for="(campaign_item, index2) in campaignFiltered" :key="index2" class="search-campaign-item" @click="menuSelected = index2">
-        <img :src="getCampaignImage(campaign_item.company) " alt="">
-        <p>{{ campaign_item.company }}</p>
+        <img :src="getCampaignImage(campaign_item.campaign_name) " alt="">
+        <p>{{ campaign_item.campaign_name }}</p>
       </div>
     </a>
   </div>

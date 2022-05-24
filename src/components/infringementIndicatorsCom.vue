@@ -1,32 +1,24 @@
 <script setup lang="ts">
 const items = [{
-  title: 'eBay',
+  title: 'Item is from China',
 }, {
-  title: 'Wish',
+  title: 'Suspicious product description',
 }, {
-  title: 'Chinese Bank',
+  title: 'Asian size chart',
 }, {
-  title: 'Pingpong',
+  title: 'Price is notably lower than the original',
 }, {
-  title: 'No Account',
+  title: 'Shipping takes more than 12 days',
 }, {
-  title: 'WeChat Pay',
+  title: 'Bad reviews which indicate that the product is fake',
 }, {
-  title: 'Paypal - No Account',
+  title: 'Item is not included in the brand\'s official merchandise',
 }, {
-  title: 'Paypal',
+  title: 'Bad reviews on customer\'s buying experience',
 }, {
-  title: 'Amazon',
+  title: 'Item uses a different logo',
 }, {
-  title: 'DHPay',
-}, {
-  title: 'US Bank',
-}, {
-  title: 'Alipay',
-}, {
-  title: 'Payoneer',
-}, {
-  title: 'DHGate - No Account',
+  title: 'Asian seller name',
 }]
 </script>
 
@@ -34,7 +26,7 @@ const items = [{
   <div class="container">
     <div class="title">
       <p>
-        Payment Methods
+        Infringement Indicators
       </p>
     </div>
     <div class="div-item-container">
@@ -53,44 +45,48 @@ const items = [{
   justify-content: space-between;
   flex-direction: column;
 
-  width: 664px;
-  height:  451px;
+  width: max-content;
+  height:  434px;
 }
 .title {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 46px;
-  width: 664px;
+  width: 638px;
 
   font-size: 22px;
   font-weight: bold;
   color: #383A3D;
 }
 .div-item-container {
-  width: 664px;
-  height:  390px;
+  margin: 0 auto;
+  width: 638px;
+  height:  350px;
 
-  display: flex;
-  align-items: flex-start;
+  display: grid;
+  /* align-items: flex-start;
   justify-content: space-between;
   flex-direction: column;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
+  grid-template-columns: 292px 292px;
 
   padding: 0 12px;
 
-  margin: 0 auto;
+  row-gap: 20px;
+  column-gap: 24px;
 }
 .div-item {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  /* flex-wrap: wrap; */
   gap: 16px;
-  margin-bottom: 25px;
-
   font-size: 16px;
   color: #383A3D;
   opacity: 80%;
+  max-width: 250px;
+  text-align: left;
 }
 
 .checkbox {

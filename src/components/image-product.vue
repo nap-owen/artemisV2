@@ -24,7 +24,7 @@ const getCampaignImage = (name) => {
 </script>
 <template>
   <div class="image">
-    <a :href="campaign_url" class="img1">
+    <a :href="props.campaign_url" class="img1">
       <img :src="props.platform" alt="">
       <div class="tooltip-div">
         <tooltip id="tooltip1" text="Click to Open Product page" />

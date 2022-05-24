@@ -142,8 +142,8 @@ const props = defineProps<{
 }
 
 .applyBtn {
-  width: 76px;
-  height: 36px;
+  width: auto;
+  padding: 9px 16px;
   border-radius: 4px;
 
   background: #3B5998;

@@ -174,10 +174,13 @@ const count = ref(0)
         </div>
         <!-- Payment MEthods -->
         <div class="middle-div">
-          <div class="flex-left middle-title2">
-            <p>Payment Methods</p>
-          </div>
-          <!-- checkboxes -->
+          <PaymentMethodsCom />
+          <hr>
+        </div>
+        <!-- Infringement Indicators -->
+        <div class="middle-div">
+          <InfringementIndicatorsCom />
+          <hr>
         </div>
       </div>
     </div>

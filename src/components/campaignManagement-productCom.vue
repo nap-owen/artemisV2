@@ -2,14 +2,28 @@
 const props = defineProps<{
   source: string
   id: number
+  platform_logo: string
+  campaign_url: string
+  seller_name: string
+  list_info: string
 }>()
+
+// company: r.campaign,
+// campaign_logo: r.campaign_image,
+// platform_logo: r.platform_image,
+// list_info: r.listing_info.listing_title,
+// id: r.id,
+// seller_name: r.seller[0].name,
+// campaign_url: r.seller[0].url,
+
+// preview_img: `${import.meta.env.VITE_VUE_APP_URL}/files/${r.evidences.preview}`,
 </script>
 
 <template>
   <div class="container-product">
     <div class="img-div1">
       <div class="img-item">
-        <image-product />
+        <image-product :campaign_url="props.campaign_url" :platform="props.platform_logo" />
       </div>
       <img :src="props.source" alt="">
     </div>
@@ -20,17 +34,17 @@ const props = defineProps<{
           <p>For Review</p>
         </div>
         <div class="upperRight">
-          <IdNumberCom :id-number="id" />
+          <IdNumberCom :id-number="props.id" />
         </div>
       </div>
       <div class="lower">
         <div class="lower1">
           <p class="title">
-            Sample Seller Name
+            {{ props.seller_name }}
           </p>
         </div>
         <div class="lower2">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+          <p>{{ props.list_info }}</p>
         </div>
       </div>
     </div>
@@ -47,6 +61,8 @@ const props = defineProps<{
     flex-direction: column;
     gap: 10px;
     margin: 0 auto;
+
+    max-height: 350px;
 }
 .img-div1 {
     width: 280px;
@@ -79,7 +95,7 @@ const props = defineProps<{
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
+    height: 116px;
     width: 280px;
 }
 .upper {
@@ -102,10 +118,12 @@ const props = defineProps<{
 .lower {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   text-align: left;
   gap: 5px;
+
+  height: 116px;
 }
 .lower1 {
   width: 280px;
@@ -114,9 +132,24 @@ const props = defineProps<{
 .title {
   font-size: 16px;
   font-weight: bold;
+
+  height: 21px;
+  width: 145px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lower2 p {
   font-size: 14px;
+  height: 66px;
+  width: 280px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
 }
 </style>

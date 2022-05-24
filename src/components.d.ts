@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     Footer: typeof import('./components/Footer.vue')['default']
     IdNumberCom: typeof import('./components/idNumberCom.vue')['default']
     ImageProduct: typeof import('./components/image-product.vue')['default']
+    InfringementIndicatorsCom: typeof import('./components/infringementIndicatorsCom.vue')['default']
     LandingpageCom: typeof import('./components/landingpage-com.vue')['default']
     Login: typeof import('./components/login.vue')['default']
     MenuDropdownNavbar: typeof import('./components/menuDropdown-navbar.vue')['default']
