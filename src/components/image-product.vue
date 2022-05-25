@@ -4,7 +4,8 @@ const props = defineProps<{
   platform: string
   campaign: string
   company_campaign: string
-  campaign_url: string
+  seller_url: string
+  product_url: string
 }>()
 
 const ucFirst = (str: string) => {
@@ -24,7 +25,7 @@ const getCampaignImage = (name) => {
 </script>
 <template>
   <div class="image">
-    <a :href="props.campaign_url" class="img1">
+    <a :href="props.product_url" class="img1">
       <img :src="props.platform" alt="">
       <div class="tooltip-div">
         <tooltip id="tooltip1" text="Click to Open Product page" />

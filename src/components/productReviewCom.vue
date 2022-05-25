@@ -2,16 +2,43 @@
 import { onClickOutside } from '@vueuse/core'
 import Footer1 from './Footer.vue'
 
-// const { x, y } = useWindowScroll()
-
 const props = defineProps<{
   results: []
   campaign: []
 }>()
 
+const id = ref()
+const seller_url = ref()
+const product_url = ref()
+const platform_logo = ref()
+const seller_name = ref()
+const list_info = ref()
+const source = ref()
+const campaign_logo = ref()
+const platform = ref()
+
 const isOpen = ref(false)
+const selectedProduct = ref()
+const selectedIndex = ref()
+const isSelected = ref(false)
 
 const dropdownRef = ref(null)
+const modalListing = ref(null)
+
+const selected = (idNumber, s_url, p_url, p_logo, s_name, l_info, p_img, c_logo, p) => {
+  id.value = idNumber
+  seller_url.value = s_url
+  product_url.value = p_url
+  platform_logo.value = p_logo
+  seller_name.value = s_name
+  list_info.value = l_info
+  source.value = p_img
+  campaign_logo.value = c_logo
+  platform.value = p
+
+  isSelected.value = true
+  console.log(isSelected.value)
+}
 
 onClickOutside(
   dropdownRef,
@@ -19,10 +46,17 @@ onClickOutside(
     isOpen.value = false
   },
 )
+
+onClickOutside(
+  modalListing,
+  (event) => {
+    isSelected.value = false
+  },
+)
 </script>
 
 <template>
-  <div class="nav">
+  <div class="nav" :class="{'overflow': isSelected}">
     <div class="flex1">
       <img src="artemis_login_svg/CM_Logo.svg" alt="">
       <p> ARTEMIS CM</p>
@@ -57,23 +91,40 @@ onClickOutside(
     </div>
   </div>
   <hr>
-  <div class="nav2">
+  <div :class="{'overflow': isSelected}" class="nav2">
     <Navbar2Sticky :campaign="campaign" :page-number="1" :results="props.results" />
   </div>
   <div class="list">
-    <div v-for="(item, index) in props.results" :key="index">
+    <button v-for="(item, index) in props.results" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_logo,item.seller_name,item.list_info,item.preview_img,item.campaign_logo, item.platform)">
       <CampaignManagementProductCom
         :id="item.id"
-        :campaign_url="item.campaign_url"
+        :seller_url="item.seller_url"
+        :product_url="item.product_url"
         :platform_logo="item.platform_logo"
         :seller_name="item.seller_name"
         :list_info="item.list_info"
-        source="/avatar_png/Default-Listing.png"
+        :source="item.preview_img"
       />
-    </div>
+      <!-- modal -->
+    </button>
   </div>
-
-  <div>
+  <div v-if="isSelected" ref="modalListing">
+    <ModalListingOverviewCom
+      :id-number="id"
+      :preview_img="source"
+      :platform_logo="platform_logo"
+      :seller_url="seller_url"
+      :product_url="product_url"
+      :seller_name="seller_name"
+      :list_info="list_info"
+      :campaign_logo="campaign_logo"
+      :platform="platform"
+      :is-click="isSelected" @clickBy="(n: boolean) => isSelected=n"
+    />
+  </div>
+  <div
+    :class="{'overflow': isSelected}"
+  >
     <Footer1 />
   </div>
 </template>
@@ -116,6 +167,10 @@ hr {
 
   padding: 20px;
 }
+.nav.overflow {
+  overflow: hidden;
+}
+
 /* flex1 */
 .flex1 {
   display: flex;
@@ -254,6 +309,9 @@ hr {
   top: 0;
   z-index: 2;
   background: #FFFFFF;
+}
+.nav2.overflow {
+  overflow: hidden;
 }
 
 /* list */

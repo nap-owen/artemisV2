@@ -31,7 +31,8 @@ const props = defineProps<{
           :list_info="item.list_info"
           :seller="item.seller_name"
           :company_campaign="item.company"
-          :campaign_url="item.campaign_url"
+          :seller_url="item.seller_url"
+          :product_url="item.product_url"
           :preview_img="item.preview_img"
         />
       </div>

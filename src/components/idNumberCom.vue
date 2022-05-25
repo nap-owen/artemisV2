@@ -28,5 +28,6 @@ const props = defineProps<{
         font-weight: bold;
         color: #2D599E;
         opacity: 100%;
+        font-size: 10px;
     }
 </style>

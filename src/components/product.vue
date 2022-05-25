@@ -9,7 +9,8 @@ const props = defineProps<{
   seller: string
   list_info: string
   company_campaign: string
-  campaign_url: string
+  seller_url: string
+  product_url: string
   preview_img: string
 }>()
 // product 1 = platform
@@ -21,7 +22,7 @@ const props = defineProps<{
       <div id="img-container">
         <!-- image component attached here -->
         <div id="img-item">
-          <image-product :platform="props.platform" :campaign="props.campaign" :company_campaign="props.company_campaign" :campaign_url="campaign_url" />
+          <image-product :platform="props.platform" :campaign="props.campaign" :company_campaign="props.company_campaign" :seller_url="props.seller_url" :product_url="props.product_url" />
         </div>
         <img :src="props.preview_img" alt="" @error="(event) => event.target.src='/avatar_png/Default-Listing.png'">
       </div>

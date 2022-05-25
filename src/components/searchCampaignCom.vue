@@ -7,6 +7,15 @@ const props = defineProps<{
 
 const campaign_text = ref('')
 const campaignFiltered = computed(() => campaign_text.value ? props.campaign.filter(r => r.campaign_name.toLowerCase().includes(campaign_text.value.toLowerCase())) : props.campaign)
+const menuSelected = ref()
+
+const router = useRouter()
+
+const campaign_menu = [{
+  menu: 'Go to Listings',
+}, {
+  menu: 'Go to Cases',
+}]
 
 const ucFirst = (str: string) => {
   if (typeof str !== 'string')
@@ -35,6 +44,9 @@ const getCampaignImage = (name) => {
       <div v-for="(campaign_item, index2) in campaignFiltered" :key="index2" class="search-campaign-item" @click="menuSelected = index2">
         <img :src="getCampaignImage(campaign_item.campaign_name) " alt="">
         <p>{{ campaign_item.campaign_name }}</p>
+        <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
+          <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push('/productReview')">{{ item.menu }}</a>
+        </div>
       </div>
     </a>
   </div>
@@ -139,5 +151,32 @@ const getCampaignImage = (name) => {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+/* campaign sub dropdown */
+
+.campaign-sub-dropdown {
+  position: absolute;
+
+  width: 180px;
+  height: 107px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #7070703D;
+  padding: 0 16px;
+
+  font-size: 14px;
+  left: 73%;
+  margin-top: 65px;
+}
+
+.campaign-sub-item {
+  cursor: pointer;
 }
 </style>

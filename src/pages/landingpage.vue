@@ -19,8 +19,9 @@ const getData = () => {
           list_info: r.listing_info.listing_title,
           id: r.id,
           seller_name: r.seller[0].name,
-          campaign_url: r.seller[0].url,
+          seller_url: r.seller[0].url,
 
+          product_url: r.url,
           // evidences preview
           preview_img: `${import.meta.env.VITE_VUE_APP_URL}/files/${r.evidences.preview}`,
         }

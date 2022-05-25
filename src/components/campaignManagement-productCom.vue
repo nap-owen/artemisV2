@@ -3,29 +3,21 @@ const props = defineProps<{
   source: string
   id: number
   platform_logo: string
-  campaign_url: string
+  seller_url: string
+  product_url: string
   seller_name: string
   list_info: string
 }>()
 
-// company: r.campaign,
-// campaign_logo: r.campaign_image,
-// platform_logo: r.platform_image,
-// list_info: r.listing_info.listing_title,
-// id: r.id,
-// seller_name: r.seller[0].name,
-// campaign_url: r.seller[0].url,
-
-// preview_img: `${import.meta.env.VITE_VUE_APP_URL}/files/${r.evidences.preview}`,
 </script>
 
 <template>
   <div class="container-product">
     <div class="img-div1">
       <div class="img-item">
-        <image-product :campaign_url="props.campaign_url" :platform="props.platform_logo" />
+        <image-product :seller_url="props.seller_url" :platform="props.platform_logo" :product_url="props.product_url" />
       </div>
-      <img :src="props.source" alt="">
+      <img :src="props.source" alt="" @error="(event) => event.target.src='/avatar_png/Default-Listing.png'">
     </div>
     <div class="txt-div">
       <div class="upper">
