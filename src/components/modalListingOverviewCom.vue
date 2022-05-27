@@ -89,8 +89,8 @@ const clicked = ref(props.isClick)
   left:0;
   right:0;
   z-index: 2;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   background: #FFFFFF;
 }
 

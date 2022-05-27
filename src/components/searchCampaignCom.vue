@@ -111,6 +111,7 @@ const getCampaignImage = (name) => {
   scrollbar-width: none;  /* Firefox */
   padding: 5px 16px;
   width: 740px;
+  min-height: 110px;
 
   position: relative;
   cursor: pointer;

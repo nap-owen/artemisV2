@@ -9,17 +9,19 @@ const props = defineProps<{
   list_info: string
 }>()
 
+const isSelected = ref(false)
+
 </script>
 
 <template>
   <div class="container-product">
-    <div class="img-div1">
+    <a :href="props.product_url" class="img-div1">
       <div class="img-item">
         <image-product :seller_url="props.seller_url" :platform="props.platform_logo" :product_url="props.product_url" />
       </div>
       <img :src="props.source" alt="" @error="(event) => event.target.src='/avatar_png/Default-Listing.png'">
-    </div>
-    <div class="txt-div">
+    </a>
+    <button class="txt-div" @click="isSelected=true;$emit('isSelected',isSelected)">
       <div class="upper">
         <div class="upperLeft">
           <p class="r-status-forreview" />
@@ -39,7 +41,7 @@ const props = defineProps<{
           <p>{{ props.list_info }}</p>
         </div>
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -55,7 +57,10 @@ const props = defineProps<{
     margin: 0 auto;
 
     max-height: 350px;
+
+    position: relative;
 }
+
 .img-div1 {
     width: 280px;
     height: 165px;
@@ -90,6 +95,25 @@ const props = defineProps<{
     height: 116px;
     width: 280px;
 }
+
+.txt-div::before {
+  content: "";
+  top: 0;
+  position: absolute;
+  width: 0;
+  height: 100%;
+  transition: all .5s;
+  transform: translateY(-100%);
+  border-radius: 12px;
+  z-index: -1;
+}
+
+.txt-div:hover::before{
+  transform: translateY(0);
+  background: #f3f1f1;
+  width: 110%;
+}
+
 .upper {
     display: flex;
     align-items: center;

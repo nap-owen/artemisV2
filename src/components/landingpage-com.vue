@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onClickOutside } from '@vueuse/core'
 import Navbar1 from './navbar.vue'
 import Aftersearch1 from './aftersearch.vue'
 // try emitting
@@ -35,12 +36,12 @@ const menuSelected = ref(-1)
 
 const router = useRouter()
 
-const filteredResults = computed(() => text.value ? props.results.filter(r => r.seller_name.toLowerCase().includes(text.value.toLowerCase())) : props.results)
-const campaignFiltered = computed(() => campaign_text.value ? props.campaign.filter(r => r.campaign_name.toLowerCase().includes(campaign_text.value.toLowerCase())) : props.campaign)
+const filteredResults = computed(() => text.value ? props.results.filter(r => r.seller_name?.toLowerCase().includes(text.value?.toLowerCase())) : props.results)
+const campaignFiltered = computed(() => campaign_text.value ? props.campaign.filter(r => r.campaign_name?.toLowerCase().includes(campaign_text.value?.toLowerCase())) : props.campaign)
 
 // for searching
 const isSearchSeller = ref(false)
-const seller_name = ref()
+const seller_name2 = ref()
 
 //
 const isActive = (a: boolean) => {
@@ -50,8 +51,8 @@ const isActive = (a: boolean) => {
     return
   }
   if (a === true) {
-    isClick.value = a
-    isSearchBarActive.value = a
+    isClick.value = true
+    isSearchBarActive.value = true
     // emit(isClick, isClick.value)
   }
 
@@ -107,10 +108,10 @@ window.addEventListener('scroll', () => {
             <!-- when click input 'Seller Name'
             code: ? Input Seller Name : Seller Name
           -->
-            <input v-model="text" type="text" placeholder="Input Seller Name" @click="isClick=true" @blur="isClick=false">
+            <input v-model="text" type="text" placeholder="Input Seller Name" @click="isClick=true">
           </div>
           <div class="search-item2">
-            <button class="r-appbar-search btn-search" :class="{'flag btn-slide': isClick}" @click="isActive(!isClick)">
+            <button class="r-appbar-search btn-search" :class="{'flag btn-slide': isClick}" @click="isActive(isClick)">
               <span>
                 {{ isClick ? ' Search' : '' }}
               </span>
@@ -119,7 +120,7 @@ window.addEventListener('scroll', () => {
         </div>
         <!-- @click="emit('clickBy', item)" -->
         <div v-if="isSearchBarActive" class="search-dropdown">
-          <button v-for="(item, index) in filteredResults" :key="index" class="search-dropdown-item" @click="isSearchSeller=true; seller_name=item.seller_name">
+          <button v-for="(item, index) in filteredResults" :key="index" class="search-dropdown-item" @click="isSearchSeller=true; seller_name2=item.seller_name">
             <p>{{ item.seller_name }}</p>
             <div class="search-dropdown-item2">
               <p>{{ item.company }}</p>
@@ -157,7 +158,7 @@ window.addEventListener('scroll', () => {
     </div>
   </body>
   <div v-if="isSearchSeller">
-    <Aftersearch1 :results="props.results" :seller_name="seller_name" />
+    <Aftersearch1 :results="props.results" :seller_name="seller_name2" />
   </div>
 </template>
 

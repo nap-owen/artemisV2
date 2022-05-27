@@ -62,7 +62,7 @@ onMounted(() => {
 <template>
   <div>
     <!-- :search-item="var1" -->
-    <LandingpageCom :results="results" :campaign="campaign" @click-by="var1=$event" />
+    <LandingpageCom :results="results" :campaign="campaign" />
     <SellersReview1 :results="results" />
     <Footer />
   </div>

@@ -118,6 +118,7 @@ const props = defineProps<{
   border: 1px solid #70707066;
   border-radius: 6px;
   position: relative;
+  overflow: hidden;
 }
 .right img {
   position: absolute;

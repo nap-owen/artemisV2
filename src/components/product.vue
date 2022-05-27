@@ -169,10 +169,11 @@ const props = defineProps<{
     .flex {
         display: flex;
         align-items: left;
-        justify-content: center;
+        justify-content: flex-start;
         flex-direction: column;
         gap: 10px;
         width: 358px;
+        height: 168px;
     }
 
     .flex-item1 {

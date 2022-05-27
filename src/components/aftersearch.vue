@@ -6,7 +6,7 @@ const props = defineProps<{
   seller_name: string
 }>()
 
-const filteredResults = computed(() => props.seller_name ? props.results.filter(r => r.seller_name.toLowerCase().includes(props.seller_name.toLowerCase())) : props.results)
+const filteredResults = computed(() => props.seller_name ? props.results.filter(r => r.seller_name?.toLowerCase().includes(props.seller_name?.toLowerCase())) : props.results)
 
 </script>
 
@@ -18,14 +18,14 @@ const filteredResults = computed(() => props.seller_name ? props.results.filter(
       <div class="afterSearch_flex">
         <product
           v-for="(item, index) in filteredResults"
-          :id="item.id"
-          :key="index"
+          :id="item.id" :key="index"
           :platform="item.platform_logo"
           :campaign="item.campaign_logo"
           :list_info="item.list_info"
           :seller="item.seller_name"
           :company_campaign="item.company"
           :seller_url="item.seller_url"
+          :product_url="item.product_url"
           :preview_img="item.preview_img"
         />
       </div>
@@ -65,11 +65,12 @@ const filteredResults = computed(() => props.seller_name ? props.results.filter(
     display: flex;
     flex-wrap: wrap;
     max-width: 1240px;
-    justify-content: space-around;
+    justify-content: flex-start;
     row-gap: 56px;
     column-gap: 0px;
     align-items: center;
-    margin: 56px auto;
+    margin: 56px 0;
+    padding: 0 10px;
 }
 
 /* media */

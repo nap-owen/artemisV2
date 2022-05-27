@@ -31,6 +31,7 @@ const props = defineProps<{
     font-size: 10px;
 
     width: max-content;
+    height: 20px;
 }
 .c-img {
   width: 12px;
@@ -39,5 +40,7 @@ const props = defineProps<{
 }
 .item {
   text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
 }
 </style>

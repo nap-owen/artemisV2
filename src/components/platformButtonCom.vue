@@ -24,13 +24,17 @@ const props = defineProps<{
 
     border: 1px solid #383A3D26;
     border-radius: 4px;
+    width: max-content;
+    height: 20px;
 }
 .p-img {
     width: 12px;
     height: 12px;
-  border-radius: 1px;
+    border-radius: 1px;
 }
 .item {
   text-transform: uppercase;
+  font-size: 10px;
+  font-weight: bold;
 }
 </style>

@@ -16,16 +16,15 @@ const list_info = ref()
 const source = ref()
 const campaign_logo = ref()
 const platform = ref()
+const company = ref()
 
 const isOpen = ref(false)
-const selectedProduct = ref()
-const selectedIndex = ref()
 const isSelected = ref(false)
 
 const dropdownRef = ref(null)
 const modalListing = ref(null)
 
-const selected = (idNumber, s_url, p_url, p_logo, s_name, l_info, p_img, c_logo, p) => {
+const selected = (idNumber, s_url, p_url, p_logo, s_name, l_info, p_img, c_logo, p, company_cam) => {
   id.value = idNumber
   seller_url.value = s_url
   product_url.value = p_url
@@ -35,9 +34,7 @@ const selected = (idNumber, s_url, p_url, p_logo, s_name, l_info, p_img, c_logo,
   source.value = p_img
   campaign_logo.value = c_logo
   platform.value = p
-
-  isSelected.value = true
-  console.log(isSelected.value)
+  company.value = company_cam
 }
 
 onClickOutside(
@@ -95,7 +92,7 @@ onClickOutside(
     <Navbar2Sticky :campaign="campaign" :page-number="1" :results="props.results" />
   </div>
   <div class="list">
-    <button v-for="(item, index) in props.results" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_logo,item.seller_name,item.list_info,item.preview_img,item.campaign_logo, item.platform)">
+    <div v-for="(item, index) in props.results" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_logo,item.seller_name,item.list_info,item.preview_img,item.campaign_logo, item.platform, item.company)">
       <CampaignManagementProductCom
         :id="item.id"
         :seller_url="item.seller_url"
@@ -104,9 +101,10 @@ onClickOutside(
         :seller_name="item.seller_name"
         :list_info="item.list_info"
         :source="item.preview_img"
+        @isSelected="(n: boolean) => isSelected=n"
       />
       <!-- modal -->
-    </button>
+    </div>
   </div>
   <div v-if="isSelected" ref="modalListing">
     <ModalListingOverviewCom
@@ -116,6 +114,7 @@ onClickOutside(
       :seller_url="seller_url"
       :product_url="product_url"
       :seller_name="seller_name"
+      :campaign="company"
       :list_info="list_info"
       :campaign_logo="campaign_logo"
       :platform="platform"
