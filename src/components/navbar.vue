@@ -269,6 +269,8 @@ document.addEventListener('click', (event) => {
     justify-content: center;
     width: 150px;
     height: 40px;
+    font-size: 14px;
+    /* font-weight:bold; */
   }
 
   #browse:hover {

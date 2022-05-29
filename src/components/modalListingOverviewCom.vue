@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { useWindowScroll } from '@vueuse/core'
+import { useScroll } from '@vueuse/core'
+
+const el = ref<HTMLElement | null>(null)
+const { x, y } = useScroll(el)
+
 const isOpen = ref(false)
-const { x, y } = useWindowScroll()
 
 const props = defineProps<{
   isClick: boolean
@@ -16,13 +19,138 @@ const props = defineProps<{
   preview_img: string
   product_url: string
   seller_url: string
-
 }>()
 
+const items = [{
+  hist_date: 'Dec 5, 2020',
+  hist_r_name: 'Researcher name',
+  hist_update_from: 'Submitted',
+  hist_update_to: 'Has Potential',
+  hist_status: 'r-status-haspotential',
+}, {
+  hist_date: 'Dec 5, 2020',
+  hist_r_name: 'Researcher name',
+  hist_update_from: 'Submitted',
+  hist_update_to: 'Has Potential',
+  hist_status: 'r-status-haspotential',
+}, {
+  hist_date: 'Dec 5, 2020',
+  hist_r_name: 'Researcher name',
+  hist_update_from: 'Submitted',
+  hist_update_to: 'Has Potential',
+  hist_status: 'r-status-haspotential',
+}, {
+  hist_date: 'Dec 3, 2020',
+  hist_r_name: 'Researcher name',
+  hist_update_from: 'Accepted',
+  hist_update_to: 'Submitted',
+  hist_status: 'r-status-submitted',
+}, {
+  hist_date: 'Dec 1, 2020',
+  hist_r_name: 'Researcher name',
+  hist_update_from: 'For Review',
+  hist_update_to: 'Accepted',
+  hist_status: 'r-status-accepted',
+}, {
+  hist_date: 'Nov 26, 2020',
+  hist_r_name: 'Researcher name',
+  hist_update_from: 'Qualified',
+  hist_update_to: 'For Review',
+  hist_status: 'r-status-forreview',
+}, {
+  hist_date: 'Nov 15, 2020',
+  hist_r_name: 'Researcher name',
+  hist_update_from: 'For Review',
+  hist_update_to: 'For Internal Review',
+  hist_status: 'r-status-for-internal',
+}]
+
+const evidence_items = [{
+  icon: 'r-product-claimtype',
+  title: 'Trademark (Standard)',
+  type: 'Claim Type',
+}, {
+  icon: 'r-product-itemtype',
+  title: 'Class 25 - Clothing',
+  type: 'Item Type',
+}, {
+  icon: 'r-product-transact-history',
+  title: 'Q1W2E3R4T5Y6A7S8D9',
+  type: 'Transaction History',
+}, {
+  icon: 'r-product-dummy',
+  title: 'qwerty asdfgh',
+  type: 'Dummy Account Used',
+}]
+
+const infringement_items = [{
+  icon: 'r-product-infringement',
+  desc: 'Item is from China',
+}, {
+  icon: 'r-product-infringement',
+  desc: 'Bad reviews on customer\'s buying experience',
+}, {
+  icon: 'r-product-infringement',
+  desc: 'Suspicious product description',
+}]
+
+const seller_items = [{
+  icon: 'r-product-seller',
+  title: 'Seller Name',
+}, {
+  icon: 'r-product-seller',
+  title: 'Alias',
+}, {
+  icon: 'r-product-mobile',
+  title: '09123456789',
+}, {
+  icon: 'r-product-phone',
+  title: '232-1234',
+}, {
+  icon: 'r-product-email',
+  title: 'selleremail@gmail.com',
+}, {
+  icon: 'r-product-date',
+  title: 'March 30, 2021',
+}, {
+  icon: 'r-product-vpn',
+  title: 'VPN here',
+}, {
+  icon: 'r-product-conversation',
+  title: 'Conversation Method',
+}, {
+  icon: 'r-product-address',
+  title: 'Zhi Fu Tun Lu 65-6hao Si Lou Kai Di Gong Si',
+}, {
+  icon: 'r-product-country',
+  title: 'Shandong, China',
+}]
+
+const payment_accs = [{
+  img: 'artemis_login_svg/Logo.svg',
+  title: 'Paypal',
+  email: 'thisisemail@paypal.com',
+  ref_code: '*5d3ebd3570327a308efcdacf',
+}, {
+  img: 'artemis_login_svg/Logo.svg',
+  title: 'Wish',
+  email: 'thisisemail@wish.com',
+  ref_code: '*5d3ebd3570327a308efcdacf',
+}, {
+  img: 'artemis_login_svg/Logo.svg',
+  title: 'Alipay',
+  email: 'thisisemail@alipay.com',
+  ref_code: '*5d3ebd3570327a308efcdacf',
+}]
+
 const clicked = ref(props.isClick)
+
 </script>
 <template>
+  <!-- the background -->
   <div class="modal-container">
+    <!-- the inside container -->
+
     <!-- navbar -->
     <div v-if="y>=0 && y<100" class="nav">
       <div class="flex1">
@@ -66,19 +194,135 @@ const clicked = ref(props.isClick)
       <a class="nav2-item" href="">Purchase Details</a>
     </div>
     <hr>
-    <ListingOverviewProductCom
-      :id-number="props.idNumber"
-      :seller_name="props.seller_name"
-      :campaign="props.campaign"
-      :campaign_logo="props.campaign_logo"
-      :platform_logo="props.platform_logo"
-      :platform="props.platform"
-      :list_info="props.list_info"
-      :preview_img="props.preview_img"
-    />
-    <button @click="clicked=false; $emit('clickBy', clicked)">
-      close overview
-    </button>
+    <div class="inside-container">
+      <div ref="el" class="left">
+        <ListingOverviewProductCom
+          :id-number="props.idNumber"
+          :seller_name="props.seller_name"
+          :campaign="props.campaign"
+          :campaign_logo="props.campaign_logo"
+          :platform_logo="props.platform_logo"
+          :platform="props.platform"
+          :list_info="props.list_info"
+          :preview_img="props.preview_img"
+        />
+        <!-- evidence -->
+        <div class="evidence-container">
+          <div class="evidence-top">
+            <div class="evidence-top-top">
+              <p class="r-upload-file" />
+              <p>Evidence</p>
+            </div>
+            <p class="evidence-top-item">
+              In case the product and store pages are no longer available, you can check this captured evidence.
+            </p>
+          </div>
+          <div class="evidence-bottom">
+            <div v-for="(item,index) in evidence_items" :key="index" class="evidence-bottom-item">
+              <p :class="item.icon" class="bottom-icon" />
+              <div class="bottom-item-right">
+                <p class="bottom-item-title">
+                  {{ item.title }}
+                </p>
+                <p class="bottom-item-subtitle">
+                  {{ item.type }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Infringement Indicators -->
+        <div class="infringement-container">
+          <p class="infringement-title">
+            Infringement Indicators
+          </p>
+          <div v-for="(item, index) in infringement_items" :key="index" class="infringement-item">
+            <p class="infringement-icon" :class="item.icon" />
+            <p>{{ item.desc }}</p>
+          </div>
+        </div>
+        <!-- Seller Information -->
+        <div class="seller-container">
+          <div class="seller-top">
+            <p>Seller Information</p>
+            <IdNumberCom text="WILL SHIP TO US" />
+          </div>
+          <div class="seller-bottom">
+            <div v-for="(item,index) in seller_items" :key="index" class="seller-item">
+              <p class="seller-icon" :class="item.icon" />
+              <p>{{ item.title }}</p>
+            </div>
+          </div>
+        </div>
+        <!-- Payment Accounts -->
+        <div class="payment-container">
+          <p class="payment-title">
+            Payment Accounts
+          </p>
+          <div class="payment-bottom">
+            <div class="payment-bottom-item-container">
+              <div v-for="(item, index) in payment_accs" :key="index" class="payment-bottom-item">
+                <p class="r-product-main-account payment-icon" />
+                <div class="payment-item2">
+                  <img :src="item.img" alt="Payment Logo" class="payment-logo">
+                  <p class="payment-bottom-title">
+                    {{ item.title }}
+                  </p>
+                  <p class="payment-bottom-sub">
+                    {{ item.email }}
+                  </p>
+                  <p class="payment-bottom-sub">
+                    {{ item.ref_code }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ListingOverviewProductCom
+          :id-number="props.idNumber"
+          :seller_name="props.seller_name"
+          :campaign="props.campaign"
+          :campaign_logo="props.campaign_logo"
+          :platform_logo="props.platform_logo"
+          :platform="props.platform"
+          :list_info="props.list_info"
+          :preview_img="props.preview_img"
+        />
+      </div>
+      <div class="right">
+        <div class="right-top">
+          <p>Status History</p>
+          <button class="right-top-btn" @click="clicked=false; $emit('clickBy', clicked)">
+            <p class="r-product-close" />
+            <p>Close Overview</p>
+          </button>
+        </div>
+        <div class="right-middle">
+          <div v-for="(item, index) in items" :key="index" class="history-container">
+            <div class="vertical-line" />
+            <div :class="item.hist_status" class="history-bullet" />
+            <div class="history-item">
+              <p class="history-item-date">
+                {{ item.hist_date }}
+              </p>
+              <p class="history-item-name">
+                {{ item.hist_r_name }}
+              </p>
+              <p class="history-item-action">
+                Updated Status from <strong>{{ item.hist_update_from }}</strong>  to <strong>{{ item.hist_update_to }}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="right-bottom">
+          <button class="right-bottom-btn">
+            Change Status
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -92,6 +336,7 @@ const clicked = ref(props.isClick)
   height: 100%;
   width: 100%;
   background: #FFFFFF;
+  /* overflow: hidden; */
 }
 
 hr {
@@ -168,6 +413,7 @@ hr {
   color: #383A3D;
 
   font-size: 14px;
+  font-weight: bold;
 }
 
 #browse:hover {
@@ -272,8 +518,478 @@ hr {
     gap: 20px;
     margin: 0 auto;
     max-width: 1240px;
-    padding: 20px;
+    padding: 0 20px;
     position: sticky;
 }
 
+.nav2-item {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 30px 0;
+}
+.nav2-item:hover{
+  border-bottom: 2px solid #3B5998;
+  color: #3B5998;
+}
+
+/* inside container */
+
+.inside-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 20px;
+  max-width: 1240px;
+  /* width: 100%; */
+  margin: 0 auto;
+  height: 100vh;
+}
+
+/* left */
+.left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 36px;
+
+  width: 60%;
+  height: 80vh;
+  overflow: scroll;
+
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.left::-webkit-scrollbar {
+  display: none;
+}
+
+/* evidence */
+.evidence-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+
+  padding-top: 40px;
+
+  border-bottom: 1px solid #d1d1d1d1;
+  padding-bottom: 40px;
+}
+
+/* evidence-top */
+.evidence-top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 22px;
+
+  width: 653px;
+  height: 132px;
+
+  border: 1px solid #83828233;
+  border-radius: 12px;
+  padding: 0 25px;
+}
+
+.evidence-top-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  color:#383A3D;
+}
+.evidence-top-item {
+  width: 510px;
+  height: 40px;
+  font-size: 14px;
+  color: #595959;
+
+  text-align: left;
+}
+.evidence-top:hover {
+  background: #F7F8FB;
+  border: 1px solid #3B599836;
+}
+
+.evidence-top:hover .evidence-top-top p {
+  color: #3B5998;
+}
+
+/* evidence-bottom */
+.evidence-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 24px;
+  column-gap: 125px;
+  width: 100%;
+}
+.evidence-bottom-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+
+  width: 218px;
+  height: 44px;
+
+  color: #595959;
+}
+.bottom-item-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.bottom-icon {
+  padding-top: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.bottom-item-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #383A3D;
+}
+.bottom-item-subtitle {
+  font-size: 14px;
+  color: #595959;
+}
+/* evidence end */
+
+/* infringement */
+.infringement-container {
+  width: 655.5px;
+  height: 250px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 22px;
+
+  padding:40px 0;
+
+  border-bottom: 1px solid #d1d1d1d1;
+
+  color: #383A3D;
+}
+.infringement-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.infringement-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  font-size: 16px;
+}
+.infringement-icon {
+  font-size: 20px;
+}
+/* infringement--end */
+
+/* Seller */
+.seller-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 22px;
+
+  color:#383A3D;
+  margin-top: 40px;
+  padding-bottom: 40px;
+
+  height: calc(padding-bottom + 300px);
+  width: 655.5px;
+
+  border-bottom: 1px solid #d1d1d1d1;
+}
+.seller-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+.seller-top p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.seller-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 43px;
+  row-gap: 18px;
+  text-align: left;
+}
+
+.seller-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+
+  font-size: 16px;
+}
+.seller-icon {
+  font-size: 20px;
+}
+
+/* seller---end  */
+
+/* Payment */
+.payment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+
+  color: #383A3D;
+  margin-top: 40px;
+  padding-bottom: 40px;
+  height: calc(padding-bottom + 267px);
+  width: 655.5px;
+  border-bottom: 1px solid #d1d1d1d1;
+}
+.payment-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.payment-bottom {
+  display: flex;
+  gap: 25px;
+  max-width: 654px;
+  overflow-x: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.payment-bottom::-webkit-scrollbar {
+  display: none;
+}
+.payment-bottom-item-container {
+  display: flex;
+  gap: 25px;
+  width: 1000px;
+}
+.payment-bottom-item {
+  display: flex;
+
+  height: 168px;
+  width: 280px;
+
+  border-radius: 12px;
+  border: 1px solid #383A3D33;
+  position: relative;
+}
+
+.payment-item2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0 22px;
+}
+
+.payment-logo {
+  width: 32px;
+  height: 32px;
+}
+.payment-bottom-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #383A3D;
+}
+
+.payment-bottom-sub {
+  font-size: 14px;
+  color: #595959;
+}
+
+.payment-icon {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right:0;
+
+  padding: 12px;
+}
+
+/* payment---end */
+
+/* left ---- end */
+
+/* right */
+.right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 36px;
+
+  border-left: 2px solid #d1d1d1d1;
+
+  width: 40%;
+  /* height: 528px; */
+  height: 80%;
+}
+
+/* top */
+.right-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: #383A3D;
+
+  margin-bottom: 10px;
+}
+.right-top-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  font-size: 14px;
+  font-weight: bold;
+
+  height: 32px;
+  width: 154px;
+
+  border-radius: 6px;
+  border: 1px solid #383A3D;
+}
+
+.right-top-btn:hover {
+  background: #ECF5FF;
+  color: #8B9DC3;
+  border: 1px solid #8B9DC3;
+}
+
+/* middle */
+.right-middle {
+  height: 100%;
+  width: 80%;
+  /* border: 1px solid red; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  text-align: left;
+
+  /* left: 15px; */
+  position: relative;
+  overflow: scroll;
+
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.right-middle::-webkit-scrollbar {
+  display: none;
+}
+
+.history-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 24px 0;
+  /* left: 35px; */
+
+  max-width: 400px;
+  position: relative;
+}
+.history-bullet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 48px;
+  border-radius: 100%;
+  border: 1px solid #383A3D;
+  background: #FFFFFF;
+
+  font-size: 14px;
+}
+
+.history-item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+
+  color: #595959;
+}
+.history-item-date {
+  font-size: 12px;
+  font-weight: bold;
+}
+.history-item-name,
+.history-item-action {
+  font-size: 14px;
+}
+.vertical-line {
+  position: absolute;
+  height: 100px;
+  top: 50%;
+  left: 24px;
+  z-index: -1;
+  border: 1px solid #a5a5a5cc;
+}
+
+/* bottom */
+
+.right-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.right-bottom-btn {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  text-align: center;
+
+  height: 48px;
+  width: 380px;
+
+  border: 1px solid #3B5998;
+  border-radius: 6px;
+
+  color: #FFFFFF;
+  background: #8B9DC3;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.right-bottom-btn:hover {
+  background: #ADBBD880;
+  border: 1px solid #8B9DC3;
+  color: #8B9DC3;
+}
+
+.right-bottom-btn:active,
+.right-bottom-btn:focus {
+  background: #3B5998;
+  color: #FFFFFF;
+  border: 1ps solid #70707033;
+}
 </style>

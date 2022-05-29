@@ -1,12 +1,18 @@
 <script setup lang="ts">
 const props = defineProps<{
   idNumber: number
+  text: string
 }>()
 </script>
 
 <template>
   <div class="idNumber">
-    <p>{{ props.idNumber }}</p>
+    <p v-if="idNumber">
+      {{ props.idNumber }}
+    </p>
+    <p v-else>
+      {{ props.text }}
+    </p>
   </div>
 </template>
 

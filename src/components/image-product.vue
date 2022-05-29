@@ -52,7 +52,7 @@ const getCampaignImage = (name) => {
 }
 .tooltip-div {
   /* min-width: 250px; */
-  /* z-index: 99; */
+  z-index: 99;
 }
 
 .image img {

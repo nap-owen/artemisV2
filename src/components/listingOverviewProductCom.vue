@@ -51,11 +51,11 @@ const props = defineProps<{
   justify-content: space-between;
   gap: 18px;
 
-  border-bottom: 1px solid #edededed;
-
+  border-bottom: 1px solid #d1d1d1d1;
+  padding-bottom: 30px;
   width: 655.5px;
   height: 222.5px;
-  margin: 0 auto;
+  margin-top: 36px;
 }
 
 .left {
@@ -82,6 +82,7 @@ const props = defineProps<{
   font-size: 24px;
   font-weight: bold;
   color: #383A3D;
+  text-align: left;
 }
 
 .buttons {
@@ -124,6 +125,15 @@ const props = defineProps<{
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
+  transition: .5s;
+}
+
+.right img:hover {
+  transform: translate(-50%, -50%) scale(.65);
+}
+
+.right:hover {
+  border: 1px solid #3B5998;
 }
 </style>

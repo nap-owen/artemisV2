@@ -19,12 +19,12 @@ const props = defineProps<{
 <template>
   <div>
     <div class="container">
+      <div id="img-item">
+        <image-product :platform="props.platform" :campaign="props.campaign" :company_campaign="props.company_campaign" :seller_url="props.seller_url" :product_url="props.product_url" />
+      </div>
       <div id="img-container">
         <!-- image component attached here -->
-        <div id="img-item">
-          <image-product :platform="props.platform" :campaign="props.campaign" :company_campaign="props.company_campaign" :seller_url="props.seller_url" :product_url="props.product_url" />
-        </div>
-        <img :src="props.preview_img" alt="" @error="(event) => event.target.src='/avatar_png/Default-Listing.png'">
+        <a :href="props.product_url"><img :src="props.preview_img" alt="" @error="(event) => event.target.src='/avatar_png/Default-Listing.png'"></a>
       </div>
       <div class="flex">
         <div class="flex-item1">
@@ -58,34 +58,37 @@ const props = defineProps<{
     } */
 
     /* image design */
+    #img-container {
+      overflow: hidden;
+      width: 200px;
+      height: 168px;
+      border-radius: 12px;
+      position: relative;
+    }
 
     #img-item {
       position: absolute;
+      top: 0;
+      left: 0;
       margin-top: 8px;
       margin-left: 8px;
       margin-bottom: 8px;
       z-index: 1;
     }
 
-    #img-container {
-      overflow: hidden;
-      width: 200px;
-      height: 168px;
-      border-radius: 12px;
-      /* position: relative; */
-    }
-
     #img-container img {
+      position: relative;
+      top: 50%;
+      left: 50%;
       width: 100%;
-      /* position: absolute; */
-      /* top: -15%; */
-      transform:  translateY(-15%) scale(1.5);
+      transform: translate(-50%, -50%) scale(1.5);
+      /* transform:  translateY(-15%) scale(1.5); */
 
       transition: .5s;
     }
 
     #img-container img:hover {
-      transform: scale(.75) translateY(-15%);
+      transform:translate(-50%, -50%) scale(.75);
     }
 
     /* media */
@@ -148,7 +151,17 @@ const props = defineProps<{
         position: relative;
     }
 
-    .container::before{
+    .flex {
+        display: flex;
+        align-items: left;
+        justify-content: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        width: 358px;
+        height: 168px;
+    }
+
+    .flex::before{
       content: "";
       top: 0;
       left: 0;
@@ -160,20 +173,10 @@ const props = defineProps<{
       border-radius: 12px;
       z-index: -1;
     }
-    .container:hover::before{
+    .flex:hover::before{
       transform: translateX(0);
       background: #f3f1f1;
       width: 100%;
-    }
-
-    .flex {
-        display: flex;
-        align-items: left;
-        justify-content: flex-start;
-        flex-direction: column;
-        gap: 10px;
-        width: 358px;
-        height: 168px;
     }
 
     .flex-item1 {

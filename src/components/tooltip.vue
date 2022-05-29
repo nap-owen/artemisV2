@@ -2,12 +2,16 @@
 
 const props = defineProps<{
   text: string
+  // icon: string
 }>()
 
 </script>
 
 <template>
   <div class="tooltip-container">
+    <!-- <div v-if="icon" class="icon">
+      <p :class="props.icon" />
+    </div> -->
     <span>{{ props.text }}</span>
   </div>
 </template>
@@ -17,6 +21,7 @@ const props = defineProps<{
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    gap: 8px;
 
     width: max-content;
 
@@ -29,8 +34,11 @@ const props = defineProps<{
     border-radius: 5px;
 
     font-size: 14px;
-
 }
+/* .icon {
+  font-size: 14px;
+  color: #FFFFFF;
+} */
 
 /* media */
 @media screen and (max-width:768px) {

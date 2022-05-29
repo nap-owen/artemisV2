@@ -88,10 +88,10 @@ onClickOutside(
     </div>
   </div>
   <hr>
-  <div :class="{'overflow': isSelected}" class="nav2">
+  <div class="nav2">
     <Navbar2Sticky :campaign="campaign" :page-number="1" :results="props.results" />
   </div>
-  <div class="list">
+  <div class="list" :class="{'overflow': isSelected}">
     <div v-for="(item, index) in props.results" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_logo,item.seller_name,item.list_info,item.preview_img,item.campaign_logo, item.platform, item.company)">
       <CampaignManagementProductCom
         :id="item.id"
@@ -205,6 +205,7 @@ hr {
   color: #383A3D;
 
   font-size: 14px;
+  font-weight: bold;
 }
 
 #browse:hover {
@@ -309,9 +310,6 @@ hr {
   z-index: 2;
   background: #FFFFFF;
 }
-.nav2.overflow {
-  overflow: hidden;
-}
 
 /* list */
 .list {
@@ -323,6 +321,11 @@ hr {
   flex-wrap:wrap;
   gap: 25px;
   margin-top: 40px;
+}
+
+.list.overflow {
+  overflow: hidden;
+  height: 0;
 }
 
 </style>
