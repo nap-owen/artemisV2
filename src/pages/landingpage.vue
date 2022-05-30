@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import axios from 'axios'
+// import qs from 'qs'
 import LandingpageCom from '~/components/landingpage-com.vue'
 import SellersReview1 from '~/components/sellers-review.vue'
 
 const headers = JSON.parse(JSON.parse(localStorage.getItem('lawfirm')).headers)
 const results = ref()
 
+// window.qs = qs
+
+const campaign_management = ref()
 const campaign = ref()
 
 const getData = () => {
@@ -23,7 +27,7 @@ const getData = () => {
 
           product_url: r.url,
           // evidences preview
-          preview_img: `${import.meta.env.VITE_VUE_APP_URL}/files/${r.evidences.preview}`,
+          preview_img: `${import.meta.env.VITE_VUE_APP_URL}/files/${r.evidences.Preview}`,
         }
       })
     })
@@ -52,9 +56,29 @@ const getCampaignData = () => {
     })
 }
 
+// const getCampaignManagementData = () => {
+//   axios.get(`${import.meta.env.VITE_VUE_APP_URL}/listings/${campaign_id}/qualified/SearchBy/seller_name/0/with/platforms/0?page=1&page_size=100`, headers)
+//     .then((response) => {
+//       campaign_management.value = response.data.data.map((r: any) => {
+//         return {
+//           id: r.id,
+//           campaign_id: r.campaign_id,
+//           campaign_name: r.name,
+//         }
+//       })
+//       // console.log(campaign.value)
+//     })
+//     .catch((error) => {
+//       console.log(error)
+//     })
+//     .then(() => {
+//     })
+// }
+
 onMounted(() => {
   getData()
   getCampaignData()
+  // getCampaignManagementData()
 })
 
 </script>

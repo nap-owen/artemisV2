@@ -7,6 +7,7 @@ const props = defineProps<{
   product_url: string
   seller_name: string
   list_info: string
+  status: string
 }>()
 
 const isSelected = ref(false)
@@ -19,13 +20,15 @@ const isSelected = ref(false)
       <div class="img-item">
         <image-product :seller_url="props.seller_url" :platform="props.platform_logo" :product_url="props.product_url" />
       </div>
-      <img :src="props.source" alt="" @error="(event) => event.target.src='/avatar_png/Default-Listing.png'">
+      <!-- preview image -->
+      <!--<img :src="props.source" alt="" @error="(event) => event.target.src='/avatar_png/Default-Listing.png'">-->
+      <img :src="props.source" alt="" onerror="this.onerror=null;this.src='/avatar_png/Default-Listing.png'">
     </a>
     <button class="txt-div" @click="isSelected=true;$emit('isSelected',isSelected)">
       <div class="upper">
         <div class="upperLeft">
           <p class="r-status-forreview" />
-          <p>For Review</p>
+          <p>{{ props.status }}</p>
         </div>
         <div class="upperRight">
           <IdNumberCom :id-number="props.id" />
@@ -71,11 +74,13 @@ const isSelected = ref(false)
 }
 .img-div1 img {
   position: absolute;
-  top: -85%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .img-div1 img:hover {
-  transform: scale(.5);
+  transform: translate(-50%, -50%) scale(.75);
   transition: .5s;
 }
 

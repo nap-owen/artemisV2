@@ -146,7 +146,7 @@ window.addEventListener('scroll', () => {
               <img :src="getCampaignImage(campaign_item.campaign_name)" alt="">
               <p>{{ campaign_item.campaign_name }}</p>
               <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
-                <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push('/productReview')">{{ item.menu }}</a>
+                <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push({path: '/productReview', query: {campaign_id: `${campaign_item.id}`}})">{{ item.menu }}</a>
               </div>
             </div>
           </a>
@@ -262,6 +262,7 @@ window.addEventListener('scroll', () => {
   scrollbar-width: none;  /* Firefox */
   padding: 5px 16px;
   width: 740px;
+  /* height: 110px; */
 
   position: relative;
   cursor: pointer;

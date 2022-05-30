@@ -6,6 +6,9 @@ const props = defineProps<{
   pageNumber: number
   results: []
   campaign: []
+
+  campaign_name: string
+  campaign_url: string
 }>()
 
 const page = ref(props.pageNumber)
@@ -358,7 +361,7 @@ const platformItems = [
 /* lowerDiv */
 .lowerDiv {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 
   max-width: 100%;

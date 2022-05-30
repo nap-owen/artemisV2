@@ -6,6 +6,8 @@ const { x, y } = useScroll(el)
 
 const isOpen = ref(false)
 
+const payment_clicked = ref(-1)
+
 const props = defineProps<{
   isClick: boolean
 
@@ -143,6 +145,44 @@ const payment_accs = [{
   ref_code: '*5d3ebd3570327a308efcdacf',
 }]
 
+const purchase_brand = [{
+  icon: 'r-product-brand-name',
+  desc1: 'Brand Name is ',
+  visibility: 'visible',
+  desc2: ' on Item Image',
+}, {
+  icon: 'r-product-logo',
+  desc1: 'Logo is ',
+  visibility: 'not visible',
+  desc2: ' on Item Image',
+}]
+
+const purchase_details = [{
+  icon: 'r-product-purchase-type',
+  desc: 'No need to purchase',
+  type: 'Purchase Type',
+}, {
+  icon: 'r-product-platform',
+  desc: 'Platform',
+  type: 'Payment Platform',
+}, {
+  icon: 'r-product-transact-number',
+  desc: 'A9B2C3D4E5F6G7',
+  type: 'Transaction Number',
+}, {
+  icon: 'r-product-purchase-price',
+  desc: '600 $USD',
+  type: 'Purchase Price',
+}, {
+  icon: 'r-product-location',
+  desc: 'China',
+  type: 'Listing Location',
+}, {
+  icon: 'r-product-shipping',
+  desc: 'Illinois',
+  type: 'Shipping Location',
+}]
+
 const clicked = ref(props.isClick)
 
 </script>
@@ -261,8 +301,8 @@ const clicked = ref(props.isClick)
           </p>
           <div class="payment-bottom">
             <div class="payment-bottom-item-container">
-              <div v-for="(item, index) in payment_accs" :key="index" class="payment-bottom-item">
-                <p class="r-product-main-account payment-icon" />
+              <div v-for="(item, index) in payment_accs" :key="index" :class="{'isSelected': !index}" class="payment-bottom-item">
+                <p v-if="index==0" class="r-product-main-account payment-icon" />
                 <div class="payment-item2">
                   <img :src="item.img" alt="Payment Logo" class="payment-logo">
                   <p class="payment-bottom-title">
@@ -279,17 +319,47 @@ const clicked = ref(props.isClick)
             </div>
           </div>
         </div>
-        <ListingOverviewProductCom
-          :id-number="props.idNumber"
-          :seller_name="props.seller_name"
-          :campaign="props.campaign"
-          :campaign_logo="props.campaign_logo"
-          :platform_logo="props.platform_logo"
-          :platform="props.platform"
-          :list_info="props.list_info"
-          :preview_img="props.preview_img"
-        />
+        <!-- Purchase Details -->
+        <div class="purchase-container">
+          <div class="purchase-title">
+            Purchase Details
+          </div>
+          <div class="purchase-price-container">
+            <p class="r-product-price purchase-icon" />
+            <p class="purchase-price">
+              Price
+            </p>
+            <p class="purchase-currency">
+              $ USD
+            </p>
+            <p>/ piece</p>
+          </div>
+          <div class="purchase-item-container">
+            <div v-for="(item, index) in purchase_brand" :key="index" class="purchase-item1">
+              <p class="purchase-item-icon" :class="item.icon" />
+              <div class="purchase-item1-item">
+                <p>{{ item.desc1 }}</p>
+                <p class="visible">
+                  {{ item.visibility }}
+                </p>
+                <p>{{ item.desc2 }}</p>
+              </div>
+            </div>
+            <div v-for="(item, index) in purchase_details" :key="index" class="purchase-item2">
+              <p class="purchase-item-icon" :class="item.icon" />
+              <div class="purchase-item2-item">
+                <p class="purchase-item2-desc">
+                  {{ item.desc }}
+                </p>
+                <p class="purchase-item2-type">
+                  {{ item.type }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- right -->
       <div class="right">
         <div class="right-top">
           <p>Status History</p>
@@ -782,6 +852,7 @@ hr {
 }
 .payment-bottom-item {
   display: flex;
+  align-items: center;
 
   height: 168px;
   width: 280px;
@@ -789,6 +860,12 @@ hr {
   border-radius: 12px;
   border: 1px solid #383A3D33;
   position: relative;
+  background: #FFFFFF;
+  outline: none;
+}
+
+.payment-bottom-item.isSelected {
+  border: 1px solid #259E09E8;
 }
 
 .payment-item2 {
@@ -821,11 +898,111 @@ hr {
   z-index: 1;
   top: 0;
   right:0;
-
+  font-size: 24px;
   padding: 12px;
 }
 
 /* payment---end */
+
+/* purchase */
+.purchase-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  color: #383A3D;
+
+  margin-top: 40px;
+  padding-bottom: 40px;
+
+  height: calc(padding-bottom + 385px);
+  width: 655.5px;
+  /* border-bottom: 1px solid #d1d1d1d1; */
+}
+
+.purchase-icon {
+  font-size: 20px;
+}
+.purchase-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.purchase-price-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.purchase-price {
+  font-size: 32px;
+  color: #3B5998;
+  font-weight: bold;
+}
+.purchase-currency {
+  font-size: 16px;
+  color: #E3707F;
+  font-weight: bold;
+}
+
+/* purchase item */
+
+.purchase-item-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  text-align: left;
+
+  column-gap: 28px;
+  row-gap: 24px;
+  font-size: 16px;
+}
+
+.purchase-item1 {
+  display: flex;
+  align-items: center;
+  gap:16px;
+  font-weight: bold;
+}
+
+.purchase-item1-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.purchase-item-icon {
+  font-size: 20px;
+}
+
+.purchase-item2 {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #383A3D;
+}
+
+.purchase-item2-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.purchase-item2-desc {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.purchase-item2-type {
+  color: #595959;
+}
+
+/* purchase---end */
 
 /* left ---- end */
 

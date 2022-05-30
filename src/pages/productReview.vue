@@ -5,6 +5,11 @@ import ProductReview from '~/components/productReviewCom.vue'
 const headers = JSON.parse(JSON.parse(localStorage.getItem('lawfirm')).headers)
 const campaign = ref()
 const results = ref()
+const route = useRoute()
+
+const campaign_management = ref()
+
+const campaign_id = ref(route.query.campaign_id)
 
 const getData = () => {
   axios.get(`${import.meta.env.VITE_VUE_APP_URL}/listings/for_review/main?page_size=50&page=1`, headers)
@@ -51,15 +56,49 @@ const getCampaignData = () => {
     })
 }
 
+const getCampaignManagementData = () => {
+  axios.get(`${import.meta.env.VITE_VUE_APP_URL}/listings/${campaign_id.value}/qualified/SearchBy/seller_name/0/with/platforms/0?page=1&page_size=100`, headers)
+    .then((response) => {
+      campaign_management.value = response.data.data.map((r: any) => {
+        return {
+          id: r.id,
+          campaign_id: r.campaign_id,
+          campaign_name: r.campaign,
+          status: r.status,
+
+          platform: r.platform,
+
+          seller_name: r.seller[0].name,
+          seller_url: r.seller[0].url,
+
+          list_info: r.listing_info.listing_title,
+
+          campaign_image: r.campaign_image,
+          platform_image: r.platform_image,
+
+          preview_image: `${import.meta.env.VITE_VUE_APP_URL}/files/${r.evidences.Preview}`,
+          product_url: r.url,
+        }
+      })
+      // console.log(campaign_management.value)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+    .then(() => {
+    })
+}
+
 onMounted(() => {
   getCampaignData()
   getData()
+  getCampaignManagementData()
 })
 
 </script>
 
 <template>
-  <ProductReview :campaign="campaign" :results="results" />
+  <ProductReview :campaign="campaign" :results="results" :campaign_management="campaign_management" :campaign_id="campaign_id" />
 </template>
 
 <route lang="yaml">

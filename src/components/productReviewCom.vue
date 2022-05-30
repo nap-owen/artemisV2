@@ -5,7 +5,15 @@ import Footer1 from './Footer.vue'
 const props = defineProps<{
   results: []
   campaign: []
+  campaign_management: []
+  campaign_id: number
 }>()
+
+const campaign_name = ref()
+const campaign_url = ref()
+
+console.log(campaign_name.value)
+console.log(campaign_url.value)
 
 const id = ref()
 const seller_url = ref()
@@ -89,18 +97,19 @@ onClickOutside(
   </div>
   <hr>
   <div class="nav2">
-    <Navbar2Sticky :campaign="campaign" :page-number="1" :results="props.results" />
+    <Navbar2Sticky :campaign_name="campaign_name" :campaign_url="campaign_url" :campaign="campaign" :page-number="1" :results="props.results" />
   </div>
   <div class="list" :class="{'overflow': isSelected}">
-    <div v-for="(item, index) in props.results" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_logo,item.seller_name,item.list_info,item.preview_img,item.campaign_logo, item.platform, item.company)">
+    <div v-for="(item, index) in props.campaign_management" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_image,item.seller_name,item.list_info,item.preview_image,item.campaign_image, item.platform, item.campaign_name);campaign_name=item.campaign_name;campaign_url=item.campaign_url">
       <CampaignManagementProductCom
         :id="item.id"
         :seller_url="item.seller_url"
         :product_url="item.product_url"
-        :platform_logo="item.platform_logo"
+        :platform_logo="item.platform_image"
         :seller_name="item.seller_name"
         :list_info="item.list_info"
-        :source="item.preview_img"
+        :source="item.preview_image"
+        :status="item.status"
         @isSelected="(n: boolean) => isSelected=n"
       />
       <!-- modal -->

@@ -83,6 +83,7 @@ const props = defineProps<{
   font-weight: bold;
   color: #383A3D;
   text-align: left;
+  width: 400px;
 }
 
 .buttons {
