@@ -9,7 +9,7 @@ const route = useRoute()
 
 const campaign_management = ref()
 
-const campaign_id = ref(route.query.campaign_id)
+const campaign_id = computed(() => route.query.campaign_id)
 
 const getData = () => {
   axios.get(`${import.meta.env.VITE_VUE_APP_URL}/listings/for_review/main?page_size=50&page=1`, headers)
@@ -80,7 +80,7 @@ const getCampaignManagementData = () => {
           product_url: r.url,
         }
       })
-      // console.log(campaign_management.value)
+      console.log(campaign_management.value)
     })
     .catch((error) => {
       console.log(error)
@@ -88,6 +88,11 @@ const getCampaignManagementData = () => {
     .then(() => {
     })
 }
+
+watch(() => campaign_id.value, () => {
+  getCampaignManagementData()
+  console.log(campaign_id.value)
+})
 
 onMounted(() => {
   getCampaignData()
@@ -98,7 +103,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <ProductReview :campaign="campaign" :results="results" :campaign_management="campaign_management" :campaign_id="campaign_id" />
+  <ProductReview
+    v-if="campaign_management"
+    :campaign="campaign"
+    :results="results"
+    :campaign_management="campaign_management"
+    :campaign_id="campaign_id"
+  />
 </template>
 
 <route lang="yaml">

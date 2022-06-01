@@ -6,14 +6,35 @@ const props = defineProps<{
   results: []
   campaign: []
   campaign_management: []
+  campaign_name: string
   campaign_id: number
 }>()
-
+const campaign_management = computed(() => props.campaign_management)
+const campaign_id = ref()
 const campaign_name = ref()
-const campaign_url = ref()
+const campaign_image = ref()
+const campaign_status = ref()
 
-console.log(campaign_name.value)
-console.log(campaign_url.value)
+const getData = () => {
+  for (const item in props.campaign_management) {
+    campaign_id.value = campaign_management.value[item].campaign_id
+    campaign_name.value = campaign_management.value[item].campaign_name
+    campaign_image.value = campaign_management.value[item].campaign_image
+    campaign_status.value = campaign_management.value[item].status
+    console.log(campaign_name.value)
+  }
+}
+
+watch(() => campaign_management.value, () => {
+  for (let i = 0; i < 1; i++) {
+    campaign_id.value = campaign_management.value[i].campaign_id
+    campaign_name.value = campaign_management.value[i].campaign_name
+    campaign_image.value = campaign_management.value[i].campaign_image
+    campaign_status.value = campaign_management.value[i].status
+    console.log(campaign_id.value)
+    console.log(campaign_name.value)
+  }
+})
 
 const id = ref()
 const seller_url = ref()
@@ -25,6 +46,7 @@ const source = ref()
 const campaign_logo = ref()
 const platform = ref()
 const company = ref()
+const c_status = ref()
 
 const isOpen = ref(false)
 const isSelected = ref(false)
@@ -32,7 +54,7 @@ const isSelected = ref(false)
 const dropdownRef = ref(null)
 const modalListing = ref(null)
 
-const selected = (idNumber, s_url, p_url, p_logo, s_name, l_info, p_img, c_logo, p, company_cam) => {
+const selected = (idNumber, s_url, p_url, p_logo, s_name, l_info, p_img, c_logo, p, company_cam, status) => {
   id.value = idNumber
   seller_url.value = s_url
   product_url.value = p_url
@@ -43,6 +65,7 @@ const selected = (idNumber, s_url, p_url, p_logo, s_name, l_info, p_img, c_logo,
   campaign_logo.value = c_logo
   platform.value = p
   company.value = company_cam
+  c_status.value = status
 }
 
 onClickOutside(
@@ -58,6 +81,10 @@ onClickOutside(
     isSelected.value = false
   },
 )
+
+onMounted(() => {
+  getData()
+})
 </script>
 
 <template>
@@ -97,10 +124,10 @@ onClickOutside(
   </div>
   <hr>
   <div class="nav2">
-    <Navbar2Sticky :campaign_name="campaign_name" :campaign_url="campaign_url" :campaign="campaign" :page-number="1" :results="props.results" />
+    <Navbar2Sticky :status="campaign_status" :campaign_management="props.campaign_management" :campaign_image="campaign_image" :campaign_name="campaign_name" :campaign_id="campaign_id" :campaign="campaign" :page-number="1" :results="props.results" />
   </div>
   <div class="list" :class="{'overflow': isSelected}">
-    <div v-for="(item, index) in props.campaign_management" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_image,item.seller_name,item.list_info,item.preview_image,item.campaign_image, item.platform, item.campaign_name);campaign_name=item.campaign_name;campaign_url=item.campaign_url">
+    <div v-for="(item, index) in props.campaign_management" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_image,item.seller_name,item.list_info,item.preview_image,item.campaign_image, item.platform, item.campaign_name, item.status)">
       <CampaignManagementProductCom
         :id="item.id"
         :seller_url="item.seller_url"
@@ -127,6 +154,7 @@ onClickOutside(
       :list_info="list_info"
       :campaign_logo="campaign_logo"
       :platform="platform"
+      :status="c_status"
       :is-click="isSelected" @clickBy="(n: boolean) => isSelected=n"
     />
   </div>
@@ -322,14 +350,16 @@ hr {
 
 /* list */
 .list {
-  display: flex;
+  /* display: flex;
   align-items: center;
+  justify-content: center; */
+  display: grid;
+  grid-template-columns: 281px 281px 281px 281px;
   justify-content: center;
+  gap: 25px;
   width: 1240px;
   margin: 0 auto;
-  flex-wrap:wrap;
-  gap: 25px;
-  margin-top: 40px;
+  padding-top: 40px;
 }
 
 .list.overflow {

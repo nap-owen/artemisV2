@@ -21,6 +21,7 @@ const props = defineProps<{
   preview_img: string
   product_url: string
   seller_url: string
+  status: string
 }>()
 
 const items = [{
@@ -245,6 +246,7 @@ const clicked = ref(props.isClick)
           :platform="props.platform"
           :list_info="props.list_info"
           :preview_img="props.preview_img"
+          :status="props.status"
         />
         <!-- evidence -->
         <div class="evidence-container">

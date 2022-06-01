@@ -4,8 +4,19 @@ import { onClickOutside } from '@vueuse/core'
 const props = defineProps<{
   icon: string
   title: string
-  numItems: string
+  numItems: number
+  isClickStatus: boolean
 }>()
+const numItem = ref()
+const isThousand = ref(false)
+const checkValue = () => {
+  if (props.numItems > 1000) {
+    numItem.value = props.numItems / 1000
+    isThousand.value = true
+    console.log(props.isClickStatus)
+  }
+  else { numItem.value = props.numItems }
+}
 
 const isClick = ref(false)
 
@@ -18,6 +29,14 @@ onClickOutside(
   },
 )
 
+watch(() => props.numItems, () => {
+  checkValue()
+})
+
+onMounted(() => {
+  checkValue()
+})
+
 </script>
 
 <template>
@@ -27,7 +46,12 @@ onClickOutside(
     </div>
     <p>{{ props.title }}</p>
     <div v-if="!isClick" class="number">
-      <p>{{ props.numItems }}</p>
+      <p v-if="isThousand">
+        {{ `${numItem}k` }}
+      </p>
+      <p v-else>
+        {{ numItem }}
+      </p>
     </div>
   </button>
 </template>

@@ -6,10 +6,60 @@ const props = defineProps<{
   pageNumber: number
   results: []
   campaign: []
-
+  campaign_id: number
   campaign_name: string
-  campaign_url: string
+  campaign_image: string
+
+  status: string
+
+  campaign_management: []
 }>()
+
+const isHasPotential = ref(false)
+const isQualified = ref(false)
+const isMonitoring = ref(false)
+const isAccepted = ref(false)
+const isSubmitted = ref(false)
+const isRejected = ref(false)
+const isForInternalReview = ref(false)
+
+const checkStatus = () => {
+  switch (props.status) {
+    case 'Qualified': {
+      isQualified.value = true
+      break
+    }
+    case 'Has Potential': {
+      isHasPotential.value = true
+      break
+    }
+    case 'Monitoring': {
+      isMonitoring.value = true
+      break
+    }
+    case 'Accepted': {
+      isAccepted.value = true
+      break
+    }
+    case 'Submitted': {
+      isSubmitted.value = true
+      break
+    }
+    case 'Rejected': {
+      isRejected.value = true
+      break
+    }
+    case 'For Internal Review': {
+      isForInternalReview.value = true
+      break
+    }
+  }
+}
+
+const campaign_name = ref()
+const campaign_image = ref()
+const campaign_name1 = computed(() => props.campaign_name)
+// const id = ref()
 
 const page = ref(props.pageNumber)
 
@@ -109,6 +159,16 @@ const platformItems = [
   { platform_name: '11street' },
   { platform_name: '1688' },
 ]
+
+watch(() => campaign_name1.value, () => {
+  campaign_name1.value = props.campaign_name
+  campaign_image.value = props.campaign_image
+})
+
+onMounted(() => {
+  checkStatus()
+  console.log(isQualified.value)
+})
 </script>
 
 <template>
@@ -118,11 +178,19 @@ const platformItems = [
         <div ref="dropdownRef" class="upperLeft1-container">
           <button class="upperLeft1" :class="{'toggled': isClick}" @click="isClick=!isClick; outsideClick('dropdownRef')">
             <!-- <button class="upperLeft1" @click="addCount();isClick=true"></button> -->
-            <img src="/JPG Campaigns/Nestle.jpg " alt="">
-            <p>Nestle</p>
+            <!-- <div v-if="campaign_name" class="upperLeft1-item">
+              <img :src="props.campaign_image" alt="">
+              <p>{{ campaign_name }}</p>
+            </div>
+            <div v-else class="upperLeft1-item">
+              <img :src="props.campaign_image" alt="">
+              <p>{{ props.campaign_name }}</p>
+            </div> -->
+            <img :src="campaign_image" alt="">
+            <p>{{ campaign_name1 }}</p>
           </button>
           <div v-if="isClick" class="searchCampaign">
-            <SearchCampaignCom :campaign="campaign" :results="props.results" />
+            <SearchCampaignCom :campaign="campaign" :results="props.results" @clickBy="(n) => campaign_name=n" @clickBy2="(n)=> campaign_id=n " />
           </div>
           <!-- v-if="count===1 && isClick===true" -->
         </div>
@@ -175,25 +243,25 @@ const platformItems = [
     <div class="lowerDiv">
       <div class="lowerLeft">
         <button>
-          <Clickable icon="r-status-haspotential" title="Has Potential" num-items="324" />
+          <Clickable icon="r-status-haspotential" title="Has Potential" :num-items="324" />
         </button>
         <button>
-          <Clickable icon="r-status-forreview" title="For Review" num-items="9" />
+          <Clickable icon="r-status-forreview" title="For Review" :is-click-status="isQualified" :num-items="9" />
         </button>
         <button>
-          <Clickable icon="r-status-monitoring" title="Monitoring" num-items="9.2k" />
+          <Clickable icon="r-status-monitoring" title="Monitoring" :num-items="9200" />
         </button>
         <button>
-          <Clickable icon="r-status-accepted" title="Accepted" num-items="9.2k" />
+          <Clickable icon="r-status-accepted" title="Accepted" :num-items="5200" />
         </button>
         <button>
-          <Clickable icon="r-status-submitted" title="Submitted" num-items="99" />
+          <Clickable icon="r-status-submitted" title="Submitted" :num-items="99" />
         </button>
         <button>
-          <Clickable icon="r-status-rejected" title="Rejected" num-items="0" />
+          <Clickable icon="r-status-rejected" title="Rejected" :num-items="0" />
         </button>
         <button>
-          <Clickable icon="r-status-forreview" title="For Internal Review" num-items="0" />
+          <Clickable icon="r-status-forreview" title="For Internal Review" :num-items="0" />
         </button>
       </div>
       <div class="lowerRight">
@@ -257,7 +325,8 @@ const platformItems = [
 
 .upperLeft1-container {
   position: relative;
-  width: 114px;
+  width: auto;
+  max-width: 200px;
   height: 40px;
 }
 
@@ -265,8 +334,10 @@ const platformItems = [
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
 
-  width: 114px;
+  width: auto;
+  max-width: 200px;
   height: 40px;
   border-radius: 20px;
   border: 1px solid #70707033;
@@ -297,6 +368,13 @@ const platformItems = [
   width: 30px;
   border-radius: 50%;
   border: 1px solid #8B9DC333;
+}
+
+.upperLeft1-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .upperLeft2 {

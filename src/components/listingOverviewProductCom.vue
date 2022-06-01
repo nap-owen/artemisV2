@@ -8,6 +8,7 @@ const props = defineProps<{
   platform: string
   list_info: string
   preview_img: string
+  status: string
 }>()
 </script>
 
@@ -20,7 +21,7 @@ const props = defineProps<{
         </p>
         <div class="buttons">
           <button>
-            <ResearchStatusButtonCom icon="r-status-haspotential" research_status="Has Potential" />
+            <ResearchStatusButtonCom icon="r-status-haspotential" :research_status="props.status" />
           </button>
           <button>
             <IdNumberCom :id-number="props.idNumber" />
@@ -131,7 +132,7 @@ const props = defineProps<{
 }
 
 .right img:hover {
-  transform: translate(-50%, -50%) scale(.65);
+  transform: translate(-50%, -50%) scale(.75);
 }
 
 .right:hover {

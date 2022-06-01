@@ -45,7 +45,7 @@ const getCampaignImage = (name) => {
         <img :src="getCampaignImage(campaign_item.campaign_name) " alt="">
         <p>{{ campaign_item.campaign_name }}</p>
         <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
-          <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push('/productReview')">{{ item.menu }}</a>
+          <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push({path: '/productReview', query: {campaign_id: `${campaign_item.id}`}});$emit('clickBy', campaign_item.campaign_name);$emit('clickBy2', campaign_item.id)">{{ item.menu }}</a>
         </div>
       </div>
     </a>

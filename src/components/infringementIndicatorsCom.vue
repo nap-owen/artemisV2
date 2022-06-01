@@ -77,15 +77,18 @@ const items = [{
   column-gap: 24px;
 }
 .div-item {
-  display: flex;
+  /* display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  /* flex-wrap: wrap; */
-  gap: 16px;
+  gap: 16px; */
+
+  display: grid;
+  grid-template-columns: 40px 1fr;
+
   font-size: 16px;
   color: #383A3D;
   opacity: 80%;
-  max-width: 250px;
+  /* max-width: 250px; */
   text-align: left;
 }
 

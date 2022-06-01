@@ -94,6 +94,7 @@ window.addEventListener('scroll', () => {
 //   const lists = ['Sample1', 'Sample2', 'Sample3', 'Sample4']
 //   return lists.filter(l => l.toLowerCase().includes(text.value.toLowerCase()))
 // })
+
 </script>
 
 <template>
