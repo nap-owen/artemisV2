@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import axios from 'axios'
 import ProductReview from '~/components/productReviewCom.vue'
+import { useCampaignStore } from '~/stores/campaign'
+
+const campaignStore = useCampaignStore()
 
 const headers = JSON.parse(JSON.parse(localStorage.getItem('lawfirm')).headers)
 const campaign = ref()
@@ -56,8 +59,10 @@ const getCampaignData = () => {
     })
 }
 
+const campaign_status = computed(() => campaignStore.status)
+
 const getCampaignManagementData = () => {
-  axios.get(`${import.meta.env.VITE_VUE_APP_URL}/listings/${campaign_id.value}/qualified/SearchBy/seller_name/0/with/platforms/0?page=1&page_size=100`, headers)
+  axios.get(`${import.meta.env.VITE_VUE_APP_URL}/listings/${campaign_id.value}/${campaign_status.value}/SearchBy/seller_name/0/with/platforms/0?page=1&page_size=100`, headers)
     .then((response) => {
       campaign_management.value = response.data.data.map((r: any) => {
         return {
@@ -92,6 +97,10 @@ const getCampaignManagementData = () => {
 watch(() => campaign_id.value, () => {
   getCampaignManagementData()
   console.log(campaign_id.value)
+})
+
+watch(() => campaign_status.value, () => {
+  getCampaignManagementData()
 })
 
 onMounted(() => {

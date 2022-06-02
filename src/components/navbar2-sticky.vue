@@ -1,19 +1,26 @@
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
 import ButtonCom from './buttonCom.vue'
+import { useCampaignStore } from '~/stores/campaign'
 
 const props = defineProps<{
   pageNumber: number
   results: []
   campaign: []
-  campaign_id: number
-  campaign_name: string
-  campaign_image: string
 
   status: string
 
   campaign_management: []
 }>()
+
+const campaignStore = useCampaignStore()
+const emit = defineEmits(['isClickStatus'])
+
+const campaign_id = computed(() => campaignStore.current.id)
+const campaign_name = computed(() => campaignStore.current.label)
+const campaign_image = computed(() => campaignStore.current.image)
+
+const status = ref(props.status)
 
 const isHasPotential = ref(false)
 const isQualified = ref(false)
@@ -24,41 +31,87 @@ const isRejected = ref(false)
 const isForInternalReview = ref(false)
 
 const checkStatus = () => {
-  switch (props.status) {
+  switch (status.value) {
     case 'Qualified': {
       isQualified.value = true
+
+      isHasPotential.value = false
+      isMonitoring.value = false
+      isAccepted.value = false
+      isSubmitted.value = false
+      isRejected.value = false
+      isForInternalReview.value = false
       break
     }
     case 'Has Potential': {
       isHasPotential.value = true
+
+      isQualified.value = false
+      isMonitoring.value = false
+      isAccepted.value = false
+      isSubmitted.value = false
+      isRejected.value = false
+      isForInternalReview.value = false
       break
     }
     case 'Monitoring': {
       isMonitoring.value = true
+
+      isHasPotential.value = false
+      isQualified.value = false
+      isAccepted.value = false
+      isSubmitted.value = false
+      isRejected.value = false
+      isForInternalReview.value = false
       break
     }
     case 'Accepted': {
       isAccepted.value = true
+
+      isMonitoring.value = false
+      isHasPotential.value = false
+      isQualified.value = false
+      isSubmitted.value = false
+      isRejected.value = false
+      isForInternalReview.value = false
       break
     }
     case 'Submitted': {
       isSubmitted.value = true
+
+      isAccepted.value = false
+      isMonitoring.value = false
+      isHasPotential.value = false
+      isQualified.value = false
+      isRejected.value = false
+      isForInternalReview.value = false
       break
     }
     case 'Rejected': {
       isRejected.value = true
+
+      isSubmitted.value = false
+      isAccepted.value = false
+      isMonitoring.value = false
+      isHasPotential.value = false
+      isQualified.value = false
+      isForInternalReview.value = false
       break
     }
     case 'For Internal Review': {
       isForInternalReview.value = true
+
+      isRejected.value = false
+      isSubmitted.value = false
+      isAccepted.value = false
+      isMonitoring.value = false
+      isHasPotential.value = false
+      isQualified.value = false
       break
     }
   }
 }
 
-const campaign_name = ref()
-const campaign_image = ref()
-const campaign_name1 = computed(() => props.campaign_name)
 // const id = ref()
 
 const page = ref(props.pageNumber)
@@ -160,14 +213,19 @@ const platformItems = [
   { platform_name: '1688' },
 ]
 
-watch(() => campaign_name1.value, () => {
-  campaign_name1.value = props.campaign_name
-  campaign_image.value = props.campaign_image
+watch(() => props.status, () => {
+  status.value = props.status
+})
+
+watch(() => status.value, () => {
+  checkStatus()
+
+  emit('isClickStatus', status.value)
 })
 
 onMounted(() => {
+  status.value = props.status
   checkStatus()
-  console.log(isQualified.value)
 })
 </script>
 
@@ -187,10 +245,10 @@ onMounted(() => {
               <p>{{ props.campaign_name }}</p>
             </div> -->
             <img :src="campaign_image" alt="">
-            <p>{{ campaign_name1 }}</p>
+            <p>{{ campaign_name }}</p>
           </button>
           <div v-if="isClick" class="searchCampaign">
-            <SearchCampaignCom :campaign="campaign" :results="props.results" @clickBy="(n) => campaign_name=n" @clickBy2="(n)=> campaign_id=n " />
+            <SearchCampaignCom :campaign="campaign" :results="props.results" />
           </div>
           <!-- v-if="count===1 && isClick===true" -->
         </div>
@@ -243,25 +301,60 @@ onMounted(() => {
     <div class="lowerDiv">
       <div class="lowerLeft">
         <button>
-          <Clickable icon="r-status-haspotential" title="Has Potential" :num-items="324" />
+          <Clickable
+            icon="r-status-haspotential" title="Has Potential" :is-click-status="isHasPotential" :num-items="324" @clickBy="(n) => {if(n===true){
+              status = 'Has Potential'
+              campaignStore.status = status
+            }}"
+          />
         </button>
         <button>
-          <Clickable icon="r-status-forreview" title="For Review" :is-click-status="isQualified" :num-items="9" />
+          <Clickable
+            icon="r-status-forreview" title="For Review" :is-click-status="isQualified" :num-items="9" @clickBy="(n) => {if(n===true){
+              status = 'Qualified'
+              campaignStore.status = status
+            }}"
+          />
         </button>
         <button>
-          <Clickable icon="r-status-monitoring" title="Monitoring" :num-items="9200" />
+          <Clickable
+            icon="r-status-monitoring" title="Monitoring" :is-click-status="isMonitoring" :num-items="9200" @clickBy="(n) => {if(n===true){
+              status = 'Monitoring'
+              campaignStore.status = status
+            }}"
+          />
         </button>
         <button>
-          <Clickable icon="r-status-accepted" title="Accepted" :num-items="5200" />
+          <Clickable
+            icon="r-status-accepted" title="Accepted" :is-click-status="isAccepted" :num-items="5200" @clickBy="(n) => {if(n===true){
+              status = 'Accepted'
+              campaignStore.status = status
+            }}"
+          />
         </button>
         <button>
-          <Clickable icon="r-status-submitted" title="Submitted" :num-items="99" />
+          <Clickable
+            icon="r-status-submitted" title="Submitted" :is-click-status="isSubmitted" :num-items="99" @clickBy="(n) => {if(n===true){
+              status = 'Submitted'
+              campaignStore.status = status
+            }}"
+          />
         </button>
         <button>
-          <Clickable icon="r-status-rejected" title="Rejected" :num-items="0" />
+          <Clickable
+            icon="r-status-rejected" title="Rejected" :is-click-status="isRejected" :num-items="0" @clickBy="(n) => {if(n===true){
+              status = 'Rejected'
+              campaignStore.status = status
+            }}"
+          />
         </button>
         <button>
-          <Clickable icon="r-status-forreview" title="For Internal Review" :num-items="0" />
+          <Clickable
+            icon="r-status-forreview" title="For Internal Review" :is-click-status="isForInternalReview" :num-items="0" @clickBy="(n) => {if(n===true){
+              status = 'For Internal Review'
+              campaignStore.status = status
+            }}"
+          />
         </button>
       </div>
       <div class="lowerRight">
@@ -370,12 +463,18 @@ onMounted(() => {
   border: 1px solid #8B9DC333;
 }
 
-.upperLeft1-item {
+.upperLeft1 p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* .upperLeft1-item {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-}
+} */
 
 .upperLeft2 {
   display: flex;

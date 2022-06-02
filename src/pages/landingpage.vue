@@ -3,12 +3,14 @@ import axios from 'axios'
 // import qs from 'qs'
 import LandingpageCom from '~/components/landingpage-com.vue'
 import SellersReview1 from '~/components/sellers-review.vue'
+import { useCampaignStore } from '~/stores/campaign'
 
 const headers = JSON.parse(JSON.parse(localStorage.getItem('lawfirm')).headers)
 const results = ref()
 
 // window.qs = qs
 
+const campaignStore = useCampaignStore()
 const campaign_management = ref()
 const campaign = ref()
 
@@ -47,6 +49,8 @@ const getCampaignData = () => {
           campaign_name: r.name,
         }
       })
+
+      campaignStore.data = response.data.data
       // console.log(campaign.value)
     })
     .catch((error) => {

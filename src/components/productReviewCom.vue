@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onClickOutside } from '@vueuse/core'
 import Footer1 from './Footer.vue'
+import { useCampaignStore } from '~/stores/campaign'
 
 const props = defineProps<{
   results: []
@@ -9,6 +10,8 @@ const props = defineProps<{
   campaign_name: string
   campaign_id: number
 }>()
+const campaignStore = useCampaignStore()
+
 const campaign_management = computed(() => props.campaign_management)
 const campaign_id = ref()
 const campaign_name = ref()
@@ -21,20 +24,29 @@ const getData = () => {
     campaign_name.value = campaign_management.value[item].campaign_name
     campaign_image.value = campaign_management.value[item].campaign_image
     campaign_status.value = campaign_management.value[item].status
-    console.log(campaign_name.value)
+
+    campaignStore.current.id = campaign_id.value
+    campaignStore.current.label = campaign_name.value
+    campaignStore.current.image = campaign_image.value
   }
 }
 
 watch(() => campaign_management.value, () => {
   for (let i = 0; i < 1; i++) {
-    campaign_id.value = campaign_management.value[i].campaign_id
-    campaign_name.value = campaign_management.value[i].campaign_name
-    campaign_image.value = campaign_management.value[i].campaign_image
-    campaign_status.value = campaign_management.value[i].status
-    console.log(campaign_id.value)
-    console.log(campaign_name.value)
+    campaign_id.value = campaign_management.value[i]?.campaign_id
+    campaign_name.value = campaign_management.value[i]?.campaign_name
+    campaign_image.value = campaign_management.value[i]?.campaign_image
+    campaign_status.value = campaign_management.value[i]?.status
+
+    campaignStore.current.id = campaign_id.value
+    campaignStore.current.label = campaign_name.value
+    campaignStore.current.image = campaign_image.value
   }
 })
+
+// watch(() => campaign_status.value, () => {
+
+// })
 
 const id = ref()
 const seller_url = ref()
@@ -87,7 +99,7 @@ onMounted(() => {
 })
 </script>
 
-<template>
+<template ref="el">
   <div class="nav" :class="{'overflow': isSelected}">
     <div class="flex1">
       <img src="artemis_login_svg/CM_Logo.svg" alt="">
@@ -124,23 +136,32 @@ onMounted(() => {
   </div>
   <hr>
   <div class="nav2">
-    <Navbar2Sticky :status="campaign_status" :campaign_management="props.campaign_management" :campaign_image="campaign_image" :campaign_name="campaign_name" :campaign_id="campaign_id" :campaign="campaign" :page-number="1" :results="props.results" />
+    <Navbar2Sticky
+      :status="campaign_status"
+      :campaign_management="props.campaign_management"
+      :campaign_image="campaign_image"
+      :campaign_name="campaign_name"
+      :campaign_id="campaign_id"
+      :campaign="campaign"
+      :page-number="1"
+      :results="props.results"
+      @isClickStatus="(n) => campaign_status=n"
+    />
   </div>
   <div class="list" :class="{'overflow': isSelected}">
-    <div v-for="(item, index) in props.campaign_management" :key="index" @click="selected(item.id,item.seller_url,item.product_url,item.platform_image,item.seller_name,item.list_info,item.preview_image,item.campaign_image, item.platform, item.campaign_name, item.status)">
-      <CampaignManagementProductCom
-        :id="item.id"
-        :seller_url="item.seller_url"
-        :product_url="item.product_url"
-        :platform_logo="item.platform_image"
-        :seller_name="item.seller_name"
-        :list_info="item.list_info"
-        :source="item.preview_image"
-        :status="item.status"
-        @isSelected="(n: boolean) => isSelected=n"
-      />
-      <!-- modal -->
-    </div>
+    <CampaignManagementProductCom
+      v-for="(item, index) in props.campaign_management" :id="item.id" :key="index"
+      :seller_url="item.seller_url"
+      :product_url="item.product_url"
+      :platform_logo="item.platform_image"
+      :seller_name="item.seller_name"
+      :list_info="item.list_info"
+      :source="item.preview_image"
+      :status="item.status"
+      @click="selected(item.id,item.seller_url,item.product_url,item.platform_image,item.seller_name,item.list_info,item.preview_image,item.campaign_image, item.platform, item.campaign_name, item.status)"
+      @isSelected="(n: boolean) => isSelected=n"
+    />
+    <!-- modal -->
   </div>
   <div v-if="isSelected" ref="modalListing">
     <ModalListingOverviewCom
@@ -154,7 +175,7 @@ onMounted(() => {
       :list_info="list_info"
       :campaign_logo="campaign_logo"
       :platform="platform"
-      :status="c_status"
+      :status="campaign_status"
       :is-click="isSelected" @clickBy="(n: boolean) => isSelected=n"
     />
   </div>
@@ -346,6 +367,10 @@ hr {
   top: 0;
   z-index: 2;
   background: #FFFFFF;
+}
+
+.nav2.background-shadow {
+  box-shadow: 0px 1px 2px #00000029;
 }
 
 /* list */

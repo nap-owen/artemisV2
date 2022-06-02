@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { useCampaignStore } from '~/stores/campaign'
 
+const campaignStore = useCampaignStore()
 const props = defineProps<{
   results: []
   campaign: []
@@ -32,6 +34,15 @@ const getCampaignImage = (name) => {
   return `https://artemisapi.newalchemysolutions.com/jpg/campaigns/${name}.jpg`
 }
 
+const goTo = (to: any, data: any) => {
+  campaignStore.current.id = data.id
+  campaignStore.current.label = data.campaign_name
+  campaignStore.current.image = getCampaignImage(data.campaign_name)
+
+  const asaPadong = to === 'listing' ? '/productReview' : '/productReview'
+
+  router.push({ path: asaPadong, query: { campaign_id: data.id } })
+}
 </script>
 
 <template>
@@ -45,7 +56,7 @@ const getCampaignImage = (name) => {
         <img :src="getCampaignImage(campaign_item.campaign_name) " alt="">
         <p>{{ campaign_item.campaign_name }}</p>
         <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
-          <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push({path: '/productReview', query: {campaign_id: `${campaign_item.id}`}});$emit('clickBy', campaign_item.campaign_name);$emit('clickBy2', campaign_item.id)">{{ item.menu }}</a>
+          <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="goTo('listings', campaign_item)">{{ item.menu }}</a>
         </div>
       </div>
     </a>

@@ -40,12 +40,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <button ref="dropdownRef" class="clickable" @click="isClick=true">
-    <div v-if="isClick">
+  <button ref="dropdownRef" class="clickable" :class="{'isActiveStatus': props.isClickStatus}" @click="isClick=true;$emit('clickBy', isClick)">
+    <div v-if="props.isClickStatus || isClick">
       <p :class="props.icon" />
     </div>
     <p>{{ props.title }}</p>
-    <div v-if="!isClick" class="number">
+    <div v-if="!isClick || !props.isClickStatus" class="number">
       <p v-if="isThousand">
         {{ `${numItem}k` }}
       </p>
@@ -58,6 +58,7 @@ onMounted(() => {
 
 <style scoped>
 .clickable {
+    outline: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +74,8 @@ onMounted(() => {
 }
 
 .clickable:active,
-.clickable:focus {
+.clickable:focus,
+.clickable.isActiveStatus {
     border-bottom: 2px solid #3B5998;
     color: #3B5998;
     font-weight: bold;

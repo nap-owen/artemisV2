@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core'
 import Navbar1 from './navbar.vue'
 import Aftersearch1 from './aftersearch.vue'
-// try emitting
+import { useCampaignStore } from '~/stores/campaign'
+
+const campaignStore = useCampaignStore()
 
 const props = defineProps<{
   results: []
@@ -78,11 +79,13 @@ document.addEventListener('click', (event) => {
     isActive(false)
 })
 
-const campaign_menu = [{
+const campaign_menu = reactive<any>([{
   menu: 'Go to Listings',
+  to: 'listings',
 }, {
   menu: 'Go to Cases',
-}]
+  to: 'cases',
+}])
 
 window.addEventListener('scroll', () => {
   const header = document.querySelector('.search-box')
@@ -95,6 +98,15 @@ window.addEventListener('scroll', () => {
 //   return lists.filter(l => l.toLowerCase().includes(text.value.toLowerCase()))
 // })
 
+const goTo = (to: any, data: any) => {
+  campaignStore.current.id = data.id
+  campaignStore.current.label = data.campaign_name
+  campaignStore.current.image = getCampaignImage(data.campaign_name)
+
+  const asaPadong = to === 'listings' ? '/productReview' : '/productReview'
+
+  router.push({ path: asaPadong, query: { campaign_id: data.id } })
+}
 </script>
 
 <template>
@@ -147,7 +159,7 @@ window.addEventListener('scroll', () => {
               <img :src="getCampaignImage(campaign_item.campaign_name)" alt="">
               <p>{{ campaign_item.campaign_name }}</p>
               <div v-if="menuSelected == index2" class="campaign-sub-dropdown">
-                <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="router.push({path: '/productReview', query: {campaign_id: `${campaign_item.id}`}})">{{ item.menu }}</a>
+                <a v-for="(item,index) in campaign_menu" :key="index" class="campaign-sub-item" @click="goTo(item.to, campaign_item)">{{ item.menu }}</a>
               </div>
             </div>
           </a>
