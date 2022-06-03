@@ -37,10 +37,22 @@ watch(() => campaign_management.value, () => {
     campaign_name.value = campaign_management.value[i]?.campaign_name
     campaign_image.value = campaign_management.value[i]?.campaign_image
     campaign_status.value = campaign_management.value[i]?.status
+    if (campaign_id.value !== undefined) {
+      campaignStore.current.id = campaign_id.value
+      campaignStore.current.label = campaign_name.value
+      campaignStore.current.image = campaign_image.value
 
-    campaignStore.current.id = campaign_id.value
-    campaignStore.current.label = campaign_name.value
-    campaignStore.current.image = campaign_image.value
+      campaignStore.campaign_management.id = campaign_management.value[i].id
+      campaignStore.campaign_management.campaign_id = campaign_id.value
+      campaignStore.campaign_management.campaign_name = campaign_name.value
+      campaignStore.campaign_management.platform = campaign_management.value[i].platform
+      campaignStore.campaign_management.seller_name = campaign_management.value[i].seller_name
+      campaignStore.campaign_management.seller_url = campaign_management.value[i].seller_url
+      campaignStore.campaign_management.list_info = campaign_management.value[i].list_info
+      campaignStore.campaign_management.platform_image = campaign_management.value[i].platform_image
+      campaignStore.campaign_management.preview_image = campaign_management.value[i].preview_image
+      campaignStore.campaign_management.product_url = campaign_management.value[i].product_url
+    }
   }
 })
 
@@ -158,6 +170,7 @@ onMounted(() => {
       :list_info="item.list_info"
       :source="item.preview_image"
       :status="item.status"
+      :total-index="index"
       @click="selected(item.id,item.seller_url,item.product_url,item.platform_image,item.seller_name,item.list_info,item.preview_image,item.campaign_image, item.platform, item.campaign_name, item.status)"
       @isSelected="(n: boolean) => isSelected=n"
     />

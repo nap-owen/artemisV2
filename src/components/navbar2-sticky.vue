@@ -20,6 +20,8 @@ const campaign_id = computed(() => campaignStore.current.id)
 const campaign_name = computed(() => campaignStore.current.label)
 const campaign_image = computed(() => campaignStore.current.image)
 
+const totalList = computed(() => campaignStore.totalList + 1)
+
 const status = ref(props.status)
 
 const isHasPotential = ref(false)
@@ -145,11 +147,17 @@ const isThirdClick = ref(false)
 const isFourthClick = ref(false)
 const isFifthClick = ref(false)
 
+const isLowerRight1Click = ref(false)
+
 const firstButton = ref(null)
 const thirdButton = ref(null)
 const fourthButton = ref(null)
 const fifthButton = ref(null)
 const dropdownRef = ref(null)
+
+const lowerRight1 = ref(null)
+
+const menuSelected = ref(-1)
 
 const outsideClick = (target: string) => {
   switch (target) {
@@ -198,6 +206,15 @@ const outsideClick = (target: string) => {
       )
       break
     }
+    case 'lowerRight1': {
+      onClickOutside(
+        lowerRight1,
+        (event) => {
+          isLowerRight1Click.value = false
+          menuSelected.value = -1
+        },
+      )
+    }
   }
 }
 
@@ -213,14 +230,33 @@ const platformItems = [
   { platform_name: '1688' },
 ]
 
+const listing_menu = [
+  { menu: 'Seller Name' },
+  { menu: 'Platform' },
+]
+
+const listing_submenu = [
+  { submenu: 'Ascending' },
+  { submenu: 'Descending' },
+]
+
 watch(() => props.status, () => {
   status.value = props.status
 })
 
 watch(() => status.value, () => {
   checkStatus()
+  if (campaignStore.totalList === 0)
+    campaignStore.totalList = 0
 
   emit('isClickStatus', status.value)
+})
+
+watch(() => campaignStore.totalList, () => {
+  if (campaignStore.totalList < totalList.value)
+    totalList.value = (totalList.value - campaignStore.totalList)
+  else
+    totalList.value = campaignStore.totalList
 })
 
 onMounted(() => {
@@ -358,8 +394,29 @@ onMounted(() => {
         </button>
       </div>
       <div class="lowerRight">
-        <div class="lowerRight1">
-          <button>1-9 of 9 listings</button>
+        <div ref="lowerRight1" class="lowerRight1">
+          <button class="lr-button" @click="isLowerRight1Click=!isLowerRight1Click ; outsideClick('lowerRight1')">
+            1-9 of {{ totalList }} listings
+          </button>
+          <div v-if="isLowerRight1Click" class="lr-dropdown-container">
+            <div class="lr-upper">
+              <p class="lr-upper1">
+                No. of Listings
+              </p>
+              <div class="lr-upper2">
+                <!-- in placeholder just use the current value of listings being showed -->
+                <input type="number" placeholder="0">
+              </div>
+            </div>
+            <a class="lr-lower">
+              <div v-for="(item, index) in listing_menu" :key="index" class="lr-lower1" @click="menuSelected = index">
+                <p>{{ item.menu }}</p>
+                <div v-if="menuSelected == index" class="lr-submenu">
+                  <a v-for="(item, index2) in listing_submenu" :key="index2">{{ item.submenu }}</a>
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
         <div class="lowerRight2">
           <button class="innerLowerRight1" @click="greatDecrement()">
@@ -562,15 +619,130 @@ onMounted(() => {
   font-weight: normal;
 }
 
-.lowerRight1:hover {
-  color: #ADBBD8;
+.lowerRight1 {
+  position: relative;
 }
 
-.lowerRight1:active,
-.lowerRight1 button:focus-within {
+.lowerRight1:focus-within .lr-button {
   color: #3B5998;
   font-weight: bold;
 }
+
+.lr-button:hover {
+  color: #ADBBD8;
+}
+.lr-button:active,
+.lr-button:focus,
+.lr-button:focus{
+  color: #3B5998;
+  font-weight: bold;
+}
+
+/* lower right1 dropdown */
+.lr-dropdown-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+
+  width: 239px;
+  height: 167px;
+
+  border-radius: 16px;
+  border: 1px solid #7070703D;
+  box-shadow: 0px 1px 6px #00000029;
+
+  background: #FFFFFF;
+
+  position: absolute;
+  right: 0;
+
+  margin-top: 9.5px;
+}
+
+.lr-upper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 207px;
+  height: 38px;
+
+  border: 1px solid #383A3D;
+  border-radius: 4px;
+}
+
+.lr-upper:hover {
+  border: 1px solid #3B5998;
+  color: #3B5998;
+}
+
+.lr-upper1 {
+  display: flex;
+  justify-content: center;
+  width: 60%;
+}
+
+.lr-upper2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  height: 100%;
+
+  border-left: 1px solid #383A3D;
+}
+.lr-upper2 input {
+  width: 70%;
+  outline: none;
+}
+
+.lr-lower {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 24px;
+
+  width: 207px;
+  position: relative;
+  cursor: pointer;
+}
+
+.lr-lower1:hover {
+  color: #3B5998;
+}
+.lr-lower1:active,
+.lr-lower1:focus-within {
+  color: #3B5998;
+  font-weight: bold;
+}
+
+.lr-submenu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+
+  padding: 0 16px;
+
+  width: 160px;
+  height: 107px;
+
+  position: absolute;
+  /* top: 0; */
+  background: #FFFFFF;
+
+  margin-left: 225px;
+  margin-top: -40px;
+  border-radius: 16px;
+  border: 1px solid #7070703D;
+
+  box-shadow: 0px 1px 6px #00000029;
+}
+
+/* lower right1 dropdown end--------- */
 
 .lowerRight2 {
   display: flex;
@@ -647,6 +819,7 @@ onMounted(() => {
   position: absolute;
   top: 50px;
   right: 0;
+  z-index: 1;
 }
 
 /* 5th Button */

@@ -5,6 +5,8 @@ export const useCampaignStore = defineStore('campaign', () => {
   const data = ref([])
   const status = ref('qualified')
 
+  const totalList = ref(0)
+
   const campaign_management = reactive({
     id: 0,
 
@@ -30,5 +32,6 @@ export const useCampaignStore = defineStore('campaign', () => {
     data,
     status,
     campaign_management,
+    totalList,
   }
 })

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useCampaignStore } from '~/stores/campaign'
+
 const props = defineProps<{
   source: string
   id: number
@@ -8,9 +10,15 @@ const props = defineProps<{
   seller_name: string
   list_info: string
   status: string
+
+  totalIndex: number
 }>()
 
+const campaignStore = useCampaignStore()
+
 const isSelected = ref(false)
+
+campaignStore.totalList = props.totalIndex
 
 </script>
 
