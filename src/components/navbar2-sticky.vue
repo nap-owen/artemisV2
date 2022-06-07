@@ -271,15 +271,6 @@ onMounted(() => {
       <div class="upperLeft">
         <div ref="dropdownRef" class="upperLeft1-container">
           <button class="upperLeft1" :class="{'toggled': isClick}" @click="isClick=!isClick; outsideClick('dropdownRef')">
-            <!-- <button class="upperLeft1" @click="addCount();isClick=true"></button> -->
-            <!-- <div v-if="campaign_name" class="upperLeft1-item">
-              <img :src="props.campaign_image" alt="">
-              <p>{{ campaign_name }}</p>
-            </div>
-            <div v-else class="upperLeft1-item">
-              <img :src="props.campaign_image" alt="">
-              <p>{{ props.campaign_name }}</p>
-            </div> -->
             <img :src="campaign_image" alt="">
             <p>{{ campaign_name }}</p>
           </button>

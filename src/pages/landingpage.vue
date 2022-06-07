@@ -4,8 +4,10 @@ import axios from 'axios'
 import LandingpageCom from '~/components/landingpage-com.vue'
 import SellersReview1 from '~/components/sellers-review.vue'
 import { useCampaignStore } from '~/stores/campaign'
+import { useUserStore1 } from '~/stores/users'
 
-const headers = JSON.parse(JSON.parse(localStorage.getItem('lawfirm')).headers)
+const userStore = useUserStore1()
+const headers = { headers: JSON.parse(userStore.decrypted).headers }
 const results = ref()
 
 // window.qs = qs

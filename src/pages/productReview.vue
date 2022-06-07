@@ -2,10 +2,13 @@
 import axios from 'axios'
 import ProductReview from '~/components/productReviewCom.vue'
 import { useCampaignStore } from '~/stores/campaign'
+import { useUserStore1 } from '~/stores/users'
 
 const campaignStore = useCampaignStore()
+const userStore = useUserStore1()
+const headers = { headers: JSON.parse(userStore.decrypted).headers }
 
-const headers = JSON.parse(JSON.parse(localStorage.getItem('lawfirm')).headers)
+// const headers = JSON.parse(JSON.parse(localStorage.getItem('lawfirm')).headers)
 const campaign = ref()
 const results = ref()
 const route = useRoute()

@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
 
 export const useUserStore1 = defineStore('users', () => {
-  const encrypted = localStorage.getItem('user')
-  // const value = ref()
-  let value: string | string[]
+  const encrypted = computed<string | null>(() => localStorage.getItem('user'))
 
   const randomString = (length: number) => {
     let result = ''
@@ -16,20 +14,24 @@ export const useUserStore1 = defineStore('users', () => {
     return result
   }
 
-  const decrypt = () => {
-    value = encrypted.split('')
-    for (let i = value.length; i > 0; i--) {
+  const decrypted = computed(() => {
+    const encSplit = encrypted.value?.split('') ?? []
+
+    if (!encSplit.length)
+      return ''
+
+    for (let i = encSplit.length; i > 0; i--) {
       if (i % 5 === 0 && i !== 0) {
         // console.log({ removed: value[i] })
-        value.splice(i, 1)
+        encSplit.splice(i, 1)
       }
     }
-    value = value.join('')
+    const encJoined = encSplit.join('')
     // console.log({ 'decrypted value': value })
-    value = atob(value)
-  }
+    return atob(encJoined)
+  })
 
-  const encrypt = (valueForEncryption) => {
+  const encrypt = (valueForEncryption: any) => new Promise((resolve) => {
     const encryptedValue = btoa(JSON.stringify(valueForEncryption))
     const value = encryptedValue.split('')
     for (let i = 0; i < value.length; i++) {
@@ -41,18 +43,16 @@ export const useUserStore1 = defineStore('users', () => {
 
     const joinValue = value.join('')
     useLocalStorage('user', joinValue)
-  }
-
-  if (encrypted)
-    decrypt()
+    resolve('sheesh')
+  })
 
   const show = () => {
     console.log(value)
   }
+
   return {
     show,
-    value,
-    decrypt,
+    decrypted,
     encrypt,
   }
 })

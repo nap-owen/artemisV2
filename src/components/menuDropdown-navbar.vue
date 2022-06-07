@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const router = useRouter()
 
 const props = defineProps<{
   isOpen: boolean
@@ -15,13 +16,20 @@ const menu = [{
   link: '#',
 }]
 
+const removeFromStorage = () => {
+  localStorage.removeItem('user')
+  router.push('/')
+}
+
 </script>
 
 <template>
   <div v-if="props.isOpen" class="dropdown">
     <a v-for="(menuitem, index) in menu" :key="index" :href="menuitem.link">{{ menuitem.title }}</a>
     <hr>
-    <a id="logout" href="/">Logout</a>
+    <button id="logout" @click="removeFromStorage()">
+      Logout
+    </button>
   </div>
 </template>
 
@@ -61,6 +69,10 @@ const menu = [{
 .dropdown hr {
   color: #383A3D26;
 }
-
+.dropdown button{
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 15px;
+}
 /* ---------------- */
 </style>

@@ -20,36 +20,14 @@ const postData = () => {
       user_id: username.value,
       password: password.value,
     }, headers)
-    .then((response) => {
+    .then(async(response) => {
       let results = response.data.data
       headers.headers.Authorization = `Bearer ${response.data.meta.access_token}`
       results = { ...results, ...headers }
-      //   console.log(results)
       if (response.status === 200) {
-        // users.value = {
-        //   username: response.data.data.user_id,
-        //   f_name: response.data.data.first_name,
-        //   l_name: response.data.data.last_name,
-        //   r: response.data.data.role,
-        //   access_level: response.data.data.access_level,
-        // }
-        // using useBase64 in vueuse
-        // const { promise } = useBase64(JSON.stringify(users.value))
-        // console.log(await promise.value)
-        // const s = (await promise.value).split(',')
-        // console.log(s)
-        // let value = s[1].split('')
-
-        store.encrypt(results)
-        store.show()
-        // to show the decrypted value
-        store.decrypt()
-
+        await store.encrypt(results)
         router.push('/landingpage')
-        // console.log(store.value.value)
       }
-
-    //   console.log(JSON.parse(results).headers.Authorization)
     })
 }
 
